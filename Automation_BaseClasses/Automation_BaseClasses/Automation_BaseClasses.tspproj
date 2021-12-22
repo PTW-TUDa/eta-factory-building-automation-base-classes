@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22">
+	<Project ProjectGUID="{197EFD7D-4D36-4A78-BCFF-62CDE3A5F8C7}" Target64Bit="true" ShowHideConfigurations="#x106">
+		<Plc>
+			<Project GUID="{9EED4EA0-AD43-4A76-86E4-9D53CAF8E51F}" Name="Automation_BaseClasses" PrjFilePath="Automation_BaseClasses\Automation_BaseClasses.plcproj" TmcFilePath="Automation_BaseClasses\Automation_BaseClasses.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e"/>
+		</Plc>
+	</Project>
+</TcSmProject>

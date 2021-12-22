@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="E_SystemControlState" Id="{9817809b-cf85-46c9-ae1f-a83f65c089ae}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_SystemControlState :
+(
+	automatic 	:= 0,
+	algorithm	:= 1,
+	manual		:= 2
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

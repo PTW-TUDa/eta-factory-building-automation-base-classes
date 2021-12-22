@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_AnalogSensor" Id="{d3cde062-ba9d-4c31-8cee-cd0494deaacc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogSensor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	fValue 						: REAL; //converted sensor value
+END_VAR
+VAR
+	nAnalogIn 			AT %I* 	: INT; //analog input value linked to real inputs
+	fSensorlimitHigh 			: REAL; //upper limit of the sensor value range
+	fSensorlimitLow 			: REAL; //lower limit of the sensor value range
+	sUnit 						: STRING; //unit of the sensor value
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fValue := ConvertedValue();]]></ST>
+    </Implementation>
+    <Method Name="ConvertedValue" Id="{8bf4a076-524b-48cd-9dd3-9b6ada554f45}">
+      <Declaration><![CDATA[METHOD ConvertedValue : REAL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// conversion from Bit value to actual value
+ConvertedValue := ((INT_TO_REAL(nAnalogIn) / 32767 * (fSensorlimitHigh - fSensorlimitLow)) + fSensorlimitLow);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{c9382c3d-f168-483f-8b32-1ef97d011732}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	fSensorlimitHigh : REAL; //upper limit of the sensor value range
+	fSensorlimitLow : REAL; //lower limit of the sensor value range
+	sUnit : STRING; //unit of the sensor value
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//copy input values to internal variables
+THIS^.fSensorlimitHigh := fSensorlimitHigh;
+THIS^.fSensorlimitLow := fSensorlimitLow;
+THIS^.sUnit := sUnit;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_AnalogSensor">
+      <LineId Id="20" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogSensor.ConvertedValue">
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogSensor.FB_init">
+      <LineId Id="14" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_PumpGrundfosMagna3" Id="{5ff4732a-f57a-4b28-83eb-fee6b9ba074e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActorContinous
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	localSetParameters : ST_PumpGrundfosMagna3SetParameters;
+	{attribute 'OPC.UA.DA' := '1'}
+	localState : ST_PumpGrundfosMagna3State;
+	
+	//external sensors connected
+	bExternalTemperatureSensorConnected : BOOL := FALSE; //true if external temperature sensor connected
+	bExternalFlowSensorConnected 		: BOOL := FALSE; //true if external flow sensor connected
+	
+	//I/O links
+	fTemperatureInternalIn 		AT %I* : REAL; //°C
+	fTemperatureExternalIn 		AT %I* : REAL; //°C external temperature from sensor connected to pump
+	fTemperatureDifferenceIn	AT %I* : REAL; //°C
+	fVolumeFlowRateIn 			AT %I* : REAL; //m^3/h volume flow rate from pump
+	fPressureDifferenceIn	 	AT %I* : REAL; //pa = 10^-5 bar
+	fPowerElectricIn			AT %I* : REAL; //W
+	fPowerThermalIn	 			AT %I* : REAL; //W
+	fRotationalSpeedIn	 		AT %I* : REAL; //rpm
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MAIN();
+
+//calculate thermal power if external sensors are connected
+IF(bExternalTemperatureSensorConnected OR bExternalFlowSensorConnected) THEN
+	CalculateThermalPower();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="CalculateThermalPower" Id="{9b7a2b1f-28da-47cf-97cd-90a3012a3c00}">
+      <Declaration><![CDATA[METHOD PRIVATE CalculateThermalPower : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	fMassFlowRate : REAL; //kg/s
+	fDensity : REAL; // kg/m³
+	fSpecificHeatCapacity : REAL; //J/(kg*K) 
+	 
+	fDensityWater : REAL := 997; // kg/m³
+	fSpecificHeatCapacityWater : REAL := 4190; //J/(kg*K)
+	fDensityGlycol : REAL := 1042; // kg/m³
+	fSpecificHeatCapacityGlycol : REAL := 3400; //J/(kg*K)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE localState.nLiquid OF
+	E_Liquids.water:
+		fDensity := fDensityWater;
+		fSpecificHeatCapacity := fSpecificHeatCapacityWater;
+	E_Liquids.glycol:
+		fDensity := fDensityGlycol;
+		fSpecificHeatCapacity := fSpecificHeatCapacityGlycol;
+END_CASE
+
+fMassFlowRate := localState.fVolumeFlowRate / 60 * 0.001 * fDensity; //conversion from volume flow (l/min) to mass flow (kg/s)
+localState.fPowerThermal :=  fMassFlowRate * localState.fTemperatureDifference * fSpecificHeatCapacity; //calculate thermal power]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ConnectExternalFlowSensor" Id="{66d0ff10-4c4a-4237-bc04-2c9d05357eda}">
+      <Declaration><![CDATA[METHOD ConnectExternalFlowSensor : BOOL
+VAR_INPUT
+	fExternalFlowValue : REAL; //l/min - input for external temperature value
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bExternalFlowSensorConnected := TRUE;
+localState.fVolumeFlowRate := fExternalFlowValue; //copy external sensor value to state]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ConnectExternalTemperatureSensor" Id="{b7808055-e68c-4dd1-be84-23a256f5bc6c}">
+      <Declaration><![CDATA[METHOD ConnectExternalTemperatureSensor : BOOL
+VAR_INPUT
+	fExternalTemperatureValue : REAL; //input for external temperature value
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bExternalTemperatureSensorConnected := TRUE;
+localState.fTemperatureExternal := fExternalTemperatureValue; //copy external sensor value to state
+localState.fTemperatureDifference := ABS(localState.fTemperatureInternal - localState.fTemperatureExternal); //calculate temperature difference]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_PumpGrundfosMagna3">
+      <LineId Id="41" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="84" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.CalculateThermalPower">
+      <LineId Id="16" Count="9" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.ConnectExternalFlowSensor">
+      <LineId Id="48" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.ConnectExternalTemperatureSensor">
+      <LineId Id="8" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
