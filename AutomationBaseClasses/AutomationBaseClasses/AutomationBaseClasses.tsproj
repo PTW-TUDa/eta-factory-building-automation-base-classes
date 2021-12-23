@@ -2,8 +2,8 @@
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22">
 	<Project ProjectGUID="{5DBEFCF8-FFAB-4576-97FF-C6E365EDA708}" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
-			<Settings MaxCpus="8">
-				<Cpu CpuId="6"/>
+			<Settings MaxCpus="8" NonWinCpus="1">
+				<Cpu CpuId="7"/>
 			</Settings>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
@@ -16,6 +16,62 @@
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC1\PLC1.tmc">
 					<Name>PLC1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.testSystem.bOperational</Name>
+							<Comment><![CDATA[digital input]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fTemperatureInternalIn</Name>
+							<Comment><![CDATA[°C]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fTemperatureExternalIn</Name>
+							<Comment><![CDATA[°C external temperature from sensor connected to pump]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fTemperatureDifferenceIn</Name>
+							<Comment><![CDATA[°C]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fVolumeFlowRateIn</Name>
+							<Comment><![CDATA[m^3/h volume flow rate from pump]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fPressureDifferenceIn</Name>
+							<Comment><![CDATA[pa = 10^-5 bar]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fPowerElectricIn</Name>
+							<Comment><![CDATA[W]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fPowerThermalIn</Name>
+							<Comment><![CDATA[W]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pumpGrundfosMagna3.fRotationalSpeedIn</Name>
+							<Comment><![CDATA[rpm]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.testSystem.bSystemOperationOn</Name>
+							<Comment><![CDATA[digital output]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_Temp_Sensor" Id="{5862196d-9579-4df5-99e3-f378128664c6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Temp_Sensor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	temp_out : REAL;
+	temp_in AT %I* : INT;
+END_VAR
+VAR
+	sensorlimit_high : REAL := 90.0;
+	sensorlimit_low : REAL := -30.0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// conversion from Bit value to temperature. 0 ~ -30 °C, 32767 ~ 90 °C
+temp_out := (INT_TO_REAL(temp_in) / 32767 * (sensorlimit_high - sensorlimit_low)) + sensorlimit_low;]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Temp_Sensor">
+      <LineId Id="23" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
