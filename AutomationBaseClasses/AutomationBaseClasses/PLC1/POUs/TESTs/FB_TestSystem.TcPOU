@@ -14,18 +14,23 @@ VAR
 	localState : ST_TestSystemState;	
 
 	//digital input
-	bOperational 					AT %I*: BOOL;
+	bOperational 				AT %I*: BOOL;
 	
 	//digital output
-	bSystemOperationOn 						AT %Q*: BOOL := FALSE;
+	bSystemOperationOn 			AT %Q*: BOOL := FALSE;
 		
 	//components
 	pumpGrundfosMagna3 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100); 
 	bStartPump					: BOOL := FALSE;
 	fSetPointPump 				: REAL := 0;
 	bAlgorithmPermissionPump 	: BOOL := TRUE;
+	
+	discreteValve				: FB_DiscreteValve;
+	bOpenValve					: BOOL := FALSE;
+	
 	nInit						: BOOL := FALSE;
 	
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -47,6 +52,11 @@ pumpGrundfosMagna3(
 	fSetPointAutomatic := fSetPointPump,
 	algorithmPermission := bAlgorithmPermissionPump
 );
+
+//discrete valve
+discreteValve(
+	bSetStatusOnAutomatic := bOpenValve,
+	algorithmPermission := bAlgorithmPermissionPump);
 
 ]]></ST>
     </Implementation>
@@ -91,7 +101,10 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//turn pump on
+        <ST><![CDATA[//open valve
+bOpenValve := TRUE;
+
+//turn pump on
 bStartPump := TRUE;
 fSetPointPump := 100;
 
@@ -154,6 +167,10 @@ END_VAR]]></Declaration>
     <LineIds Name="FB_TestSystem">
       <LineId Id="754" Count="10" />
       <LineId Id="770" Count="6" />
+      <LineId Id="816" Count="0" />
+      <LineId Id="815" Count="0" />
+      <LineId Id="817" Count="1" />
+      <LineId Id="820" Count="0" />
       <LineId Id="785" Count="0" />
       <LineId Id="367" Count="0" />
     </LineIds>
@@ -172,6 +189,9 @@ END_VAR]]></Declaration>
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.RampUp">
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="24" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="8" Count="0" />

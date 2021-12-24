@@ -26,10 +26,32 @@ VAR
 	fPowerThermalIn	 			AT %I* : REAL; //W
 	fRotationalSpeedIn	 		AT %I* : REAL; //rpm
 END_VAR
-]]></Declaration>
+
+//Variables that must be connected
+
+//Inputs
+//localState.fTemperatureInternal in °C
+//localState.fTemperatureExternal in °C (connected to pump)
+//localState.fPressureDifference in Pa
+//localState.fPowerElectric in W
+//localState.fRotationalSpeed in rpm
+//localState.fVolumeFlowRate in m^3/h (pump sensor)
+//errorState.bError
+//controlState.bStatusOn 
+//setPointState.fOperatingPoint in %
+//setPointState.fSetPoint in %
+//errorState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(GrundfosMagna3Modbus.nAlarmCode));
+//errorState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(GrundfosMagna3Modbus.nWarningCode));
+//localState.bRemoteControlOn
+
+//Outputs
+//Control module byte 1 (On/Off) := bSetStatusOn;
+//Control module byte 2 (Control mode) := localSetParameters.nControlMode 
+//Control mode byte 5 (Setpoint) open loop := fSetPoint * 100 in %]]></Declaration>
     <Implementation>
       <ST><![CDATA[MAIN();
 
+//Should not be done in pump class. Heat power can be read from pump and heat power measured by heat flow meter should be read in other class
 //calculate thermal power if external sensors are connected
 IF(bExternalTemperatureSensorConnected OR bExternalFlowSensorConnected) THEN
 	CalculateThermalPower();
@@ -73,7 +95,8 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[bExternalFlowSensorConnected := TRUE;
+        <ST><![CDATA[//Should not be done in pump class if not connected directly to pump
+bExternalFlowSensorConnected := TRUE;
 localState.fVolumeFlowRate := fExternalFlowValue; //copy external sensor value to state]]></ST>
       </Implementation>
     </Method>
@@ -91,6 +114,7 @@ localState.fTemperatureDifference := ABS(localState.fTemperatureInternal - local
     </Method>
     <LineIds Name="FB_PumpGrundfosMagna3">
       <LineId Id="41" Count="0" />
+      <LineId Id="147" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="64" Count="0" />
       <LineId Id="73" Count="0" />
@@ -101,6 +125,7 @@ localState.fTemperatureDifference := ABS(localState.fTemperatureInternal - local
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.ConnectExternalFlowSensor">
+      <LineId Id="55" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="16" Count="0" />
     </LineIds>

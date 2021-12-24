@@ -71,6 +71,9 @@
     <Compile Include="POUs\0_Base Clases\FB_SystemContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Actors\FB_DiscreteValve.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Actors\FB_PumpGrundfosMagna3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
