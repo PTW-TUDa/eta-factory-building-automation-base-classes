@@ -17,9 +17,9 @@ VAR
 	controlState : ST_ControlState;
 	{attribute 'OPC.UA.DA' := '1'}
 	errorState : ST_ErrorState;
-	
+
 	//internal variables:
-	bSetStatusOn : BOOL; //actual internal value to switch on 
+	bSetStatusOn 	AT %Q* : BOOL; //actual internal value to switch on 
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -19,12 +19,13 @@ VAR
 	//digital output
 	bSystemOperationOn 			AT %Q*: BOOL := FALSE;
 		
-	//components
-	pumpGrundfosMagna3 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100); 
+	//Components - Pump
+	pump 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100); 
 	bStartPump					: BOOL := FALSE;
 	fSetPointPump 				: REAL := 0;
 	bAlgorithmPermissionPump 	: BOOL := TRUE;
 	
+	//Components - Discrete Valve
 	discreteValve				: FB_DiscreteValve;
 	bOpenValve					: BOOL := FALSE;
 	
@@ -47,10 +48,10 @@ SetState();//set state values
 SetOutput();//set output values
 
 //pump
-pumpGrundfosMagna3(
+pump(
 	bSetStatusOnAutomatic := bStartPump,
 	fSetPointAutomatic := fSetPointPump,
-	algorithmPermission := bAlgorithmPermissionPump
+	algorithmPermission := 
 );
 
 //discrete valve
@@ -80,14 +81,19 @@ VAR_OUTPUT
 	bRampDownFinished : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//turn system off
-bSystemOperationOn := FALSE;
+        <ST><![CDATA[IF bOperational=FALSE THEN
+	//turn pump off
+	bStartPump := FALSE;
+	fSetPointPump := 0;	
+END_IF
 
-//turn pump off
-bStartPump := FALSE;
-fSetPointPump := 0;
+IF bOperational=FALSE AND pump.bWorking=FALSE THEN
+	bOpenValve := FALSE;
+END_IF
 
-bRampDownFinished := TRUE;]]></ST>
+IF bOperational=FALSE AND pump.bWorking=FALSE AND discreteValve.bWorking=FALSE THEN
+	bRampDownFinished := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="RampUp" Id="{f3784821-29fa-4a43-84ee-d8fad2aad1d8}">
@@ -108,7 +114,11 @@ bOpenValve := TRUE;
 bStartPump := TRUE;
 fSetPointPump := 100;
 
-bRampUpFinished := TRUE;]]></ST>
+IF discreteValve.bWorking = TRUE AND pump.bWorking = TRUE THEN
+	bRampUpFinished := TRUE;
+END_IF;
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetOutput" Id="{ed7a131a-a3a6-4bfc-ad29-fbe80c311f75}">
@@ -161,7 +171,10 @@ VAR_OUTPUT
 	bSwitchToOperational : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[
+
+//turn system off, e.g. according to hysteresis
+//bSystemOperationOn := FALSE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_TestSystem">
@@ -179,14 +192,16 @@ END_VAR]]></Declaration>
       <LineId Id="13" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.RampDown">
-      <LineId Id="15" Count="0" />
-      <LineId Id="14" Count="0" />
       <LineId Id="16" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="13" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="30" Count="1" />
       <LineId Id="9" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="32" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.RampUp">
       <LineId Id="23" Count="0" />
@@ -195,8 +210,12 @@ END_VAR]]></Declaration>
       <LineId Id="9" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="8" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="13" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="40" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.SetOutput">
       <LineId Id="6" Count="0" />
@@ -212,6 +231,8 @@ END_VAR]]></Declaration>
       <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.Working">
+      <LineId Id="20" Count="1" />
+      <LineId Id="19" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>
   </POU>

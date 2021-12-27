@@ -16,7 +16,7 @@ VAR
 	setPointState : ST_SetPointState;
 	
 	//internal variables:
-	fSetPoint : REAL; //actual set setpoint in percent 0.0 - 100.0
+	fSetPoint	AT %Q* : REAL; //actual set setpoint in percent 0.0 - 100.0
 	aSetPointLimits	: ARRAY[1..2] OF REAL := [0, 100]; //lower and upper set point limit
 END_VAR
 ]]></Declaration>

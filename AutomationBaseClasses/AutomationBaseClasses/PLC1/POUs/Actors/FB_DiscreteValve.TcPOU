@@ -7,20 +7,48 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	//I/O Links
+	bValveIsOpen: BOOL; //True if valve is (actual) open
 END_VAR
-//Variables that must be connected
-
-//Inputs
-//controlState.bStatusOn  := POsition feedback from valve
 
 //Outputs
 //Output (On/Off) := bSetStatusOn;
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[SelectControlMode();
+SetState();]]></ST>
     </Implementation>
+    <Property Name="bWorking" Id="{cdbb5f1b-344d-4814-8f11-6e79cecb4130}">
+      <Declaration><![CDATA[PROPERTY bWorking : BOOL; //TRUE if valve is (actual) open]]></Declaration>
+      <Get Name="Get" Id="{5a2e688a-3a5b-4624-bb4a-7ac0319686e3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bWorking := bValveIsOpen;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetState" Id="{eeff4fab-f10d-4347-b3e3-7e5a71f7ad61}">
+      <Declaration><![CDATA[METHOD SetState //Set opc ua states
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[controlState.bStatusOn := bWorking;
+]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_DiscreteValve">
+      <LineId Id="26" Count="0" />
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.bWorking.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.SetState">
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
