@@ -7,48 +7,56 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	//I/O Links
-	bValveIsOpen: BOOL; //True if valve is (actual) open
-END_VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	localState : ST_DiscreteValveState;	
 
-//Outputs
-//Output (On/Off) := bSetStatusOn;
+	bFeedbackSignal : BOOL := FALSE; //True if a feedback signal is provided	
+
+	//I/O Links
+	bValveOpen 		AT %Q* : BOOL := FALSE;
+	bValveIsOpen	AT %I* : BOOL := FALSE; //True if valve is (actual) open
+END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SelectControlMode();
 SetState();]]></ST>
     </Implementation>
-    <Property Name="bWorking" Id="{cdbb5f1b-344d-4814-8f11-6e79cecb4130}">
-      <Declaration><![CDATA[PROPERTY bWorking : BOOL; //TRUE if valve is (actual) open]]></Declaration>
-      <Get Name="Get" Id="{5a2e688a-3a5b-4624-bb4a-7ac0319686e3}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[bWorking := bValveIsOpen;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Method Name="SetState" Id="{eeff4fab-f10d-4347-b3e3-7e5a71f7ad61}">
-      <Declaration><![CDATA[METHOD SetState //Set opc ua states
+    <Method Name="SetState" Id="{0e571675-b07a-4d0e-a5bb-9e330e7c5235}">
+      <Declaration><![CDATA[METHOD PROTECTED  SetState : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[controlState.bStatusOn := bWorking;
-]]></ST>
+        <ST><![CDATA[//Set control state
+IF bFeedbackSignal = TRUE THEN //Use feedback signal if possible
+	controlState.bStatusOn := bValveIsOpen;
+END_IF;
+
+//Outputs
+bValveOpen := bSetStatusOn;]]></ST>
       </Implementation>
     </Method>
+    <Property Name="State" Id="{7f0a6b13-28ca-4bf9-bc80-2ea3ea18f827}">
+      <Declaration><![CDATA[PROPERTY State : REFERENCE TO ST_DiscreteValveState]]></Declaration>
+      <Get Name="Get" Id="{dd320022-b991-4eab-8c4d-a9f73c72d96a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State REF= localState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <LineIds Name="FB_DiscreteValve">
       <LineId Id="26" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_DiscreteValve.bWorking.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
     <LineIds Name="FB_DiscreteValve.SetState">
-      <LineId Id="9" Count="0" />
-      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.State.Get">
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

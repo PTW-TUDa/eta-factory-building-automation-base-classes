@@ -59,6 +59,17 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
+    <Method Name="SetState" Id="{f6a04e6a-d2ef-4e92-9d0c-a34a08ec2664}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT  SetState : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//copy states to OPC UA
+
+//set outputs from OPC UA]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="StateCheck" Id="{1d1914c3-f788-4493-89d9-bb29e16f8d15}">
       <Declaration><![CDATA[METHOD PROTECTED ABSTRACT StateCheck : BOOL
 (* In this method the folowing elements of the actorState structrure have to be set if they are not set yet:
@@ -166,6 +177,10 @@ END_VAR]]></Declaration>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.RampUp">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.SetState">
+      <LineId Id="6" Count="1" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.StateCheck">

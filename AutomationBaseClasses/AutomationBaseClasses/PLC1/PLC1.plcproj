@@ -44,13 +44,13 @@
     <Compile Include="DUTs\Actor Data Structs\Pumps\E_GrundfosMagna3ControlMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\Pumps\E_Liquids.TcTLEO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Actor Data Structs\ST_DiscreteValveState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\System Data Structs\ST_TestSystemSetParameters.TcDUT">
@@ -75,6 +75,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Actors\FB_PumpGrundfosMagna3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Actors\FB_ControlledValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">

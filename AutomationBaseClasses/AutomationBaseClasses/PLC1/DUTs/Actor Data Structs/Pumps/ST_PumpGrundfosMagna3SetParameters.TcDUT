@@ -4,7 +4,8 @@
     <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
 TYPE ST_PumpGrundfosMagna3SetParameters :
 STRUCT
-	nControlMode : E_GrundfosMagna3ControlMode; //select controlmode: constantSpeed, constantFrequency, constantHead, constantPressure, constantDifferentialPressure, proportionalPressure, constantFlow, constantTemperature, constantLevel, autoAdapt, flowAdapt, closedLoopSensor
+	nControlModeAlgorithm : E_GrundfosMagna3ControlMode; //select controlmode: constantSpeed, constantFrequency, constantHead, constantPressure, constantDifferentialPressure, proportionalPressure, constantFlow, constantTemperature, constantLevel, autoAdapt, flowAdapt, closedLoopSensor
+	nControlModeManual : E_GrundfosMagna3ControlMode;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -4,7 +4,7 @@
     <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
 TYPE ST_PumpGrundfosMagna3State :
 STRUCT
-	bRemoteControlOn : BOOL; //0 = control by pump, 1 = control by bus 
+	bRemoteControlOn : BOOL; //0 = control by pump, 1 = control by bus 	
 	fVolumeFlowRate : REAL; //m^3/h volume flow rate from pump or external sensor
 	fTemperatureInternal : REAL; //°C
 	fTemperatureExternal : REAL; //°C
@@ -14,7 +14,6 @@ STRUCT
 	fPowerHydraulic : REAL; //W
 	fPowerThermal : REAL; //W
 	fRotationalSpeed : REAL; //rpm
-	nLiquid : E_Liquids; //liquid used in the pump (water, glycol)
 END_STRUCT
 END_TYPE
 ]]></Declaration>

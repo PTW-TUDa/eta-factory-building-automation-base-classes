@@ -19,17 +19,30 @@ VAR
 	errorState : ST_ErrorState;
 
 	//internal variables:
-	bSetStatusOn 	AT %Q* : BOOL; //actual internal value to switch on 
+	bSetStatusOn : BOOL; //actual internal value to switch on 
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Property Name="bStatusOn" Id="{8d0a9f66-53f0-4faa-aec7-56f3439086a4}">
+      <Declaration><![CDATA[PROPERTY bStatusOn : BOOL]]></Declaration>
+      <Get Name="Get" Id="{996681ce-1125-4289-a2ab-680a8f58a25d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bStatusOn := controlState.bStatusOn;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="SelectControlMode" Id="{3e578076-f21b-4cb6-b8d9-37cde3c10288}">
       <Declaration><![CDATA[METHOD PROTECTED SelectControlMode : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+
+VAR
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//change access mode
 IF control.bManualModeActivated THEN
@@ -49,6 +62,9 @@ END_IF]]></ST>
     </Method>
     <LineIds Name="FB_Actor2Point">
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Actor2Point.bStatusOn.Get">
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_Actor2Point.SelectControlMode">
       <LineId Id="22" Count="0" />

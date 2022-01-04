@@ -24,6 +24,7 @@ VAR
 	bStartPump					: BOOL := FALSE;
 	fSetPointPump 				: REAL := 0;
 	bAlgorithmPermissionPump 	: BOOL := TRUE;
+	nControlModePump : E_GrundfosMagna3ControlMode := 0;
 	
 	//Components - Discrete Valve
 	discreteValve				: FB_DiscreteValve;
@@ -45,13 +46,13 @@ END_IF
 //start system methods
 MAIN();
 SetState();//set state values
-SetOutput();//set output values
 
 //pump
 pump(
 	bSetStatusOnAutomatic := bStartPump,
 	fSetPointAutomatic := fSetPointPump,
-	algorithmPermission := 
+	algorithmPermission := bAlgorithmPermissionPump,
+	nControlModeAutomatic := nControlModePump
 );
 
 //discrete valve
@@ -87,11 +88,11 @@ END_VAR]]></Declaration>
 	fSetPointPump := 0;	
 END_IF
 
-IF bOperational=FALSE AND pump.bWorking=FALSE THEN
+IF bOperational=FALSE AND pump.controlState.bStatusOn=FALSE THEN
 	bOpenValve := FALSE;
 END_IF
 
-IF bOperational=FALSE AND pump.bWorking=FALSE AND discreteValve.bWorking=FALSE THEN
+IF bOperational=FALSE AND pump.controlState.bStatusOn=FALSE AND discreteValve.controlState.bStatusOn=FALSE THEN
 	bRampDownFinished := TRUE;
 END_IF]]></ST>
       </Implementation>
@@ -114,35 +115,23 @@ bOpenValve := TRUE;
 bStartPump := TRUE;
 fSetPointPump := 100;
 
-IF discreteValve.bWorking = TRUE AND pump.bWorking = TRUE THEN
+IF discreteValve.State.bValveIsOpen = TRUE AND pump.bStatusOn = TRUE THEN
 	bRampUpFinished := TRUE;
 END_IF;
-
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetOutput" Id="{ed7a131a-a3a6-4bfc-ad29-fbe80c311f75}">
-      <Declaration><![CDATA[METHOD PRIVATE SetOutput : BOOL
+    <Method Name="SetState" Id="{6f5b6a90-4211-4d68-92aa-fa3fb40b781b}">
+      <Declaration><![CDATA[METHOD PROTECTED   SetState : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//set outputs from OPC UA
-bSystemOperationOn := localSetParameters.bSystemOperationOn;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetState" Id="{c90130e8-67d0-4cc3-be94-df5af45a3604}">
-      <Declaration><![CDATA[METHOD PRIVATE SetState : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//copy sensor values to OPC UA data struct
-
-
-//copy states to OPC UA
+        <ST><![CDATA[//copy states to OPC UA
 controlState.bStatusOn := bSystemOperationOn;
-]]></ST>
+
+//set outputs from OPC UA
+bSystemOperationOn := localSetParameters.bSystemOperationOn;]]></ST>
       </Implementation>
     </Method>
     <Method Name="StateCheck" Id="{d5772649-a060-4f63-863c-5518172c4e38}">
@@ -171,15 +160,15 @@ VAR_OUTPUT
 	bSwitchToOperational : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-
-//turn system off, e.g. according to hysteresis
+        <ST><![CDATA[//turn system off, e.g. according to hysteresis
 //bSystemOperationOn := FALSE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_TestSystem">
-      <LineId Id="754" Count="10" />
-      <LineId Id="770" Count="6" />
+      <LineId Id="754" Count="9" />
+      <LineId Id="770" Count="5" />
+      <LineId Id="856" Count="0" />
+      <LineId Id="776" Count="0" />
       <LineId Id="816" Count="0" />
       <LineId Id="815" Count="0" />
       <LineId Id="817" Count="1" />
@@ -213,25 +202,16 @@ END_VAR]]></Declaration>
       <LineId Id="38" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="37" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="40" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_TestSystem.SetOutput">
-      <LineId Id="6" Count="0" />
-      <LineId Id="12" Count="0" />
+      <LineId Id="39" Count="1" />
     </LineIds>
     <LineIds Name="FB_TestSystem.SetState">
-      <LineId Id="6" Count="0" />
-      <LineId Id="16" Count="2" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="19" Count="0" />
+      <LineId Id="6" Count="3" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.StateCheck">
       <LineId Id="14" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.Working">
-      <LineId Id="20" Count="1" />
       <LineId Id="19" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>

@@ -16,7 +16,7 @@ VAR
 	setPointState : ST_SetPointState;
 	
 	//internal variables:
-	fSetPoint	AT %Q* : REAL; //actual set setpoint in percent 0.0 - 100.0
+	fSetPoint	    : REAL; //actual set setpoint in percent 0.0 - 100.0
 	aSetPointLimits	: ARRAY[1..2] OF REAL := [0, 100]; //lower and upper set point limit
 END_VAR
 ]]></Declaration>
@@ -42,6 +42,17 @@ END_VAR
 setPointState.aSetPointLimits := aSetPointLimits;]]></ST>
         </Implementation>
       </Set>
+    </Property>
+    <Property Name="fOperatingPoint" Id="{7b148afd-35b2-483d-925a-a08de35f92e5}">
+      <Declaration><![CDATA[PROPERTY fOperatingPoint : REAL]]></Declaration>
+      <Get Name="Get" Id="{ab9b85a3-c946-48ed-b5df-b883a67d4f4f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fOperatingPoint := setPointState.fOperatingPoint;]]></ST>
+        </Implementation>
+      </Get>
     </Property>
     <Property Name="fUpperSetPointLimit" Id="{fb4707ce-856d-497a-a2f5-99887319386f}">
       <Declaration><![CDATA[PROPERTY fUpperSetPointLimit : REAL //set upper set point limit]]></Declaration>
@@ -70,7 +81,6 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SelectControlMode();
-SelectSetPoint();
 SetPointCheck();]]></ST>
       </Implementation>
     </Method>
@@ -90,23 +100,6 @@ ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
 ELSE
 	fsetPoint := fSetPointAutomatic;
 END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SelectSetPoint" Id="{c00b1980-2db2-4070-bc69-4d3e586d5c0d}">
-      <Declaration><![CDATA[METHOD PROTECTED FINAL SelectSetPoint : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//change access mode
-IF control.bManualModeActivated THEN
-	fsetPoint := setSetPoint.fSetPointManual;
-ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
-	fsetPoint := setSetPoint.fSetPointAlgorithm;
-ELSE
-	fsetPoint := fSetPointAutomatic;
-END_IF
-setPointState.fSetPoint := fSetPoint;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetPointCheck" Id="{a788f595-bc97-42ed-a5e1-110d1f06de83}">
@@ -133,6 +126,9 @@ fSetPoint := MIN(fSetPoint, aLocalSetPointLimits[2]);]]></ST>
       <LineId Id="2" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="FB_ActorContinous.fOperatingPoint.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
     <LineIds Name="FB_ActorContinous.fUpperSetPointLimit.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
@@ -141,7 +137,8 @@ fSetPoint := MIN(fSetPoint, aLocalSetPointLimits[2]);]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.MAIN">
-      <LineId Id="5" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.SelectControlMode">
       <LineId Id="38" Count="1" />
@@ -153,17 +150,6 @@ fSetPoint := MIN(fSetPoint, aLocalSetPointLimits[2]);]]></ST>
       <LineId Id="16" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ActorContinous.SelectSetPoint">
-      <LineId Id="22" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="29" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.SetPointCheck">
       <LineId Id="18" Count="0" />

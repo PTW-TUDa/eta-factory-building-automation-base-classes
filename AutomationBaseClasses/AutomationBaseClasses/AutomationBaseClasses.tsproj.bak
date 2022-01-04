@@ -16,6 +16,122 @@
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="PLC1\PLC1.tmc">
 					<Name>PLC1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.testSystem.bOperational</Name>
+							<Comment><![CDATA[digital input]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fTemperatureInternal_IN</Name>
+							<Comment><![CDATA[°C]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fTemperatureExternal_IN</Name>
+							<Comment><![CDATA[°C external temperature from sensor connected to pump]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fTemperatureDifference_IN</Name>
+							<Comment><![CDATA[°C]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fVolumeFlowRate_IN</Name>
+							<Comment><![CDATA[m^3/h volume flow rate from pump]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fPressureDifference_IN</Name>
+							<Comment><![CDATA[pa = 10^-5 bar]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fPowerElectric_IN</Name>
+							<Comment><![CDATA[W]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fPowerThermal_IN</Name>
+							<Comment><![CDATA[W]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fRotationalSpeed_IN</Name>
+							<Comment><![CDATA[rpm]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fActualSetpoint_IN</Name>
+							<Comment><![CDATA[%]]></Comment>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.bStatusOn_IN</Name>
+							<Comment><![CDATA[True if pump is running]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.nControlMode_IN</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.bAlarm_IN</Name>
+							<Comment><![CDATA[True if pump has been stopped because of an alarm]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.bWarning_IN</Name>
+							<Comment><![CDATA[True if pump shows a warning]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.bRemoteControlOn_IN</Name>
+							<Comment><![CDATA[True if remote control is used]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.nAlarmCode_IN</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.nWarningCode_IN</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.discreteValve.bValveIsOpen</Name>
+							<Comment><![CDATA[True if valve is (actual) open]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2" AreaNo="1">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.testSystem.bSystemOperationOn</Name>
+							<Comment><![CDATA[digital output]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.bSetStatus_OUT</Name>
+							<Comment><![CDATA[Outputs]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.nControlMode_OUT</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.pump.fSetPoint_OUT</Name>
+							<Type>REAL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.testSystem.discreteValve.bValveOpen</Name>
+							<Comment><![CDATA[I/O Links]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
 					<Contexts>
 						<Context>
 							<Id NeedCalleeCall="true">0</Id>
