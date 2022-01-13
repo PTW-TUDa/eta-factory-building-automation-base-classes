@@ -16,6 +16,8 @@ VAR
 	{attribute 'OPC.UA.DA' := '1'}
 	controlState : ST_ControlState;
 	{attribute 'OPC.UA.DA' := '1'}
+	resetError : ST_ResetError;
+	{attribute 'OPC.UA.DA' := '1'}
 	errorState : ST_ErrorState;
 
 	//internal variables:

@@ -22,8 +22,8 @@ VAR
 	//Components - Pump
 	pump 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100); 
 	bStartPump					: BOOL := FALSE;
-	fSetPointPump 				: REAL := 0;
-	bAlgorithmPermissionPump 	: BOOL := TRUE;
+	fSetPointPump 				: REAL := 50;
+	bAlgorithmPermissionPump 	: BOOL := FALSE;
 	nControlModePump : E_GrundfosMagna3ControlMode := 0;
 	
 	//Components - Discrete Valve
@@ -54,6 +54,7 @@ pump(
 	algorithmPermission := bAlgorithmPermissionPump,
 	nControlModeAutomatic := nControlModePump
 );
+pump.ReadWriteProfibus();
 
 //discrete valve
 discreteValve(
@@ -113,7 +114,7 @@ bOpenValve := TRUE;
 
 //turn pump on
 bStartPump := TRUE;
-fSetPointPump := 100;
+fSetPointPump := 60.00;
 
 IF discreteValve.State.bValveIsOpen = TRUE AND pump.bStatusOn = TRUE THEN
 	bRampUpFinished := TRUE;
@@ -169,6 +170,7 @@ END_VAR]]></Declaration>
       <LineId Id="770" Count="5" />
       <LineId Id="856" Count="0" />
       <LineId Id="776" Count="0" />
+      <LineId Id="890" Count="0" />
       <LineId Id="816" Count="0" />
       <LineId Id="815" Count="0" />
       <LineId Id="817" Count="1" />

@@ -32,6 +32,9 @@
     <Compile Include="DUTs\0_Base Data Structs\ST_ErrorState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\0_Base Data Structs\ST_ResetError.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\0_Base Data Structs\ST_SetPointState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -98,6 +101,15 @@
     <Compile Include="POUs\TESTs\FB_TestSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Utilities\BufferIntToReal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utilities\BufferRealToReal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utilities\BufferUdintToReal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
@@ -108,6 +120,7 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\0_Base Clases" />
     <Folder Include="POUs\Actors" />
+    <Folder Include="POUs\Utilities" />
     <Folder Include="POUs\Sensors" />
     <Folder Include="POUs\Systems" />
     <Folder Include="POUs\TESTs" />
@@ -122,6 +135,10 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>

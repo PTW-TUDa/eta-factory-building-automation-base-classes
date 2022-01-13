@@ -8,7 +8,6 @@ STRUCT
 	sErrorMessage	: STRING; //returns error message
 	bWarning		: BOOL; //true if in warning
 	sWarningMessage	: STRING; //returns warning message
-	bResetError 	: BOOL; //reset error
 END_STRUCT
 END_TYPE
 ]]></Declaration>
