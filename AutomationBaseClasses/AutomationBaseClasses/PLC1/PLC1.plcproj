@@ -44,7 +44,22 @@
     <Compile Include="DUTs\0_Base Data Structs\ST_SystemState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Actor Data Structs\DicreteValve\ST_DiscreteValveDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Actor Data Structs\MixingValve\E_MixingValveControlMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Actor Data Structs\MixingValve\ST_MixingValveDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Actor Data Structs\MixingValve\ST_MixingValveSetParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\Actor Data Structs\Pumps\E_GrundfosMagna3ControlMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Actor Data Structs\Pumps\ST_GundfosMagna3DefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
@@ -53,14 +68,15 @@
     <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\ST_DiscreteValveState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\System Data Structs\ST_TestSystemSetParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\System Data Structs\ST_TestSystemState.TcDUT">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global Variables %28Delete before export%29\GlobalVariables.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
@@ -80,34 +96,28 @@
     <Compile Include="POUs\Actors\FB_PumpGrundfosMagna3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Actors\FB_ControlledValve.TcPOU">
+    <Compile Include="POUs\Actors\FB_MixingValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Sensors\FB_AnalogSensor.TcPOU">
+    <Compile Include="POUs\Test %28Delete before export%29\FB_TestSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Sensors\FB_Flow_Sensor.TcPOU">
+    <Compile Include="POUs\Utilities\Profibus\BufferIntToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Sensors\FB_Pressure_Sensor.TcPOU">
+    <Compile Include="POUs\Utilities\Profibus\BufferRealToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Sensors\FB_Temp_Sensor.TcPOU">
+    <Compile Include="POUs\Utilities\Profibus\BufferUdintToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\TESTs\FB_TestSystem.TcPOU">
+    <Compile Include="POUs\Utilities\AI_AO\FB_AnalogInput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Utilities\BufferIntToReal.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Utilities\BufferRealToReal.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Utilities\BufferUdintToReal.TcPOU">
+    <Compile Include="POUs\Utilities\AI_AO\FB_AnalogOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -115,19 +125,27 @@
     <Folder Include="DUTs" />
     <Folder Include="DUTs\0_Base Data Structs" />
     <Folder Include="DUTs\Actor Data Structs" />
+    <Folder Include="DUTs\Actor Data Structs\MixingValve" />
+    <Folder Include="DUTs\Actor Data Structs\DicreteValve" />
     <Folder Include="DUTs\Actor Data Structs\Pumps" />
     <Folder Include="DUTs\System Data Structs" />
     <Folder Include="GVLs" />
+    <Folder Include="Global Variables %28Delete before export%29" />
     <Folder Include="POUs\0_Base Clases" />
     <Folder Include="POUs\Actors" />
     <Folder Include="POUs\Utilities" />
-    <Folder Include="POUs\Sensors" />
     <Folder Include="POUs\Systems" />
-    <Folder Include="POUs\TESTs" />
+    <Folder Include="POUs\Test %28Delete before export%29" />
+    <Folder Include="POUs\Utilities\Profibus" />
+    <Folder Include="POUs\Utilities\AI_AO" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Tc2_ControllerToolbox">
+      <DefaultResolution>Tc2_ControllerToolbox, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_ControllerToolbox</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>

@@ -7,14 +7,12 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	{attribute 'OPC.UA.DA' := '1'}
-	localState : ST_DiscreteValveState;	
-
-	bFeedbackSignal : BOOL := FALSE; //True if a feedback signal is provided	
+	//default parameters
+	localDefaultParameters : ST_DiscreteValveDefaultParameters;	
 
 	//I/O Links
-	bValveOpen 		AT %Q* : BOOL := FALSE;
-	bValveIsOpen	AT %I* : BOOL := FALSE; //True if valve is (actual) open
+	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
+	bStatusOn_IN		AT %I* : BOOL := FALSE; //True if valve is (actual) open
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -25,27 +23,29 @@ SetState();]]></ST>
       <Declaration><![CDATA[METHOD PROTECTED  SetState : BOOL
 VAR_INPUT
 END_VAR
-]]></Declaration>
+VAR
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Set control state
-IF bFeedbackSignal = TRUE THEN //Use feedback signal if possible
-	controlState.bStatusOn := bValveIsOpen;
+        <ST><![CDATA[//control state
+IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Use feedback signal if possible
+	controlState.bStatusOn := bStatusOn_IN;
 END_IF;
 
 //Outputs
-bValveOpen := bSetStatusOn;]]></ST>
+bSetStatusOn_OUT := bSetStatusOn;
+]]></ST>
       </Implementation>
     </Method>
-    <Property Name="State" Id="{7f0a6b13-28ca-4bf9-bc80-2ea3ea18f827}">
-      <Declaration><![CDATA[PROPERTY State : REFERENCE TO ST_DiscreteValveState]]></Declaration>
-      <Get Name="Get" Id="{dd320022-b991-4eab-8c4d-a9f73c72d96a}">
+    <Property Name="ST_DefaultParameters" Id="{8d33a13c-5650-4ddc-aac7-e5707e8c1b8d}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_DiscreteValveDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{33d3ed96-b96e-4f0c-89d2-38cef331df44}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[State REF= localState;]]></ST>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
         </Implementation>
-      </Get>
+      </Set>
     </Property>
     <LineIds Name="FB_DiscreteValve">
       <LineId Id="26" Count="0" />
@@ -54,8 +54,9 @@ END_VAR
     <LineIds Name="FB_DiscreteValve.SetState">
       <LineId Id="6" Count="5" />
       <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
     </LineIds>
-    <LineIds Name="FB_DiscreteValve.State.Get">
+    <LineIds Name="FB_DiscreteValve.ST_DefaultParameters.Set">
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

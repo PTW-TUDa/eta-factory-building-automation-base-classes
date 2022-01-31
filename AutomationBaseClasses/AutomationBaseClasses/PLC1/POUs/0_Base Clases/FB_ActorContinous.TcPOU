@@ -43,17 +43,6 @@ setPointState.aSetPointLimits := aSetPointLimits;]]></ST>
         </Implementation>
       </Set>
     </Property>
-    <Property Name="fOperatingPoint" Id="{7b148afd-35b2-483d-925a-a08de35f92e5}">
-      <Declaration><![CDATA[PROPERTY fOperatingPoint : REAL]]></Declaration>
-      <Get Name="Get" Id="{ab9b85a3-c946-48ed-b5df-b883a67d4f4f}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[fOperatingPoint := setPointState.fOperatingPoint;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Property Name="fUpperSetPointLimit" Id="{fb4707ce-856d-497a-a2f5-99887319386f}">
       <Declaration><![CDATA[PROPERTY fUpperSetPointLimit : REAL //set upper set point limit]]></Declaration>
       <Get Name="Get" Id="{75fedf8f-b247-42bc-bba6-2e70fb22bf6e}">
@@ -125,9 +114,6 @@ fSetPoint := MIN(fSetPoint, aLocalSetPointLimits[2]);]]></ST>
     <LineIds Name="FB_ActorContinous.fLowerSetPointLimit.Set">
       <LineId Id="2" Count="0" />
       <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ActorContinous.fOperatingPoint.Get">
-      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.fUpperSetPointLimit.Get">
       <LineId Id="2" Count="0" />

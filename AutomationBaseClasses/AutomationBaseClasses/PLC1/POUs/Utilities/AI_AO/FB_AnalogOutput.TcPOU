@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_AnalogOutput" Id="{e8cc816e-9340-40fa-8115-6e9fa806b2a4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogOutput
+VAR_INPUT
+END_VAR
+VAR_INPUT
+	fValue				: REAL; //input value
+END_VAR
+VAR_OUTPUT
+	nValue 				: INT; //converted value
+END_VAR
+VAR
+	aLimits				: ARRAY[1..2] OF REAL := [0, 100]; //lower and upper limit	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// conversion from Bit value to actual value
+nValue := REAL_TO_INT((fValue-aLimits[1])/(aLimits[2]-aLimits[1])*32767);]]></ST>
+    </Implementation>
+    <Property Name="fLowerLimit" Id="{adb82427-e4b9-4c31-a5bd-ab3e5dd2d104}">
+      <Declaration><![CDATA[PROPERTY fLowerLimit : REAL;]]></Declaration>
+      <Get Name="Get" Id="{ff133f63-b271-4515-87e0-b6d2f7a7b4da}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fLowerLimit := aLimits[1];]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9c547cbe-dbb5-46b0-81d7-32e2f389816c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[aLimits[1] := fLowerLimit;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="fUpperLimit" Id="{e02ae1cb-4796-4557-b671-a31ca10dead6}">
+      <Declaration><![CDATA[PROPERTY fUpperLimit : REAL;]]></Declaration>
+      <Get Name="Get" Id="{bb80768e-2f89-478b-b0f6-c5c862ceefdd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fUpperLimit := aLimits[2];]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6741dadc-5f28-4156-aa4b-585c6d01e884}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[aLimits[2] := fUpperLimit;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_AnalogOutput">
+      <LineId Id="27" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogOutput.fLowerLimit.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogOutput.fLowerLimit.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogOutput.fUpperLimit.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogOutput.fUpperLimit.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

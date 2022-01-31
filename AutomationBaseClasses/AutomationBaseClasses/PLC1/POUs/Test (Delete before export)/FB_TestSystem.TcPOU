@@ -20,15 +20,23 @@ VAR
 	bSystemOperationOn 			AT %Q*: BOOL := FALSE;
 		
 	//Components - Pump
-	pump 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100); 
+	ST_PumpDefaultParameters : ST_GundfosMagna3DefaultParameters := (bExternalTemperatureSensor := TRUE);
+	pump			 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100, ST_DefaultParameters := ST_PumpDefaultParameters); 
 	bStartPump					: BOOL := FALSE;
 	fSetPointPump 				: REAL := 50;
 	bAlgorithmPermissionPump 	: BOOL := FALSE;
 	nControlModePump : E_GrundfosMagna3ControlMode := 0;
 	
 	//Components - Discrete Valve
-	discreteValve				: FB_DiscreteValve;
+	ST_DiscreteValveDefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := TRUE);
+	discreteValve				: FB_DiscreteValve := (ST_DefaultParameters := ST_DiscreteValveDefaultParameters);
 	bOpenValve					: BOOL := FALSE;
+	
+	//Components - Controlled Valve
+	ST_ControledValveDefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE, fControlerAmplification := 0.5, fControlerIntegralTime := 500);
+	controledValve 					: FB_MixingValve := (ST_DefaultParameters := ST_ControledValveDefaultParameters);
+	bOpenControledValve 				: BOOL := FALSE;
+	fSetpointControledValve 			: REAL := 75;
 	
 	nInit						: BOOL := FALSE;
 	
@@ -54,12 +62,18 @@ pump(
 	algorithmPermission := bAlgorithmPermissionPump,
 	nControlModeAutomatic := nControlModePump
 );
-pump.ReadWriteProfibus();
+pump.SetState_Profibus();
 
 //discrete valve
 discreteValve(
 	bSetStatusOnAutomatic := bOpenValve,
 	algorithmPermission := bAlgorithmPermissionPump);
+	
+//controlled valve
+controledValve(
+	bSetStatusOnAutomatic := bOpenControledValve,
+	algorithmPermission := bAlgorithmPermissionPump,
+	fSetPointAutomatic := fSetpointControledValve);
 
 ]]></ST>
     </Implementation>
@@ -116,7 +130,7 @@ bOpenValve := TRUE;
 bStartPump := TRUE;
 fSetPointPump := 60.00;
 
-IF discreteValve.State.bValveIsOpen = TRUE AND pump.bStatusOn = TRUE THEN
+IF pump.bStatusOn = TRUE THEN
 	bRampUpFinished := TRUE;
 END_IF;
 ]]></ST>
@@ -175,6 +189,7 @@ END_VAR]]></Declaration>
       <LineId Id="815" Count="0" />
       <LineId Id="817" Count="1" />
       <LineId Id="820" Count="0" />
+      <LineId Id="928" Count="5" />
       <LineId Id="785" Count="0" />
       <LineId Id="367" Count="0" />
     </LineIds>

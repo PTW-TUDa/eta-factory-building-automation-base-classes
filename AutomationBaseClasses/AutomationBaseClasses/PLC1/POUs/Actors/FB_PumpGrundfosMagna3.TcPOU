@@ -13,6 +13,9 @@ VAR
 	{attribute 'OPC.UA.DA' := '1'}
 	localState : ST_PumpGrundfosMagna3State;
 	
+	//default parameters
+	localDefaultParameters : ST_GundfosMagna3DefaultParameters;
+	
 	//I/O links
 	//Inputs
 	StatusModule_IN				AT %I* : ARRAY [0..5] OF BYTE;
@@ -33,24 +36,12 @@ VAR
 	
 	//internal variables:
 	nControlMode : E_GrundfosMagna3ControlMode; //actual pump control mode
-	bExternalTemperatureSensorConnected : BOOL := TRUE; //true if external temperature sensor connected
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[MAIN();
 CalculateHydraulicPower();
 SelectPumpControlMode();]]></ST>
     </Implementation>
-    <Property Name="bExternalTemperatureSensor" Id="{61a8bc23-912e-42b7-8bba-85a22513c812}">
-      <Declaration><![CDATA[PROPERTY bExternalTemperatureSensor : BOOL]]></Declaration>
-      <Set Name="Set" Id="{8af04288-c858-4540-ba92-3eea6e4d8f1e}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[bExternalTemperatureSensorConnected := bExternalTemperatureSensor;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Method Name="CalculateHydraulicPower" Id="{5ee59af5-7c08-4f03-8cfe-829337b66dfd}">
       <Declaration><![CDATA[METHOD CalculateHydraulicPower : REAL
 VAR_INPUT
@@ -60,8 +51,23 @@ END_VAR
         <ST><![CDATA[localState.fPowerHydraulic := localState.fPressureDifference*localState.fVolumeFlowRate;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ReadWriteProfibus" Id="{e9c465c4-8736-4795-97fc-0fdf20374859}">
-      <Declaration><![CDATA[METHOD ReadWriteProfibus //Method must be called in system POU to enable different communication standards for Grundfos pumps
+    <Method Name="SelectPumpControlMode" Id="{9f36f1dc-61c9-4f36-814e-95f20eaaf659}">
+      <Declaration><![CDATA[METHOD PROTECTED SelectPumpControlMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF control.bManualModeActivated THEN
+	nControlMode := localSetParameters.nControlModeManual;
+ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
+	nControlMode := localSetParameters.nControlModeAlgorithm;
+ELSE
+	nControlMode := nControlModeAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState_Profibus" Id="{e9c465c4-8736-4795-97fc-0fdf20374859}">
+      <Declaration><![CDATA[METHOD SetState_Profibus //Method must be called in system POU to enable different communication standards for Grundfos pumps
 VAR_INPUT
 END_VAR
 VAR_INST
@@ -87,7 +93,7 @@ localState.bRemoteControlOn := StatusModule_IN[0].0;
 localState.nControlMode := StatusModule_IN[4];
 localState.fVolumeFlowRate := BufferUdintToReal(raw_input := fVolumeFlowRate_IN);
 localState.fTemperatureInternal := BufferRealToReal(raw_input := fTemperatureInternal_IN);
-IF bExternalTemperatureSensorConnected THEN //Set external temperature and temperature difference if temperature sensor is connected
+IF localDefaultParameters.bExternalTemperatureSensor THEN //Set external temperature and temperature difference if temperature sensor is connected
 	localState.fTemperatureExternal := BufferUdintToReal(raw_input := fTemperatureExternal_IN);
 	localState.fTemperatureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
 END_IF;
@@ -106,31 +112,28 @@ ControlModule_OUT[3] := HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,1))*16 + HEXCHRNIBBLE_TO_
 ControlModule_OUT[4] := HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,3))*16 + HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,4));]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SelectPumpControlMode" Id="{9f36f1dc-61c9-4f36-814e-95f20eaaf659}">
-      <Declaration><![CDATA[METHOD PROTECTED SelectPumpControlMode : BOOL
-VAR_INPUT
+    <Property Name="ST_DefaultParameters" Id="{37c47602-10af-4f25-93f4-2c0dd2131db3}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_GundfosMagna3DefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{69ad99eb-9ef1-4940-bed0-9eace3e8cb70}">
+        <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF control.bManualModeActivated THEN
-	nControlMode := localSetParameters.nControlModeManual;
-ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
-	nControlMode := localSetParameters.nControlModeAlgorithm;
-ELSE
-	nControlMode := nControlModeAutomatic;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
     <LineIds Name="FB_PumpGrundfosMagna3">
       <LineId Id="259" Count="2" />
-    </LineIds>
-    <LineIds Name="FB_PumpGrundfosMagna3.bExternalTemperatureSensor.Set">
-      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.CalculateHydraulicPower">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_PumpGrundfosMagna3.ReadWriteProfibus">
+    <LineIds Name="FB_PumpGrundfosMagna3.SelectPumpControlMode">
+      <LineId Id="6" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.SetState_Profibus">
       <LineId Id="129" Count="0" />
       <LineId Id="131" Count="1" />
       <LineId Id="134" Count="3" />
@@ -155,9 +158,8 @@ END_IF]]></ST>
       <LineId Id="56" Count="3" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_PumpGrundfosMagna3.SelectPumpControlMode">
-      <LineId Id="6" Count="5" />
-      <LineId Id="5" Count="0" />
+    <LineIds Name="FB_PumpGrundfosMagna3.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

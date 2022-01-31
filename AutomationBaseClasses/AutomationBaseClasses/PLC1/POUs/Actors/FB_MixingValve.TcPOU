@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
+VAR_INPUT
+	nControlModeAutomatic : E_MixingValveControlMode;
+	fOperatingPointExternal : REAL; //External operating point (e. g. temperature) which can be controlled by internal controller (between 0.0 and 100.0 %)
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR	
+	{attribute 'OPC.UA.DA' := '1'}
+	localSetParameters : ST_MixingValveSetParameters;
+	
+	//default parameters
+	localDefaultParameters : ST_MixingValveDefaultParameters;	
+
+	//analog converters
+	InputConverter : FB_AnalogInput := (fUpperLimit := 100, fLowerLimit := 0);
+	OutputConverter : FB_AnalogOutput := (fUpperLimit := 100, fLowerLimit := 0);
+	
+	//I/O Links
+	nSetPoint_OUT		AT %Q* : INT; //Set position linked to terminal
+	nOperatingPoint_IN 	AT %I* : INT; //Actual valve position linked to terminal
+	
+	//internal variables
+	nControlMode 				: E_MixingValveControlMode;	
+	fSetPoint_internal 			: REAL;
+	
+	
+
+	PI_Controller_Heating		: FB_CTRL_PI;
+	PI_Controller_Cooling		: FB_CTRL_PI;
+	PI_Controler_Parameters 	: ST_CTRL_PI_PARAMS;
+	
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MAIN();
+SelectValveControlMode();
+ControlValve();
+SetState();
+
+]]></ST>
+    </Implementation>
+    <Method Name="ControlValve" Id="{1e52182a-8bdc-49bd-b2bd-13ceeb4d93b8}">
+      <Declaration><![CDATA[METHOD ControlValve : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//set control parameters
+PI_Controler_Parameters.fKp 			:= localDefaultParameters.fControlerAmplification;
+PI_Controler_Parameters.tTn 			:= DINT_TO_TIME(localDefaultParameters.fControlerIntegralTime);
+PI_Controler_Parameters.fOutMaxLimit	:= 100.0;
+PI_Controler_Parameters.fOutMinLimit	:= 0.0;
+PI_Controler_Parameters.tTaskCycleTime	:= GlobalVariables.tTaskCycleTime;
+PI_Controler_Parameters.tCtrlCycleTime	:= DINT_TO_TIME(500);
+PI_Controler_Parameters.bARWOnIPartOnly	:= TRUE;
+
+
+CASE nControlMode OF
+	0: //position mode
+	fSetPoint_internal := fSetPoint;
+	
+	1: //heating mode
+	PI_Controller_Heating (
+			fSetpointValue	:= fSetPoint,
+			fActualValue	:= fOperatingPointExternal,
+			fManSyncValue	:= 0,
+			bSync			:= FALSE,
+			eMode			:= 2, (* mode active *)
+			bHold			:= FALSE,
+			stParams		:= PI_Controler_Parameters);
+	fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Heating.fOut);
+			
+	2: //cooling mode
+	PI_Controller_Cooling (
+		fSetpointValue	:= fOperatingPointExternal,
+		fActualValue	:= fSetPoint,
+		fManSyncValue	:= 0,
+		bSync			:= FALSE,
+		eMode			:= 2, (* mode active *)
+		bHold			:= FALSE,
+		stParams		:= PI_Controler_Parameters);
+	fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Cooling.fOut);
+END_CASE
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SelectValveControlMode" Id="{69d2db34-6658-4b13-ae91-6cb6bcdc3229}">
+      <Declaration><![CDATA[METHOD SelectValveControlMode : BOOL
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF control.bManualModeActivated THEN
+	nControlMode := localSetParameters.nControlModeManual;
+ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
+	nControlMode := localSetParameters.nControlModeAlgorithm;
+ELSE
+	nControlMode := nControlModeAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState" Id="{be832a62-70d4-4ec0-8ee4-578237454401}">
+      <Declaration><![CDATA[METHOD PROTECTED   SetState : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+	StatusModule_IN: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//setpoint and control state
+setPointState.fSetPoint := fSetPoint;
+
+IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if there is a feedback signal 
+	InputConverter(nValue := nOperatingPoint_IN);
+	setPointState.fOperatingPoint := InputConverter.fValue;
+	IF setPointState.fOperatingPoint > 0 THEN //Set control state if valve is open
+		controlState.bStatusOn := TRUE;
+	ELSE
+		controlState.bStatusOn := FALSE;
+	END_IF
+END_IF;
+
+//Output
+OutputConverter(fValue := fSetPoint_internal);
+nSetPoint_OUT := OutputConverter.nValue;  //converts real setpoint for terminal
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ST_DefaultParameters" Id="{1a42851e-de6a-48b1-b7bd-13b0312684ce}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_MixingValveDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{a86ebf94-4f5d-419b-bd12-1e8c85044a39}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_MixingValve">
+      <LineId Id="58" Count="0" />
+      <LineId Id="93" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MixingValve.ControlValve">
+      <LineId Id="99" Count="0" />
+      <LineId Id="104" Count="1" />
+      <LineId Id="100" Count="3" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="74" Count="6" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="84" Count="6" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="23" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MixingValve.SelectValveControlMode">
+      <LineId Id="6" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MixingValve.SetState">
+      <LineId Id="39" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="81" Count="2" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MixingValve.ST_DefaultParameters.Set">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
