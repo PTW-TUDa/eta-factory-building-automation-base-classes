@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ST_ErrorState" Id="{d0a0b0b3-d0d7-4d27-9523-22819611090b}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_ErrorState :
+STRUCT
+	bError			: BOOL; //true if in error
+	sErrorMessage	: STRING; //returns error message
+	bWarning		: BOOL; //true if in warning
+	sWarningMessage	: STRING; //returns warning message
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

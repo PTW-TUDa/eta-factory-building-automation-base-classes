@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ST_MixingValveDefaultParameters" Id="{fe25e7db-0691-4761-8b7b-8dd172b389e7}">
+    <Declaration><![CDATA[TYPE ST_MixingValveDefaultParameters:
+STRUCT
+	bFeedbackSignal : BOOL;
+	fControlerAmplification : LREAL;
+	fControlerIntegralTime : DINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

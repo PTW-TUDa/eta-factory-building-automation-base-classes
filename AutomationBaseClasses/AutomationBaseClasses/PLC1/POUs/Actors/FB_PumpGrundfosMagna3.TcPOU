@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_PumpGrundfosMagna3" Id="{5ff4732a-f57a-4b28-83eb-fee6b9ba074e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActorContinous
+VAR_INPUT
+	nControlModeAutomatic : E_GrundfosMagna3ControlMode;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	localSetParameters : ST_PumpGrundfosMagna3SetParameters;
+	{attribute 'OPC.UA.DA' := '1'}
+	localState : ST_PumpGrundfosMagna3State;
+	
+	//default parameters
+	localDefaultParameters : ST_GundfosMagna3DefaultParameters;
+	
+	//I/O links
+	//Inputs
+	StatusModule_IN				AT %I* : ARRAY [0..5] OF BYTE;
+	nAlarmCode_IN				AT %I* : USINT;
+	nWarningCode_IN				AT %I* : USINT;
+	fVolumeFlowRate_IN 			AT %I* : UDINT; //m^3/h volume flow rate from pump
+	fPressureDifference_IN	 	AT %I* : UDINT; //pa = 10^-5 bar
+	fPowerElectric_IN			AT %I* : UDINT; //W
+	fTemperatureInternal_IN 	AT %I* : REAL; //°C
+	fActualSetpoint_IN			AT %I* : UDINT; //%
+	fRotationalSpeed_IN	 		AT %I* : UDINT; //rpm
+	fTemperatureExternal_IN 	AT %I* : UDINT; //°C external temperature from sensor connected to pump
+	fTemperatureDifference_IN	AT %I* : UDINT; //°C
+	fPowerThermal_IN	 		AT %I* : UDINT; //W
+	
+	//Outputs
+	ControlModule_OUT 			AT %Q* : ARRAY [0..4] OF BYTE;
+	
+	//internal variables:
+	nControlMode : E_GrundfosMagna3ControlMode; //actual pump control mode
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MAIN();
+CalculateHydraulicPower();
+SelectPumpControlMode();]]></ST>
+    </Implementation>
+    <Method Name="CalculateHydraulicPower" Id="{5ee59af5-7c08-4f03-8cfe-829337b66dfd}">
+      <Declaration><![CDATA[METHOD CalculateHydraulicPower : REAL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[localState.fPowerHydraulic := localState.fPressureDifference*localState.fVolumeFlowRate;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SelectPumpControlMode" Id="{9f36f1dc-61c9-4f36-814e-95f20eaaf659}">
+      <Declaration><![CDATA[METHOD PROTECTED SelectPumpControlMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF control.bManualModeActivated THEN
+	nControlMode := localSetParameters.nControlModeManual;
+ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
+	nControlMode := localSetParameters.nControlModeAlgorithm;
+ELSE
+	nControlMode := nControlModeAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState_Profibus" Id="{e9c465c4-8736-4795-97fc-0fdf20374859}">
+      <Declaration><![CDATA[METHOD SetState_Profibus //Method must be called in system POU to enable different communication standards for Grundfos pumps
+VAR_INPUT
+END_VAR
+VAR_INST
+	tmp : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Control State
+controlState.bStatusOn := StatusModule_IN[0].0;
+
+//Error state
+errorState.bError := StatusModule_IN[0].2;
+errorState.bWarning := StatusModule_IN[0].3;
+errorState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(nAlarmCode_IN));
+errorState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode_IN));
+
+//SetPoint State
+setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
+setPointState.fSetPoint := fSetPoint;
+
+//Local state
+localState.bRemoteControlOn := StatusModule_IN[0].0;
+localState.nControlMode := StatusModule_IN[4];
+localState.fVolumeFlowRate := BufferUdintToReal(raw_input := fVolumeFlowRate_IN);
+localState.fTemperatureInternal := BufferRealToReal(raw_input := fTemperatureInternal_IN);
+IF localDefaultParameters.bExternalTemperatureSensor THEN //Set external temperature and temperature difference if temperature sensor is connected
+	localState.fTemperatureExternal := BufferUdintToReal(raw_input := fTemperatureExternal_IN);
+	localState.fTemperatureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
+END_IF;
+localState.fPressureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
+localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN);
+localState.fPowerThermal := BufferUdintToReal(raw_input := fPowerThermal_IN);
+localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_IN);
+
+//Output
+ControlModule_OUT[0].1 := bSetStatusOn;
+ControlModule_OUT[0].2 := resetError.bResetError OR resetError.bResetWarning;
+ControlModule_OUT[1] := INT_TO_BYTE(nControlMode);
+ControlModule_OUT[2] := 0;
+tmp := DWORD_TO_HEXSTR(DINT_TO_DWORD(TRUNC(fSetPoint*100)),4,TRUE);
+ControlModule_OUT[3] := HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,1))*16 + HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,2));
+ControlModule_OUT[4] := HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,3))*16 + HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,4));]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ST_DefaultParameters" Id="{37c47602-10af-4f25-93f4-2c0dd2131db3}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_GundfosMagna3DefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{69ad99eb-9ef1-4940-bed0-9eace3e8cb70}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_PumpGrundfosMagna3">
+      <LineId Id="259" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.CalculateHydraulicPower">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.SelectPumpControlMode">
+      <LineId Id="6" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.SetState_Profibus">
+      <LineId Id="129" Count="0" />
+      <LineId Id="131" Count="1" />
+      <LineId Id="134" Count="3" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="152" Count="2" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="144" Count="2" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="56" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

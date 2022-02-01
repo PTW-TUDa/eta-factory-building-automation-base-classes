@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_ActorContinous" Id="{c8bff7e9-c02c-4471-8259-14c86f2cd564}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_ActorContinous EXTENDS FB_Actor2Point
+VAR_INPUT
+	//internal input variables:
+	fSetPointAutomatic	: REAL; //set setpoint in percent 0.0 - 100.0
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//OPC UA structured variables:
+	{attribute 'OPC.UA.DA' := '1'}
+	setSetPoint : ST_SetSetPoint;
+	{attribute 'OPC.UA.DA' := '1'}
+	setPointState : ST_SetPointState;
+	
+	//internal variables:
+	fSetPoint	    : REAL; //actual set setpoint in percent 0.0 - 100.0
+	aSetPointLimits	: ARRAY[1..2] OF REAL := [0, 100]; //lower and upper set point limit
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="fLowerSetPointLimit" Id="{796dd9fb-c52d-4acd-9fa6-dc7e631b498d}">
+      <Declaration><![CDATA[PROPERTY fLowerSetPointLimit : REAL; //set lower set point limit]]></Declaration>
+      <Get Name="Get" Id="{dfc88d31-f790-4b77-86cd-90806c52cfb4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fLowerSetPointLimit := aSetPointLimits[1];]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{eb1ec4b7-b0b3-49de-b291-c6ccce0d6210}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[aSetPointLimits[1] := fLowerSetPointLimit;
+setPointState.aSetPointLimits := aSetPointLimits;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="fUpperSetPointLimit" Id="{fb4707ce-856d-497a-a2f5-99887319386f}">
+      <Declaration><![CDATA[PROPERTY fUpperSetPointLimit : REAL //set upper set point limit]]></Declaration>
+      <Get Name="Get" Id="{75fedf8f-b247-42bc-bba6-2e70fb22bf6e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fUpperSetPointLimit := aSetPointLimits[2];]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a00ba8d7-fa9c-4009-8dbd-de57d102b8e3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[aSetPointLimits[2] := fUpperSetPointLimit;
+setPointState.aSetPointLimits := aSetPointLimits;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="MAIN" Id="{7c71e98c-e88b-49de-b162-405ba243d74c}">
+      <Declaration><![CDATA[METHOD PROTECTED MAIN : BOOL // Method that calls all needed function block methods
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SelectControlMode();
+SetPointCheck();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SelectControlMode" Id="{9487b088-9bc5-4a7e-8bf7-9767eafe3f05}">
+      <Declaration><![CDATA[METHOD PROTECTED FINAL SelectControlMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.SelectControlMode();
+
+//add changing set point to method
+IF control.bManualModeActivated THEN
+	fsetPoint := setSetPoint.fSetPointManual;
+ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
+	fsetPoint := setSetPoint.fSetPointAlgorithm;
+ELSE
+	fsetPoint := fSetPointAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPointCheck" Id="{a788f595-bc97-42ed-a5e1-110d1f06de83}">
+      <Declaration><![CDATA[METHOD PROTECTED FINAL SetPointCheck : BOOL
+VAR
+	aLocalSetPointLimits : ARRAY[1..2] OF REAL := aSetPointLimits;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//control value must not be below the lower limit
+fSetPoint := MAX(fSetPoint, aLocalSetPointLimits[1]);
+
+//control value must not be above the upper limit
+fSetPoint := MIN(fSetPoint, aLocalSetPointLimits[2]);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ActorContinous">
+      <LineId Id="91" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.fLowerSetPointLimit.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.fLowerSetPointLimit.Set">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.fUpperSetPointLimit.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.fUpperSetPointLimit.Set">
+      <LineId Id="5" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.MAIN">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.SelectControlMode">
+      <LineId Id="38" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActorContinous.SetPointCheck">
+      <LineId Id="18" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
