@@ -81,13 +81,13 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Clases\FB_Actor2Point.TcPOU">
+    <Compile Include="POUs\0_Base Classes\FB_Actor2Point.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Clases\FB_ActorContinous.TcPOU">
+    <Compile Include="POUs\0_Base Classes\FB_ActorContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Clases\FB_SystemContinous.TcPOU">
+    <Compile Include="POUs\0_Base Classes\FB_SystemContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Actors\FB_DiscreteValve.TcPOU">
@@ -102,7 +102,7 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Test %28Delete before export%29\FB_TestSystem.TcPOU">
+    <Compile Include="POUs\XX_GA %28Delete before export%29\FB_TestSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Utilities\Profibus\BufferIntToReal.TcPOU">
@@ -131,13 +131,19 @@
     <Folder Include="DUTs\System Data Structs" />
     <Folder Include="GVLs" />
     <Folder Include="Global Variables %28Delete before export%29" />
-    <Folder Include="POUs\0_Base Clases" />
+    <Folder Include="POUs\0_Base Classes" />
     <Folder Include="POUs\Actors" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\Actors" />
+    <Folder Include="POUs\Sensors" />
     <Folder Include="POUs\Utilities" />
     <Folder Include="POUs\Systems" />
-    <Folder Include="POUs\Test %28Delete before export%29" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29" />
     <Folder Include="POUs\Utilities\Profibus" />
     <Folder Include="POUs\Utilities\AI_AO" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\Networks" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\LinkageSystems" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\StrategyControllers" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\Systems" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
