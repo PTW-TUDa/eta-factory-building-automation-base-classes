@@ -5,7 +5,7 @@
 VAR_INPUT
 	//internal input variables:
 	bSetStatusOnAutomatic : BOOL; //turn actor on
-	algorithmPermission : BOOL; //is true if control by algorithm is allowed
+	bAlgorithmPermission : BOOL; //is true if control by algorithm is allowed
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -51,7 +51,7 @@ IF control.bManualModeActivated THEN
 	controlState.nAccessmode := E_SystemControlState.manual;
 	controlState.sAccessMode := 'manual';
 	bSetStatusOn := control.bSetStatusOnManual;
-ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
+ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
 	controlState.nAccessmode := E_SystemControlState.algorithm;
 	controlState.sAccessMode := 'algorithm';
 	bSetStatusOn := control.bSetStatusOnAlgorithm;

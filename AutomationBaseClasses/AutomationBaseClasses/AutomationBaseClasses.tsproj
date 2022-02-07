@@ -45,8 +45,7 @@
 						</Var>
 						<Var>
 							<Name>MAIN.testSystem.pump.StatusModule_IN</Name>
-							<Comment><![CDATA[I/O links
-Inputs]]></Comment>
+							<Comment><![CDATA[I/O links]]></Comment>
 							<Type GUID="{12E80FF5-6251-C867-A464-3036E21E986D}">ARRAY [0..5] OF BYTE</Type>
 						</Var>
 						<Var>
@@ -122,7 +121,6 @@ Inputs]]></Comment>
 						</Var>
 						<Var>
 							<Name>MAIN.testSystem.pump.ControlModule_OUT</Name>
-							<Comment><![CDATA[Outputs]]></Comment>
 							<Type GUID="{14CEA088-1F4A-00F5-F531-CD5B99CC8C4C}">ARRAY [0..4] OF BYTE</Type>
 						</Var>
 						<Var>

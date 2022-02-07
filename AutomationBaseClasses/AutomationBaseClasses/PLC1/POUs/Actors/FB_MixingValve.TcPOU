@@ -3,8 +3,8 @@
   <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
 VAR_INPUT
-	nControlModeAutomatic : E_MixingValveControlMode;
-	fOperatingPointExternal : REAL; //External operating point (e. g. temperature) which can be controlled by internal controller (between 0.0 and 100.0 %)
+	nControlModeAutomatic : E_MixingValveControlMode; //control mode: 0 = position mode, 1 = heating mode, 2 = cooling mode
+	fTemperatureExternal : REAL; //External temperature in °C
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -15,20 +15,19 @@ VAR
 	//default parameters
 	localDefaultParameters : ST_MixingValveDefaultParameters;	
 
-	//analog converters
-	InputConverter : FB_AnalogInput := (fUpperLimit := 100, fLowerLimit := 0);
-	OutputConverter : FB_AnalogOutput := (fUpperLimit := 100, fLowerLimit := 0);
+	//analog converters for 0 - 10 V i/o signals
+	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
+	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
 	nSetPoint_OUT		AT %Q* : INT; //Set position linked to terminal
 	nOperatingPoint_IN 	AT %I* : INT; //Actual valve position linked to terminal
 	
 	//internal variables
-	nControlMode 				: E_MixingValveControlMode;	
-	fSetPoint_internal 			: REAL;
+	nControlMode			: E_MixingValveControlMode;	
+	fSetPoint_internal 		: REAL; //internal, control mode depending setpoint between 0.0 and 100.0
 	
-	
-
+	//controllers
 	PI_Controller_Heating		: FB_CTRL_PI;
 	PI_Controller_Cooling		: FB_CTRL_PI;
 	PI_Controler_Parameters 	: ST_CTRL_PI_PARAMS;
@@ -38,7 +37,6 @@ END_VAR]]></Declaration>
       <ST><![CDATA[MAIN();
 SelectValveControlMode();
 ControlValve();
-SetState();
 
 ]]></ST>
     </Implementation>
@@ -67,7 +65,7 @@ CASE nControlMode OF
 	1: //heating mode
 	PI_Controller_Heating (
 			fSetpointValue	:= fSetPoint,
-			fActualValue	:= fOperatingPointExternal,
+			fActualValue	:= fTemperatureExternal,
 			fManSyncValue	:= 0,
 			bSync			:= FALSE,
 			eMode			:= 2, (* mode active *)
@@ -77,7 +75,7 @@ CASE nControlMode OF
 			
 	2: //cooling mode
 	PI_Controller_Cooling (
-		fSetpointValue	:= fOperatingPointExternal,
+		fSetpointValue	:= fTemperatureExternal,
 		fActualValue	:= fSetPoint,
 		fManSyncValue	:= 0,
 		bSync			:= FALSE,
@@ -98,20 +96,34 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF control.bManualModeActivated THEN
 	nControlMode := localSetParameters.nControlModeManual;
-ELSIF control.bAlgorithmModeActivated AND algorithmPermission THEN
+ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
 	nControlMode := localSetParameters.nControlModeAlgorithm;
 ELSE
 	nControlMode := nControlModeAutomatic;
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetState" Id="{be832a62-70d4-4ec0-8ee4-578237454401}">
-      <Declaration><![CDATA[METHOD PROTECTED   SetState : BOOL
+    <Method Name="SetSetPointLimits" Id="{a8c83337-88ad-4b4d-a894-cec3559c40a9}">
+      <Declaration><![CDATA[METHOD PROTECTED  SetSetPointLimits : BOOL
 VAR_INPUT
 END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nControlMode OF
+	0: //position mode
+	aSetPointLimits := localDefaultParameters.aSetPointLimitsPosition;
 
+	1: //heating mode
+	aSetPointLimits := localDefaultParameters.aSetPointLimitsTemperature;
+	
+	2: //cooling mode
+	aSetPointLimits := localDefaultParameters.aSetPointLimitsTemperature;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState_AI_AO" Id="{be832a62-70d4-4ec0-8ee4-578237454401}">
+      <Declaration><![CDATA[METHOD SetState_AI_AO : BOOL
 VAR
-	StatusModule_IN: INT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//setpoint and control state
@@ -150,8 +162,8 @@ END_VAR
     </Property>
     <LineIds Name="FB_MixingValve">
       <LineId Id="58" Count="0" />
-      <LineId Id="93" Count="1" />
-      <LineId Id="59" Count="0" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="94" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="31" Count="0" />
     </LineIds>
@@ -182,7 +194,14 @@ END_VAR
       <LineId Id="6" Count="5" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_MixingValve.SetState">
+    <LineIds Name="FB_MixingValve.SetSetPointLimits">
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="5" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MixingValve.SetState_AI_AO">
       <LineId Id="39" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="64" Count="0" />

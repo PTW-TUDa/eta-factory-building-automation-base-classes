@@ -6,6 +6,8 @@ STRUCT
 	bFeedbackSignal : BOOL;
 	fControlerAmplification : LREAL;
 	fControlerIntegralTime : DINT;
+	aSetPointLimitsPosition	: ARRAY[1..2] OF REAL;
+	aSetPointLimitsTemperature : ARRAY[1..2] OF REAL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

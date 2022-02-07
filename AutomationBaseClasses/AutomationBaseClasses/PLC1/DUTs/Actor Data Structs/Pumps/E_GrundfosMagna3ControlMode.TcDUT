@@ -13,6 +13,7 @@ TYPE E_GrundfosMagna3ControlMode :
 	proportionalPressure := 6,
 	constantFlow := 7,
 	constantTemperature := 8,
+	differentialTemperature := 9,
 	constantLevel := 10,
 	autoAdapt := 128,
 	flowAdapt := 129,

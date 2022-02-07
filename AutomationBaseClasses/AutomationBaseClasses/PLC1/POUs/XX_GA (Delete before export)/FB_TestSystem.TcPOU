@@ -13,6 +13,9 @@ VAR
 	{attribute 'OPC.UA.DA' := '1'}
 	localState : ST_TestSystemState;	
 
+	//default parameters
+	localDefaultParameters : ST_TestSystemDefaultParameters;
+	
 	//digital input
 	bOperational 				AT %I*: BOOL;
 	
@@ -20,8 +23,8 @@ VAR
 	bSystemOperationOn 			AT %Q*: BOOL := FALSE;
 		
 	//Components - Pump
-	ST_PumpDefaultParameters : ST_GundfosMagna3DefaultParameters := (bExternalTemperatureSensor := TRUE);
-	pump			 			: FB_PumpGrundfosMagna3 := (fLowerSetPointLimit := 30, fUpperSetPointLimit := 100, ST_DefaultParameters := ST_PumpDefaultParameters); 
+	ST_PumpDefaultParameters : ST_GundfosMagna3DefaultParameters := (bExternalTemperatureSensor := TRUE,aSetPointLimitsConstantSpeed := [0,100]);
+	pump			 			: FB_PumpGrundfosMagna3 := (ST_DefaultParameters := ST_PumpDefaultParameters); 
 	bStartPump					: BOOL := FALSE;
 	fSetPointPump 				: REAL := 50;
 	bAlgorithmPermissionPump 	: BOOL := FALSE;
@@ -47,7 +50,7 @@ END_VAR
       <ST><![CDATA[//set init values
 IF(NOT nInit) THEN
 	fSetPointAutomatic := 20;
-	algorithmPermission := TRUE;
+	bAlgorithmPermission := TRUE;
 	nInit := TRUE;
 END_IF
 
@@ -59,7 +62,7 @@ SetState();//set state values
 pump(
 	bSetStatusOnAutomatic := bStartPump,
 	fSetPointAutomatic := fSetPointPump,
-	algorithmPermission := bAlgorithmPermissionPump,
+	bAlgorithmPermission := bAlgorithmPermissionPump,
 	nControlModeAutomatic := nControlModePump
 );
 pump.SetState_Profibus();
@@ -67,13 +70,15 @@ pump.SetState_Profibus();
 //discrete valve
 discreteValve(
 	bSetStatusOnAutomatic := bOpenValve,
-	algorithmPermission := bAlgorithmPermissionPump);
+	bAlgorithmPermission := bAlgorithmPermissionPump);
+discreteValve.SetState_BI_BO();
 	
 //controlled valve
 controledValve(
 	bSetStatusOnAutomatic := bOpenControledValve,
-	algorithmPermission := bAlgorithmPermissionPump,
+	bAlgorithmPermission := bAlgorithmPermissionPump,
 	fSetPointAutomatic := fSetpointControledValve);
+controledValve.SetState_AI_AO();
 
 ]]></ST>
     </Implementation>
@@ -123,8 +128,9 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//open valve
+        <ST><![CDATA[//open valves
 bOpenValve := TRUE;
+bOpenControledValve := TRUE;
 
 //turn pump on
 bStartPump := TRUE;
@@ -134,6 +140,15 @@ IF pump.bStatusOn = TRUE THEN
 	bRampUpFinished := TRUE;
 END_IF;
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSetPointLimits" Id="{f051f01d-b197-4bf8-82e6-ce2ab19a0807}">
+      <Declaration><![CDATA[METHOD PROTECTED   SetSetPointLimits : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[aSetPointLimits := localDefaultParameters.aSetPointLimits;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetState" Id="{6f5b6a90-4211-4d68-92aa-fa3fb40b781b}">
@@ -189,7 +204,10 @@ END_VAR]]></Declaration>
       <LineId Id="815" Count="0" />
       <LineId Id="817" Count="1" />
       <LineId Id="820" Count="0" />
-      <LineId Id="928" Count="5" />
+      <LineId Id="928" Count="0" />
+      <LineId Id="975" Count="0" />
+      <LineId Id="929" Count="4" />
+      <LineId Id="976" Count="0" />
       <LineId Id="785" Count="0" />
       <LineId Id="367" Count="0" />
     </LineIds>
@@ -212,6 +230,7 @@ END_VAR]]></Declaration>
     <LineIds Name="FB_TestSystem.RampUp">
       <LineId Id="23" Count="0" />
       <LineId Id="25" Count="0" />
+      <LineId Id="49" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="14" Count="0" />
@@ -220,6 +239,9 @@ END_VAR]]></Declaration>
       <LineId Id="35" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="39" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_TestSystem.SetSetPointLimits">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestSystem.SetState">
       <LineId Id="6" Count="3" />

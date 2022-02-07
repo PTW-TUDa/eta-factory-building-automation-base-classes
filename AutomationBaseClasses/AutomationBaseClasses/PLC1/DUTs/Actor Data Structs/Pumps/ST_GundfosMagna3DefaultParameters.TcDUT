@@ -3,7 +3,17 @@
   <DUT Name="ST_GundfosMagna3DefaultParameters" Id="{c79135d6-6136-4193-87e6-f0a4d4d2cc36}">
     <Declaration><![CDATA[TYPE ST_GundfosMagna3DefaultParameters :
 STRUCT
-	bExternalTemperatureSensor : BOOL;
+	bExternalTemperatureSensor 				: BOOL;
+	aSetPointLimitsConstantSpeed			: ARRAY[1..2] OF REAL;
+	aSetPointLimitsConstantFrequency 		: ARRAY[1..2] OF REAL;
+	aSetPointLimitsConstantHead 			: ARRAY[1..2] OF REAL;
+	aSetPointLimitsConstantPressure 		: ARRAY[1..2] OF REAL;
+	aSetPointLimitsDifferentialPressure		: ARRAY[1..2] OF REAL;	
+	aSetPointLimitsProportionalPressure		: ARRAY[1..2] OF REAL;
+	aSetPointLimitsConstantFlow 			: ARRAY[1..2] OF REAL;
+	aSetPointLimitsConstantTemperature 		: ARRAY[1..2] OF REAL;
+	aSetPointLimitsDifferentialTemperature 	: ARRAY[1..2] OF REAL;
+	aSetPointLimitsConstantLevel 			: ARRAY[1..2] OF REAL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
