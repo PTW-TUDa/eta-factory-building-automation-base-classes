@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="FB_DiscreteValve" Id="{7c2d056e-b7a5-47e0-8780-c9ad927c4f52}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Discrete valve which can be opened and closed
-*)
-
-FUNCTION_BLOCK FB_DiscreteValve EXTENDS FB_Actor2Point
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DiscreteValve EXTENDS FB_Actor2Point
 VAR_INPUT
 END_VAR
 VAR_OUTPUT

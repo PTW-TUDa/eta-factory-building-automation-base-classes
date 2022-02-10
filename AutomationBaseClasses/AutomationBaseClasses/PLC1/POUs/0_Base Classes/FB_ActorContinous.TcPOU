@@ -1,25 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="FB_ActorContinous" Id="{c8bff7e9-c02c-4471-8259-14c86f2cd564}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Abstract base claass for continous controled actors
-*)
-
-FUNCTION_BLOCK ABSTRACT FB_ActorContinous EXTENDS FB_Actor2Point
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_ActorContinous EXTENDS FB_Actor2Point
 VAR_INPUT
-	//internal input variables:
 	fSetPointAutomatic	: REAL; //unit depending setpoint
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	//OPC UA structured variables:
 	{attribute 'OPC.UA.DA' := '1'}
 	setSetPoint : ST_SetSetPoint;
 	{attribute 'OPC.UA.DA' := '1'}
 	setPointState : ST_SetPointState;
 	
-	//internal variables:
+	//internal variables
 	fSetPoint	    : REAL; //actual set setpoint
 	aSetPointLimits	: ARRAY[1..2] OF REAL; //control mode and unit depending setpoint limits that are set by abstract method SetSetPointLimits() in a subclass 
 END_VAR

@@ -52,7 +52,9 @@ errorState.bWarning := bWarning_IN;
 
 //setpoint state
 setPointState.fSetPoint := fSetPoint;
+setPointState.sSetPointUnit := 'degreeC';
 setPointState.fOperatingPoint := fExternalTemperature;
+setPointState.sOperatingPointUnit := 'degreeC';
 setPointState.aSetPointLimits := aSetPointLimits;
 
 //local state
@@ -90,7 +92,9 @@ END_VAR
       <LineId Id="32" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="36" Count="0" />
+      <LineId Id="44" Count="0" />
       <LineId Id="35" Count="0" />
+      <LineId Id="45" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="37" Count="1" />
       <LineId Id="40" Count="0" />

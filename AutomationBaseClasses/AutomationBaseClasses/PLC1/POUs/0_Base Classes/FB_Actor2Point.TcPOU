@@ -1,20 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="FB_Actor2Point" Id="{779c39b8-c120-47da-8edf-760811555f3b}" SpecialFunc="None">
-    <Declaration><![CDATA[(* 
-Abstract base class for two-point actors
-*)
-
-FUNCTION_BLOCK ABSTRACT FB_Actor2Point
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Actor2Point
 VAR_INPUT
-	//internal input variables:
 	bSetStatusOnAutomatic : BOOL; //turn actor on
 	bAlgorithmPermission : BOOL; //is true if control by algorithm is allowed
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	//OPC UA structured variables:
 	{attribute 'OPC.UA.DA' := '1'}
 	control : ST_Control;
 	{attribute 'OPC.UA.DA' := '1'}
@@ -24,7 +18,7 @@ VAR
 	{attribute 'OPC.UA.DA' := '1'}
 	errorState : ST_ErrorState;
 
-	//internal variables:
+	//internal variables
 	bSetStatusOn : BOOL; //actual internal value to switch on 
 END_VAR
 ]]></Declaration>

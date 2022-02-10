@@ -29,6 +29,9 @@
     <Compile Include="DUTs\0_Base Data Structs\ST_ControlState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\0_Base Data Structs\ST_SensorState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\0_Base Data Structs\ST_ErrorState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -68,6 +71,9 @@
     <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\System Data Structs\ST_TestSystemDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -96,6 +102,9 @@
     <Compile Include="POUs\0_Base Classes\FB_ActorContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\0_Base Classes\FB_Sensor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\0_Base Classes\FB_SystemContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -109,6 +118,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Sensors\FB_AnalogTemperatureSensor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\Actors\CoolingUnits\CoolingUnit_eChiller.TcPOU">
@@ -143,6 +155,7 @@
     <Folder Include="DUTs\Actor Data Structs\MixingValve" />
     <Folder Include="DUTs\Actor Data Structs\DicreteValve" />
     <Folder Include="DUTs\Actor Data Structs\Pumps" />
+    <Folder Include="DUTs\Sensor Data Structs" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29" />
     <Folder Include="DUTs\System Data Structs" />
     <Folder Include="GVLs" />
