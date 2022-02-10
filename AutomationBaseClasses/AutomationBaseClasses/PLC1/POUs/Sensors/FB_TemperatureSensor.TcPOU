@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
-  <POU Name="FB_AnalogTemperatureSensor" Id="{5862196d-9579-4df5-99e3-f378128664c6}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-	Analog temperature sensor
-*)
-FUNCTION_BLOCK FB_AnalogTemperatureSensor EXTENDS FB_Sensor
+  <POU Name="FB_TemperatureSensor" Id="{5862196d-9579-4df5-99e3-f378128664c6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TemperatureSensor EXTENDS FB_Sensor
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -35,8 +32,6 @@ fTemperature := (INT_TO_REAL(temperature_IN))*0.01;
 //sensor state
 sensorState.fValue := fTemperature;
 sensorState.sUnit := localDefaultParameters.sUnit;
-sensorState.fUpperLimit := localDefaultParameters.fUpperLimit;
-sensorState.fLowerLimit := localDefaultParameters.fLowerLimit;
 ]]></ST>
       </Implementation>
     </Method>
@@ -51,20 +46,19 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <LineIds Name="FB_AnalogTemperatureSensor">
+    <LineIds Name="FB_TemperatureSensor">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_AnalogTemperatureSensor.SetState_AI">
+    <LineIds Name="FB_TemperatureSensor.SetState_AI">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="17" Count="0" />
-      <LineId Id="23" Count="1" />
       <LineId Id="16" Count="0" />
     </LineIds>
-    <LineIds Name="FB_AnalogTemperatureSensor.ST_DefaultParameters.Set">
+    <LineIds Name="FB_TemperatureSensor.ST_DefaultParameters.Set">
       <LineId Id="8" Count="0" />
     </LineIds>
   </POU>

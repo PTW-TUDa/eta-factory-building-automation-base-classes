@@ -5,7 +5,11 @@
 TYPE ST_PumpGrundfosMagna3State :
 STRUCT
 	bRemoteControlOn : BOOL; //0 = control by pump, 1 = control by bus 	
-	nControlMode : INT; //Control mode
+	bError : BOOL; //true if pump shows an error
+	bWarning : BOOL; //true if pump shows a warning
+	sErrorMessage : STRING; //error code
+	sWarningMessage : STRING; //warning code
+	nControlMode : INT; //control mode
 	fVolumeFlowRate : REAL; //m^3/h volume flow rate from pump or external sensor
 	fTemperatureInternal : REAL; //°C
 	fTemperatureExternal : REAL; //°C

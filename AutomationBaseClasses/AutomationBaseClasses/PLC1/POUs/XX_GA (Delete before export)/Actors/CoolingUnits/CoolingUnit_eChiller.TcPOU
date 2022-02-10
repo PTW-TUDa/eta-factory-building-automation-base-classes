@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="CoolingUnit_eChiller" Id="{2fd4228b-5aa5-47c8-816c-daa5107a89d5}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Efficient Energy eChiller 45-II with internal feed-temperature control:
-- fSetPoint: Target temperature in °C
-- fExternalTemperature: Actual temperature in buffer storage in °C 
-*)
-
-FUNCTION_BLOCK CoolingUnit_eChiller EXTENDS FB_ActorContinous
+    <Declaration><![CDATA[FUNCTION_BLOCK CoolingUnit_eChiller EXTENDS FB_ActorContinous
 VAR_INPUT
 	fExternalTemperature : REAL; //External temperature in °C
 END_VAR
@@ -46,10 +40,6 @@ END_VAR
         <ST><![CDATA[//control state
 controlState.bStatusOn := bStatusOn_IN;
 
-//error state
-errorState.bError := bError_IN;
-errorState.bWarning := bWarning_IN;
-
 //setpoint state
 setPointState.fSetPoint := fSetPoint;
 setPointState.sSetPointUnit := 'degreeC';
@@ -58,6 +48,8 @@ setPointState.sOperatingPointUnit := 'degreeC';
 setPointState.aSetPointLimits := aSetPointLimits;
 
 //local state
+localState.bError := bError_IN;
+localState.bWarning := bWarning_IN;
 //local state is read via opc ua
 
 //outputs
@@ -85,10 +77,7 @@ END_VAR
     </LineIds>
     <LineIds Name="CoolingUnit_eChiller.SetState">
       <LineId Id="22" Count="0" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="30" Count="0" />
+      <LineId Id="28" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="36" Count="0" />
@@ -97,6 +86,8 @@ END_VAR
       <LineId Id="45" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="37" Count="1" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="49" Count="0" />
       <LineId Id="40" Count="0" />
       <LineId Id="23" Count="1" />
       <LineId Id="5" Count="0" />

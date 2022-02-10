@@ -68,24 +68,6 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="StateCheck" Id="{1d1914c3-f788-4493-89d9-bb29e16f8d15}">
-      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT StateCheck : BOOL
-(* In this method the folowing elements of the actorState structrure have to be set if they are not set yet:
-	bStatusOn 		: BOOL; //status on / off
-	bError			: BOOL; //true if in error
-	sErrorMessage	: STRING; //returns error message
-	bWarning		: BOOL; //true if in warning
-	sWarningMessage	: STRING; //returns warning message
-	fOperatingPoint	: REAL; //current operating point
-*)
-VAR_INPUT
-END_VAR
-VAR
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="SystemFlowControl" Id="{6217cbf4-0afa-43b2-8f55-e14926bb4551}">
       <Declaration><![CDATA[METHOD SystemFlowControl : INT
 VAR_INPUT
@@ -178,9 +160,6 @@ END_VAR]]></Declaration>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.SetSetPointLimits">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_SystemContinous.StateCheck">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.SystemFlowControl">
