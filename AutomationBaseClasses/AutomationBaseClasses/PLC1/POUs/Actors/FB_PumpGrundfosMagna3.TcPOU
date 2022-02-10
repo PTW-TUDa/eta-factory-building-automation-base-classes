@@ -116,10 +116,10 @@ END_VAR
 controlState.bStatusOn := StatusModule_IN[0].0;
 
 //error state
-errorState.bError := StatusModule_IN[0].2;
-errorState.bWarning := StatusModule_IN[0].3;
-errorState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(nAlarmCode_IN));
-errorState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode_IN));
+localState.bError := StatusModule_IN[0].2;
+localState.bWarning := StatusModule_IN[0].3;
+localState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(nAlarmCode_IN));
+localState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode_IN));
 
 //setpoint State
 setPointState.fSetPoint := fSetPoint;
@@ -144,7 +144,7 @@ localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_I
 
 //output
 ControlModule_OUT[0].1 := bSetStatusOn;
-ControlModule_OUT[0].2 := resetError.bResetError OR resetError.bResetWarning;
+ControlModule_OUT[0].2 := localSetParameters.bReset;
 ControlModule_OUT[1] := INT_TO_BYTE(nControlMode);
 ControlModule_OUT[2] := 0;
 tmp := DWORD_TO_HEXSTR(DINT_TO_DWORD(TRUNC(fSetPoint*100)),4,TRUE);

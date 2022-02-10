@@ -6,8 +6,6 @@ TYPE ST_SensorState :
 STRUCT
 	fValue 		: REAL; //status on / off
 	sUnit		: STRING; //current unit of sensor value
-	fLowerLimit	: REAL; //upper sensor limit
-	fUpperLimit	: REAL; //lower sensor limit
 END_STRUCT
 END_TYPE
 ]]></Declaration>

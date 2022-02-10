@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_HVFAStorage" Id="{4e82d7a1-f7f2-424a-a2d3-5178f16a7cfd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HVFAStorage
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	UpperTemperatureSensor : FB_TemperatureSensor;
+	LowerTemperatureSensor : FB_TemperatureSensor;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//get sensor inputs
+UpperTemperatureSensor.SetState_AI();
+LowerTemperatureSensor.SetState_AI();]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HVFAStorage">
+      <LineId Id="40" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

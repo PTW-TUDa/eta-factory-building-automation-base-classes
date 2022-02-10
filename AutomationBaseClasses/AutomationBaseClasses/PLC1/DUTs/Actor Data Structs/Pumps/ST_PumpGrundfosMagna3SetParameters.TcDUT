@@ -6,6 +6,7 @@ TYPE ST_PumpGrundfosMagna3SetParameters :
 STRUCT
 	nControlModeAlgorithm : E_GrundfosMagna3ControlMode; //select controlmode: constantSpeed, constantFrequency, constantHead, constantPressure, constantDifferentialPressure, proportionalPressure, constantFlow, constantTemperature, constantLevel, autoAdapt, flowAdapt, closedLoopSensor
 	nControlModeManual : E_GrundfosMagna3ControlMode;
+	bReset : BOOL; //true to reset errors and warnings
 END_STRUCT
 END_TYPE
 ]]></Declaration>
