@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
+    <Declaration><![CDATA[(*
+Mixing valve with different control modes:
+- position mode: fSetPoint [%], limit [0.0 - 100.0]
+- heating mode: fSetPoint [°C], limit depends on system
+- cooling mode: fSetPoint [°C], limit depends on system
+*)
+
+FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
 VAR_INPUT
 	nControlModeAutomatic : E_MixingValveControlMode; //control mode: 0 = position mode, 1 = heating mode, 2 = cooling mode
 	fTemperatureExternal : REAL; //External temperature in °C
@@ -132,6 +139,7 @@ setPointState.fSetPoint := fSetPoint;
 IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if there is a feedback signal 
 	InputConverter(nValue := nOperatingPoint_IN);
 	setPointState.fOperatingPoint := InputConverter.fValue;
+	setPointState.aSetPointLimits := aSetPointLimits;
 	IF setPointState.fOperatingPoint > 0 THEN //Set control state if valve is open
 		controlState.bStatusOn := TRUE;
 	ELSE
@@ -207,6 +215,7 @@ END_VAR
       <LineId Id="64" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="70" Count="1" />
+      <LineId Id="87" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="81" Count="2" />
       <LineId Id="80" Count="0" />

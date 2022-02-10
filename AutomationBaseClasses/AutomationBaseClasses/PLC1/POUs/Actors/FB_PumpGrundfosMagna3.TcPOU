@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="FB_PumpGrundfosMagna3" Id="{5ff4732a-f57a-4b28-83eb-fee6b9ba074e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActorContinous
+    <Declaration><![CDATA[(*
+Grundfos Magna 3 speed-controlled pump
+- description for control mode depending setpoints is missing
+*)
+
+FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActorContinous
 VAR_INPUT
 	nControlModeAutomatic : E_GrundfosMagna3ControlMode;
 END_VAR
@@ -112,20 +117,21 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Control State
+        <ST><![CDATA[//control state
 controlState.bStatusOn := StatusModule_IN[0].0;
 
-//Error state
+//error state
 errorState.bError := StatusModule_IN[0].2;
 errorState.bWarning := StatusModule_IN[0].3;
 errorState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(nAlarmCode_IN));
 errorState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode_IN));
 
-//SetPoint State
-setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
+//setpoint State
 setPointState.fSetPoint := fSetPoint;
+setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
+setPointState.aSetPointLimits := aSetPointLimits;
 
-//Local state
+//local state
 localState.bRemoteControlOn := StatusModule_IN[0].0;
 localState.nControlMode := StatusModule_IN[4];
 localState.fVolumeFlowRate := BufferUdintToReal(raw_input := fVolumeFlowRate_IN);
@@ -139,7 +145,7 @@ localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN);
 localState.fPowerThermal := BufferUdintToReal(raw_input := fPowerThermal_IN);
 localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_IN);
 
-//Output
+//output
 ControlModule_OUT[0].1 := bSetStatusOn;
 ControlModule_OUT[0].2 := resetError.bResetError OR resetError.bResetWarning;
 ControlModule_OUT[1] := INT_TO_BYTE(nControlMode);
@@ -185,7 +191,9 @@ END_VAR
       <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.SetState_Profibus">
-      <LineId Id="6" Count="33" />
+      <LineId Id="6" Count="9" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="16" Count="23" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.ST_DefaultParameters.Set">

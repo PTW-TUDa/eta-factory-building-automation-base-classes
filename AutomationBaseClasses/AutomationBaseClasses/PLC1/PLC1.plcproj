@@ -80,6 +80,9 @@
     <Compile Include="DUTs\XX_GA %28Delete before export%29\ST_eChillerDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\XX_GA %28Delete before export%29\ST_eChillerState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Global Variables %28Delete before export%29\GlobalVariables.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
