@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
-  <POU Name="eChiller" Id="{2fd4228b-5aa5-47c8-816c-daa5107a89d5}" SpecialFunc="None">
+  <POU Name="CoolingUnit_eChiller" Id="{2fd4228b-5aa5-47c8-816c-daa5107a89d5}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Efficient Energy eChiller 45-II with internal feed-temperature control:
 - fSetPoint: Target temperature in °C
 - fExternalTemperature: Actual temperature in buffer storage in °C 
 *)
 
-FUNCTION_BLOCK eChiller EXTENDS FB_ActorContinous
+FUNCTION_BLOCK CoolingUnit_eChiller EXTENDS FB_ActorContinous
 VAR_INPUT
 	fExternalTemperature : REAL; //External temperature in °C
 END_VAR
@@ -78,10 +78,10 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <LineIds Name="eChiller">
+    <LineIds Name="CoolingUnit_eChiller">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="eChiller.SetState">
+    <LineIds Name="CoolingUnit_eChiller.SetState">
       <LineId Id="22" Count="0" />
       <LineId Id="28" Count="1" />
       <LineId Id="25" Count="0" />
@@ -100,7 +100,7 @@ END_VAR
       <LineId Id="20" Count="1" />
       <LineId Id="18" Count="0" />
     </LineIds>
-    <LineIds Name="eChiller.ST_DefaultParameters.Set">
+    <LineIds Name="CoolingUnit_eChiller.ST_DefaultParameters.Set">
       <LineId Id="8" Count="0" />
     </LineIds>
   </POU>

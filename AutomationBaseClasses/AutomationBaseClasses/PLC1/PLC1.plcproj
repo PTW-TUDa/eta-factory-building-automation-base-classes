@@ -111,7 +111,10 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\Actors\eChiller.TcPOU">
+    <Compile Include="POUs\XX_GA %28Delete before export%29\Actors\CoolingUnits\CoolingUnit_eChiller.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\XX_GA %28Delete before export%29\Actors\Pumps\Pump_GrundfosCM.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\FB_TestSystem.TcPOU">
@@ -153,6 +156,9 @@
     <Folder Include="POUs\XX_GA %28Delete before export%29" />
     <Folder Include="POUs\Utilities\Profibus" />
     <Folder Include="POUs\Utilities\AI_AO" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\Actors\CoolingUnits" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\Actors\HeatingUnits" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\Actors\Pumps" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\Networks" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\LinkageSystems" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\StrategyControllers" />
