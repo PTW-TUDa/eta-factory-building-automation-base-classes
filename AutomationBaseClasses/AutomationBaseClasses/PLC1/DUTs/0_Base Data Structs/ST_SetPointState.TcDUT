@@ -4,8 +4,10 @@
     <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
 TYPE ST_SetPointState :
 STRUCT
-	fOperatingPoint	: REAL; //current operating point
-	fSetPoint		: REAL; //current set point
+	fOperatingPoint		: REAL; //current operating point
+	fSetPoint			: REAL; //current set point
+	sSetPointUnit		: STRING; //current set point unit
+	sOperatingPointUnit : STRING; //current operating point unit 
 	aSetPointLimits	: ARRAY[1..2] OF REAL; //lower and upper limit of setpoint
 END_STRUCT
 END_TYPE

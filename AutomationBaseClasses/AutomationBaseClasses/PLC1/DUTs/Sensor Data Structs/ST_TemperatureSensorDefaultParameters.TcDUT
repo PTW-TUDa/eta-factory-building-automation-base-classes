@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ST_TemperatureSensorDefaultParameters" Id="{454cc1d5-6b60-40fe-bb05-0fb85141d002}">
+    <Declaration><![CDATA[TYPE ST_TemperatureSensorDefaultParameters :
+STRUCT
+	//default parameters for Pt100 sensors
+	sUnit		: STRING := 'degreeC'; //current unit of sensor value
+	fLowerLimit	: REAL := -200; //upper sensor limit
+	fUpperLimit	: REAL := 850; //lower sensor limit
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

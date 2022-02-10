@@ -1,12 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
   <POU Name="FB_PumpGrundfosMagna3" Id="{5ff4732a-f57a-4b28-83eb-fee6b9ba074e}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Grundfos Magna 3 speed-controlled pump
-- description for control mode depending setpoints is missing
-*)
-
-FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActorContinous
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActorContinous
 VAR_INPUT
 	nControlModeAutomatic : E_GrundfosMagna3ControlMode;
 END_VAR
@@ -128,7 +123,9 @@ errorState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode
 
 //setpoint State
 setPointState.fSetPoint := fSetPoint;
+//setPointState.sSetPointUnit := 'percent'; missing implementation for internal setpoints
 setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
+//setPointState.sOperatingPointUnit := 'percent'; missing implementation for internal setpoints
 setPointState.aSetPointLimits := aSetPointLimits;
 
 //local state
@@ -193,7 +190,10 @@ END_VAR
     <LineIds Name="FB_PumpGrundfosMagna3.SetState_Profibus">
       <LineId Id="6" Count="9" />
       <LineId Id="46" Count="0" />
-      <LineId Id="16" Count="23" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="17" Count="22" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.ST_DefaultParameters.Set">
