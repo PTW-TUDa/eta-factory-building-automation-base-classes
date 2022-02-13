@@ -5,6 +5,8 @@
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
+	UpperTemperature : REAL;
+	LowerTemperature : REAL;
 END_VAR
 VAR
 	UpperTemperatureSensor : FB_TemperatureSensor;
@@ -14,11 +16,17 @@ END_VAR
     <Implementation>
       <ST><![CDATA[//get sensor inputs
 UpperTemperatureSensor.SetState_AI();
-LowerTemperatureSensor.SetState_AI();]]></ST>
+LowerTemperatureSensor.SetState_AI();
+
+//Set outputs
+UpperTemperature := UpperTemperatureSensor.fTemperature;
+LowerTemperature := LowerTemperatureSensor.fTemperature;]]></ST>
     </Implementation>
     <LineIds Name="FB_HVFAStorage">
       <LineId Id="40" Count="1" />
       <LineId Id="9" Count="0" />
+      <LineId Id="52" Count="2" />
+      <LineId Id="51" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

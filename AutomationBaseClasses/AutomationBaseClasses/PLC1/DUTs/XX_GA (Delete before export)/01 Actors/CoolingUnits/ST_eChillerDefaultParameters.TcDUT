@@ -3,7 +3,7 @@
   <DUT Name="ST_eChillerDefaultParameters" Id="{5e1708f4-4b24-4710-a81f-ab3e89a27f17}">
     <Declaration><![CDATA[TYPE ST_eChillerDefaultParameters :
 STRUCT
-	aSetPointLimitsTemperature : ARRAY[1..2] OF REAL;
+	aSetPointLimitsTemperature : ARRAY[1..2] OF REAL := [10,28];
 END_STRUCT
 END_TYPE
 ]]></Declaration>
