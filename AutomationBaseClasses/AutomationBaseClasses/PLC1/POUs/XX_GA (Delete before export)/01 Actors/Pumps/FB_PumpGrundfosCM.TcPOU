@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
-  <POU Name="Pump_GrundfosCM" Id="{5b6d9bd2-ce18-456b-8ae2-afbacf79793a}" SpecialFunc="None">
-    <Declaration><![CDATA[(*
-Grundfos CM pump that can be switch on/off
-*)
-
-FUNCTION_BLOCK Pump_GrundfosCM EXTENDS FB_Actor2Point
+  <POU Name="FB_PumpGrundfosCM" Id="{5b6d9bd2-ce18-456b-8ae2-afbacf79793a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosCM EXTENDS FB_Actor2Point
 VAR
 	//I/O Links
 	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
@@ -27,10 +23,10 @@ controlState.bStatusOn := bSetStatusOn; //pump does not have a status module, so
 bSetStatusOn_OUT := bSetStatusOn;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="Pump_GrundfosCM">
+    <LineIds Name="FB_PumpGrundfosCM">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="Pump_GrundfosCM.SetState_BO">
+    <LineIds Name="FB_PumpGrundfosCM.SetState_BO">
       <LineId Id="7" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />

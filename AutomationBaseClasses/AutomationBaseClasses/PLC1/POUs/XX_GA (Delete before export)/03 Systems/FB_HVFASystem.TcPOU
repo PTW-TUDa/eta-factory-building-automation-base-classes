@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_HVFASystem" Id="{819033da-c1b5-4061-83ca-54928ee7a888}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HVFASystem EXTENDS FB_SystemContinous
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//default parameters
+	localDefaultParameters : ST_HVFASystemDefaultParameters;	
+
+	//storage
+	HVFAStorage : FB_HVFAStorage;
+	
+	//pumps
+	PUx05 : FB_PumpGrundfosMagna3; //Magna 3 pump (network side)
+	PU7x0 : FB_PumpGrundfosCM; //CM pump (storage side)
+
+	//valves
+	SVx05 : FB_MixingValve; //discrete inlet valve, valve motor needs continous signal but operates only between extreme positions
+	SVx06 : FB_MixingValve; //discrete outlet valve	, valve motor needs continous signal but operates only between extreme positions
+	RVx05 : FB_MixingValve; //continous mixing valve
+	
+	//sensors
+	//WMZ missing
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MAIN();
+//storage
+HVFAStorage();
+
+//pumps
+PUx05();
+PUx05.SetState_Profibus();
+PU7x0();
+PU7x0.SetState_BO();
+
+//valves
+SVx05();
+SVx05.SetState_AI_AO();
+SVx06();
+SVx06.SetState_AI_AO();
+RVx05();
+RVx05.SetState_AI_AO();]]></ST>
+    </Implementation>
+    <Property Name="ST_DefaultParameters" Id="{409a6170-908b-4cb9-b27b-a4d046f62bf2}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_HVFASystemDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{b464b8d0-7ede-4f68-8361-cd48f1624612}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_HVFASystem">
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="41" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_HVFASystem.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

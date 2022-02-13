@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="CoolingNetwork" Id="{155ab526-6067-4e28-9085-03eb63802422}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK CoolingNetwork
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//default parameters
+	ST_HVFADefaultParameters : ST_HVFASystemDefaultParameters(aSetPointLimitsTemperature:=[5,25]);
+
+	//systems
+	eChillerSystem : FB_eChillerSystem;
+	BufferStorage : FB_BufferStorage;
+	HVFAStorage : FB_HVFASystem := (ST_DefaultParameters := ST_HVFADefaultParameters)
+	
+	
+	//internal variables
+	bSetStatusOnAutomatic_eChillerSystem : BOOL;
+	bAlgorithmPermission_eChillerSystem : BOOL;
+	fSetPoint_eChillerSystem : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[BufferStorage();
+
+eChillerSystem(
+	bSetStatusOnAutomatic := bSetStatusOnAutomatic_eChillerSystem,
+	bAlgorithmPermission := bAlgorithmPermission_eChillerSystem,
+	fSetPointAutomatic := fSetPoint_eChillerSystem,
+	fExternalTemperature := BufferStorage.MidTemperature);
+				]]></ST>
+    </Implementation>
+    <LineIds Name="CoolingNetwork">
+      <LineId Id="26" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="28" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
