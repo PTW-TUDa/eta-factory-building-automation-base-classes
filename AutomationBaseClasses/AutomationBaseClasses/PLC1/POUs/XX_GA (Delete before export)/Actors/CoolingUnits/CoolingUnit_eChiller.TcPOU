@@ -6,6 +6,7 @@ VAR_INPUT
 	fExternalTemperature : REAL; //External temperature in °C
 END_VAR
 VAR_OUTPUT
+	bError : BOOL; // Returns eChiller error
 END_VAR
 VAR
 	//default parameters
@@ -48,6 +49,7 @@ setPointState.sOperatingPointUnit := 'degreeC';
 setPointState.aSetPointLimits := aSetPointLimits;
 
 //local state
+bError := bError_IN;
 localState.bError := bError_IN;
 localState.bWarning := bWarning_IN;
 //local state is read via opc ua
@@ -86,6 +88,7 @@ END_VAR
       <LineId Id="45" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="37" Count="1" />
+      <LineId Id="63" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="49" Count="0" />
       <LineId Id="40" Count="0" />
