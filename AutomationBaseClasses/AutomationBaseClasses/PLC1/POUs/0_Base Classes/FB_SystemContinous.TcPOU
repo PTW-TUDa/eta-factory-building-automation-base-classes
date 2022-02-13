@@ -15,7 +15,7 @@ END_VAR
       <ST><![CDATA[
 ]]></ST>
     </Implementation>
-    <Method Name="CheckError" Id="{b59ceb35-abc7-4ef8-8adb-66fb11937329}">
+    <Method Name="CheckError" Id="{ad935b5d-159a-45d8-a497-f9d6421f009b}">
       <Declaration><![CDATA[METHOD PROTECTED ABSTRACT CheckError : BOOL
 VAR_INPUT
 END_VAR
@@ -94,7 +94,7 @@ END_VAR
         <ST><![CDATA[CheckError(bError => bSystemError);
 systemState.bError := bSystemError;
 
-IF bSystemError = FALSE THEN
+IF NOT bSystemError THEN
 	CASE nState OF
 		E_SystemOperatingState.standby:
 			systemState.sOperatingState := 'standby';
@@ -146,67 +146,16 @@ IF bSystemError = FALSE THEN
 	END_CASE
 ELSE
 	RampDown(bRampDownFinished => bSwitchState);
-	IF bSwitchState THEN	
-		nState := E_SystemOperatingState.standby;
+	IF bSwitchState THEN
 		systemState.sOperatingState := 'standby';
-<<<<<<< Updated upstream
-		bSwitchState := FALSE;
-		//if turned on switch to ramp-up
-		IF(bSetStatusOn) THEN
-			nState := E_SystemOperatingState.rampUp;
-		END_IF
-	E_SystemOperatingState.rampUp:
-		systemState.sOperatingState := 'ramp-up';
-		RampUp(bRampUpFinished => bSwitchState);
-		//if turned off switch to ramp-down
-		IF(NOT bSetStatusOn) THEN
-			nState := E_SystemOperatingState.rampDown;
-		//if ramp-up finished switch to operational
-		ELSIF(bSwitchState) THEN
-			nState := E_SystemOperatingState.operational;
-		END_IF
-	E_SystemOperatingState.operational:
-		systemState.sOperatingState := 'operational';
-		Operational(bSwitchToWorking => bSwitchState);
-		//if turned off switch to ramp-down
-		IF(NOT bSetStatusOn) THEN
-			nState := E_SystemOperatingState.rampDown;
-		//switch to working if desired
-		ELSIF(bSwitchState) THEN
-			nState := E_SystemOperatingState.working;
-		END_IF
-	E_SystemOperatingState.working:
-		systemState.sOperatingState := 'working';
-		Working(bSwitchToOperational => bSwitchState);
-		//if turned off switch to ramp-down
-		IF(NOT bSetStatusOn) THEN
-			nState := E_SystemOperatingState.rampDown;
-		//switch to operational if desired
-		ELSIF(bSwitchState) THEN
-			nState := E_SystemOperatingState.operational;
-		END_IF
-	E_SystemOperatingState.rampDown:
-		systemState.sOperatingState := 'ramp-down';
-		RampDown(bRampDownFinished => bSwitchState);
-		//if turned on switch to ramp-up
-		IF(bSetStatusOn) THEN
-			nState := E_SystemOperatingState.rampUp;
-		//if ramp-down finished switch to standby
-		ELSIF(bSwitchState) THEN
-			nState := E_SystemOperatingState.standby;
-		END_IF
-END_CASE
-systemState.nOperatingState := nState;]]></ST>
-=======
+		nState := E_SystemOperatingState.standby;
 	ELSE
-		nState := E_SystemOperatingState.rampDown;
-		systemState.sOperatingState := 'rampDown';		
+		systemState.sOperatingState := 'ramp-down';	
+		nState := E_SystemOperatingState.rampDown;		
 	END_IF
+	
 END_IF
-systemState.nOperatingState := nState;
-
-]]></ST>
->>>>>>> Stashed changes
+systemState.nOperatingState := nState;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Working" Id="{16283899-5654-440c-b82d-86196b3a2bb6}">
@@ -225,7 +174,7 @@ END_VAR]]></Declaration>
       <LineId Id="19" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.CheckError">
-      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.MAIN">
       <LineId Id="5" Count="1" />
@@ -243,10 +192,9 @@ END_VAR]]></Declaration>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.SystemFlowControl">
-      <LineId Id="177" Count="0" />
-      <LineId Id="192" Count="0" />
-      <LineId Id="182" Count="0" />
-      <LineId Id="176" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="165" Count="1" />
+      <LineId Id="163" Count="0" />
       <LineId Id="82" Count="2" />
       <LineId Id="131" Count="0" />
       <LineId Id="85" Count="9" />
@@ -264,17 +212,17 @@ END_VAR]]></Declaration>
       <LineId Id="128" Count="0" />
       <LineId Id="115" Count="2" />
       <LineId Id="10" Count="0" />
-      <LineId Id="183" Count="0" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="193" Count="1" />
-      <LineId Id="200" Count="0" />
-      <LineId Id="197" Count="1" />
-      <LineId Id="202" Count="0" />
-      <LineId Id="195" Count="0" />
-      <LineId Id="185" Count="0" />
+      <LineId Id="167" Count="1" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="176" Count="0" />
       <LineId Id="174" Count="0" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="162" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="141" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.Working">
       <LineId Id="5" Count="0" />

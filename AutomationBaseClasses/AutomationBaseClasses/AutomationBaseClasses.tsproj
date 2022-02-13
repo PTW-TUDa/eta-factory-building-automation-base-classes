@@ -1,5 +1,25 @@
 <?xml version="1.0"?>
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000300000006}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..5] OF BYTE</Name>
+			<BitSize>48</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>6</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-000300000005}" IecBaseType="true" AutoDeleteType="true">ARRAY [0..4] OF BYTE</Name>
+			<BitSize>40</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>5</Elements>
+			</ArrayInfo>
+		</DataType>
+	</DataTypes>
 	<Project ProjectGUID="{5DBEFCF8-FFAB-4576-97FF-C6E365EDA708}" Target64Bit="true" ShowHideConfigurations="#x106">
 		<System>
 			<Settings MaxCpus="8" NonWinCpus="1">
@@ -66,7 +86,7 @@
 						<Var>
 							<Name>MAIN.CN.HVFAStorage.PUx05.StatusModule_IN</Name>
 							<Comment><![CDATA[I/O links]]></Comment>
-							<Type GUID="{12E80FF5-6251-C867-A464-3036E21E986D}">ARRAY [0..5] OF BYTE</Type>
+							<Type GUID="{18071995-0000-0000-0000-000300000006}">ARRAY [0..5] OF BYTE</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.CN.HVFAStorage.PUx05.nAlarmCode_IN</Name>
@@ -161,7 +181,7 @@
 						</Var>
 						<Var>
 							<Name>MAIN.CN.HVFAStorage.PUx05.ControlModule_OUT</Name>
-							<Type GUID="{14CEA088-1F4A-00F5-F531-CD5B99CC8C4C}">ARRAY [0..4] OF BYTE</Type>
+							<Type GUID="{18071995-0000-0000-0000-000300000005}">ARRAY [0..4] OF BYTE</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.CN.HVFAStorage.PU7x0.bSetStatusOn_OUT</Name>
