@@ -21,17 +21,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="fOperatingPoint" Id="{9e55e02a-e000-449d-ace8-c0c0318e8e4a}">
-      <Declaration><![CDATA[PROPERTY fOperatingPoint : REAL]]></Declaration>
-      <Get Name="Get" Id="{646b79d7-340e-449c-a059-1923543a0f71}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[fOperatingPoint := setPointState.fOperatingPoint;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Method Name="MAIN" Id="{7c71e98c-e88b-49de-b162-405ba243d74c}">
       <Declaration><![CDATA[METHOD PROTECTED MAIN : BOOL // Method that calls all needed function block methods
 VAR_INPUT
@@ -62,7 +51,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetPointCheck" Id="{a788f595-bc97-42ed-a5e1-110d1f06de83}">
-      <Declaration><![CDATA[METHOD PRIVATE SetPointCheck : BOOL
+      <Declaration><![CDATA[METHOD PROTECTED SetPointCheck : BOOL
 VAR
 END_VAR
 ]]></Declaration>
@@ -82,9 +71,6 @@ END_VAR
     </Method>
     <LineIds Name="FB_ActorContinous">
       <LineId Id="91" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ActorContinous.fOperatingPoint.Get">
-      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.MAIN">
       <LineId Id="15" Count="2" />

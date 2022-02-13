@@ -16,7 +16,7 @@ VAR
 	localDefaultParameters : ST_MixingValveDefaultParameters;	
 
 	//analog converters for 0 - 10 V i/o signals
-	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
+	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 90);
 	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
@@ -34,16 +34,14 @@ VAR
 	
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[InputConverter();
-OutputConverter();
-MAIN();
+      <ST><![CDATA[MAIN();
 SelectValveControlMode();
 ControlValve();
 
 ]]></ST>
     </Implementation>
     <Method Name="ControlValve" Id="{1e52182a-8bdc-49bd-b2bd-13ceeb4d93b8}">
-      <Declaration><![CDATA[METHOD PRIVATE ControlValve : BOOL
+      <Declaration><![CDATA[METHOD ControlValve : BOOL
 VAR_INPUT
 END_VAR
 VAR
@@ -92,7 +90,7 @@ END_CASE
       </Implementation>
     </Method>
     <Method Name="SelectValveControlMode" Id="{69d2db34-6658-4b13-ae91-6cb6bcdc3229}">
-      <Declaration><![CDATA[METHOD PRIVATE SelectValveControlMode : BOOL
+      <Declaration><![CDATA[METHOD SelectValveControlMode : BOOL
 VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
@@ -142,7 +140,8 @@ CASE nControlMode OF
 END_CASE
 
 IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if there is a feedback signal 
-
+	InputConverter(nValue := nOperatingPoint_IN);
+	setPointState.fOperatingPoint := InputConverter.fValue;
 	setPointState.sOperatingPointUnit := 'percent';
 	setPointState.aSetPointLimits := aSetPointLimits;
 	IF setPointState.fOperatingPoint > 0 THEN //Set control state if valve is open
@@ -151,10 +150,6 @@ IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if t
 		controlState.bStatusOn := FALSE;
 	END_IF
 END_IF;
-
-//input
-InputConverter(nValue := nOperatingPoint_IN);
-setPointState.fOperatingPoint := InputConverter.fValue;
 
 //Output
 OutputConverter(fValue := fSetPoint_internal);
@@ -178,7 +173,6 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_MixingValve">
-      <LineId Id="158" Count="1" />
       <LineId Id="58" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="94" Count="0" />
@@ -227,16 +221,13 @@ END_VAR
       <LineId Id="99" Count="0" />
       <LineId Id="64" Count="0" />
       <LineId Id="52" Count="0" />
-      <LineId Id="71" Count="0" />
+      <LineId Id="70" Count="1" />
       <LineId Id="101" Count="0" />
       <LineId Id="87" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="81" Count="2" />
       <LineId Id="80" Count="0" />
       <LineId Id="53" Count="0" />
-      <LineId Id="104" Count="1" />
-      <LineId Id="108" Count="0" />
-      <LineId Id="107" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="67" Count="0" />
       <LineId Id="72" Count="0" />

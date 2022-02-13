@@ -88,6 +88,7 @@ END_VAR
 		END_IF
 	E_SystemOperatingState.rampUp:
 		systemState.sOperatingState := 'ramp-up';
+		systemState.bRampUp := TRUE;
 		RampUp(bRampUpFinished => bSwitchState);
 		//if turned off switch to ramp-down
 		IF(NOT bSetStatusOn) THEN
@@ -118,6 +119,7 @@ END_VAR
 		END_IF
 	E_SystemOperatingState.rampDown:
 		systemState.sOperatingState := 'ramp-down';
+		systemState.bRampDown := TRUE;
 		RampDown(bRampDownFinished => bSwitchState);
 		//if turned on switch to ramp-up
 		IF(bSetStatusOn) THEN
@@ -163,7 +165,9 @@ END_VAR]]></Declaration>
     <LineIds Name="FB_SystemContinous.SystemFlowControl">
       <LineId Id="82" Count="2" />
       <LineId Id="131" Count="0" />
-      <LineId Id="85" Count="9" />
+      <LineId Id="85" Count="5" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="91" Count="3" />
       <LineId Id="129" Count="0" />
       <LineId Id="95" Count="4" />
       <LineId Id="119" Count="0" />
@@ -174,7 +178,9 @@ END_VAR]]></Declaration>
       <LineId Id="103" Count="2" />
       <LineId Id="123" Count="0" />
       <LineId Id="149" Count="5" />
-      <LineId Id="108" Count="6" />
+      <LineId Id="108" Count="2" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="111" Count="3" />
       <LineId Id="128" Count="0" />
       <LineId Id="115" Count="2" />
       <LineId Id="10" Count="0" />
