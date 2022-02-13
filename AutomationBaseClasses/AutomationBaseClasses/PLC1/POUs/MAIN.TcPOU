@@ -3,14 +3,17 @@
   <POU Name="MAIN" Id="{9f33f5a0-2a24-4206-9468-c589128c5602}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	testSystem : FB_TestSystem;
+	//eChillerSystem : FB_eChillerSystem;
+	CN : CoolingNetwork;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[testSystem();]]></ST>
+      <ST><![CDATA[//eChillerSystem();
+CN();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="2" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

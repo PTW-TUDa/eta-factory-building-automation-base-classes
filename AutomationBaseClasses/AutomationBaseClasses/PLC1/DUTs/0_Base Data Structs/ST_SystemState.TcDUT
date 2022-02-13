@@ -4,10 +4,8 @@
     <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
 TYPE ST_SystemState :
 STRUCT
-	sOperatingState : STRING; //operating state (standby, operational, working)
+	sOperatingState : STRING; //operating state (standby, operational, working,ramp up, ramp down)
 	nOperatingState : E_SystemOperatingState; //operating state (standby, operational, working)
-	bRampUp : BOOL; //true if in ramp up state
-	bRampDown : BOOL; //true if in ramp down state
 END_STRUCT
 END_TYPE
 ]]></Declaration>
