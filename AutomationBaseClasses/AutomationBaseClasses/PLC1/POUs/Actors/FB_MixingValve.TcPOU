@@ -59,36 +59,33 @@ PI_Controler_Parameters.tTaskCycleTime	:= GlobalVariables.tTaskCycleTime;
 PI_Controler_Parameters.tCtrlCycleTime	:= DINT_TO_TIME(500);
 PI_Controler_Parameters.bARWOnIPartOnly	:= TRUE;
 
-IF bSetStatusOn THEN
-	CASE nControlMode OF
-		0: //position mode
-		fSetPoint_internal := fSetPoint;
-		
-		1: //heating mode
-		PI_Controller_Heating (
-				fSetpointValue	:= fSetPoint,
-				fActualValue	:= fTemperatureExternal,
-				fManSyncValue	:= 0,
-				bSync			:= FALSE,
-				eMode			:= 2, (* mode active *)
-				bHold			:= FALSE,
-				stParams		:= PI_Controler_Parameters);
-		fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Heating.fOut);
-				
-		2: //cooling mode
-		PI_Controller_Cooling (
-			fSetpointValue	:= fTemperatureExternal,
-			fActualValue	:= fSetPoint,
+
+CASE nControlMode OF
+	0: //position mode
+	fSetPoint_internal := fSetPoint;
+	
+	1: //heating mode
+	PI_Controller_Heating (
+			fSetpointValue	:= fSetPoint,
+			fActualValue	:= fTemperatureExternal,
 			fManSyncValue	:= 0,
 			bSync			:= FALSE,
 			eMode			:= 2, (* mode active *)
 			bHold			:= FALSE,
 			stParams		:= PI_Controler_Parameters);
-		fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Cooling.fOut);
-	END_CASE
-ELSE
-	fSetPoint_internal := localDefaultParameters.fDefaultPosition;
-END_IF
+	fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Heating.fOut);
+			
+	2: //cooling mode
+	PI_Controller_Cooling (
+		fSetpointValue	:= fTemperatureExternal,
+		fActualValue	:= fSetPoint,
+		fManSyncValue	:= 0,
+		bSync			:= FALSE,
+		eMode			:= 2, (* mode active *)
+		bHold			:= FALSE,
+		stParams		:= PI_Controler_Parameters);
+	fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Cooling.fOut);
+END_CASE
 
 
 ]]></ST>
@@ -193,8 +190,7 @@ END_VAR
       <LineId Id="104" Count="1" />
       <LineId Id="100" Count="3" />
       <LineId Id="98" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="111" Count="0" />
+      <LineId Id="94" Count="1" />
       <LineId Id="7" Count="1" />
       <LineId Id="69" Count="0" />
       <LineId Id="12" Count="0" />
@@ -208,7 +204,6 @@ END_VAR
       <LineId Id="83" Count="0" />
       <LineId Id="91" Count="0" />
       <LineId Id="9" Count="0" />
-      <LineId Id="112" Count="2" />
       <LineId Id="31" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="23" Count="0" />
