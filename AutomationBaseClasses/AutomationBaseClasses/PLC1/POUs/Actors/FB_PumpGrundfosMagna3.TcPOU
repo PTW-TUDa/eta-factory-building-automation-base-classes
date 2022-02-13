@@ -40,7 +40,7 @@ SelectPumpControlMode();
 CalculateHydraulicPower();]]></ST>
     </Implementation>
     <Method Name="CalculateHydraulicPower" Id="{5ee59af5-7c08-4f03-8cfe-829337b66dfd}">
-      <Declaration><![CDATA[METHOD CalculateHydraulicPower : REAL
+      <Declaration><![CDATA[METHOD PRIVATE CalculateHydraulicPower : REAL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -49,7 +49,7 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="SelectPumpControlMode" Id="{9f36f1dc-61c9-4f36-814e-95f20eaaf659}">
-      <Declaration><![CDATA[METHOD PROTECTED SelectPumpControlMode : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE SelectPumpControlMode : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
