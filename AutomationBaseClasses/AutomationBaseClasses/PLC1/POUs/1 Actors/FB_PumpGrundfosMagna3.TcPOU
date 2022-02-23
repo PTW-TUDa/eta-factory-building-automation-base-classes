@@ -6,6 +6,7 @@ VAR_INPUT
 	nControlModeAutomatic : E_GrundfosMagna3ControlMode;
 END_VAR
 VAR_OUTPUT
+	bError : BOOL;
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
@@ -37,7 +38,8 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[MAIN();
 SelectPumpControlMode();
-CalculateHydraulicPower();]]></ST>
+CalculateHydraulicPower();
+bError := localState.bError;]]></ST>
     </Implementation>
     <Method Name="CalculateHydraulicPower" Id="{5ee59af5-7c08-4f03-8cfe-829337b66dfd}">
       <Declaration><![CDATA[METHOD PRIVATE CalculateHydraulicPower : REAL
@@ -167,6 +169,7 @@ END_VAR
       <LineId Id="259" Count="0" />
       <LineId Id="333" Count="0" />
       <LineId Id="260" Count="0" />
+      <LineId Id="367" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.CalculateHydraulicPower">
       <LineId Id="5" Count="0" />

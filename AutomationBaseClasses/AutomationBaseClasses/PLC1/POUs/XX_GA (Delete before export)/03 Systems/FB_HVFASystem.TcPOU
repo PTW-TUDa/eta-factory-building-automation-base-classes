@@ -19,34 +19,68 @@ VAR
 	PU7x0 : FB_PumpGrundfosCM; //CM pump (storage side)
 
 	//valves
-	SVx05 : FB_MixingValve; //discrete inlet valve, valve motor needs continous signal but operates only between extreme positions
-	SVx06 : FB_MixingValve; //discrete outlet valve	, valve motor needs continous signal but operates only between extreme positions
-	RVx05 : FB_MixingValve; //continous mixing valve
+	ST_SVx05DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0);
+	ST_SVx06DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0);
+	ST_RVx05DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0);
+
+	SVx05 : FB_MixingValve := (ST_DefaultParameters := ST_SVx05DefaultParameters); //discrete inlet valve, valve motor needs continous signal but operates only between extreme positions
+	SVx06 : FB_MixingValve := (ST_DefaultParameters := ST_SVx06DefaultParameters); //discrete outlet valve	, valve motor needs continous signal but operates only between extreme positions
+	RVx05 : FB_MixingValve := (ST_DefaultParameters := ST_RVx05DefaultParameters); //continous mixing valve
 	
 	//sensors
 	//WMZ missing
 	
 	//internal variables
-
+	bSetStatusOn_PUx05 : BOOL;
+	bSetStatusOn_PU7x0 : BOOL;
+	bSetStatusOn_SVx05 : BOOL;
+	fSetPoint_SVx05 : REAL;
+	bSetStatusOn_SVx06 : BOOL;
+	fSetPoint_SVx06 : REAL;	
+	bSetStatusOn_RVx05 : BOOL;
+	fSetPoint_RVx05 : REAL;
+	fExternalTemperature_RVx05 : REAL;
+	nControlMode_RVx05 : E_MixingValveControlMode;
+	
+	FB_Trigger : F_TRIG;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[MAIN();
+
 //storage
 HVFAStorage();
 
 //pumps
-PUx05();
+PUx05(bSetStatusOnAutomatic := bSetStatusOn_PUx05,
+	fSetPointAutomatic := 100,
+	bAlgorithmPermission := bAlgorithmPermission,
+	nControlModeAutomatic := 0);
 PUx05.SetState_Profibus();
-PU7x0();
+
+PU7x0(bSetStatusOnAutomatic := bSetStatusOn_PU7x0,
+	bAlgorithmPermission := bAlgorithmPermission);
 PU7x0.SetState_BO();
 
 //valves
-SVx05();
+SVx05(bSetStatusOnAutomatic := bSetStatusOn_SVx05,
+	fSetPointAutomatic := fSetPoint_SVx05,
+	bAlgorithmPermission := bAlgorithmPermission,
+	nControlModeAutomatic := 0);
 SVx05.SetState_AI_AO();
-SVx06();
+
+SVx06(bSetStatusOnAutomatic := bSetStatusOn_SVx06,
+	fSetPointAutomatic := fSetPoint_SVx06,
+	bAlgorithmPermission := bAlgorithmPermission,
+	nControlModeAutomatic := 0);
 SVx06.SetState_AI_AO();
-RVx05();
+
+RVx05(bSetStatusOnAutomatic := bSetStatusOn_RVx05,
+	fSetPointAutomatic := fSetPoint,
+	bAlgorithmPermission := bAlgorithmPermission,
+	fTemperatureExternal := fExternalTemperature_RVx05,
+	nControlModeAutomatic := nControlMode_RVx05);
 RVx05.SetState_AI_AO();]]></ST>
     </Implementation>
     <Method Name="CheckError" Id="{3885b851-6355-4b83-91f2-4bce5a5a167c}">
@@ -56,9 +90,13 @@ END_VAR
 VAR_OUTPUT
 	bError : BOOL;
 END_VAR
+VAR
+	bError_PUx05 : BOOL;
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[//Check for pump error
+bError_PUx05 := PUx05.bError;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operational" Id="{1affe816-03a8-4619-861c-9f36b7a32fe2}">
@@ -70,15 +108,14 @@ VAR_OUTPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//storage pump
-PU7x0.bSetStatusOnAutomatic := TRUE;
+bSetStatusOn_PU7x0 := TRUE;
 
 //network pump
-PUx05.bSetStatusOnAutomatic := TRUE;
-PUx05.fSetPointAutomatic := 100;
+bSetStatusOn_PUx05 := TRUE;
 
 //temperature controlling valve
-RVx05.bSetStatusOnAutomatic := TRUE;
-RVx05.fSetPointAutomatic := fSetPoint;
+bSetStatusOn_RVx05 := TRUE;
+//fExternalTemperature_RVx05 := WMZ710.ReturnTemperature
 
 IF PUx05.bStatusOn THEN
 	bSwitchToWorking := TRUE;
@@ -94,7 +131,13 @@ VAR_OUTPUT
 	bRampDownFinished : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[bSetStatusOn_PU7x0 := FALSE;
+bSetStatusOn_PUx05 := FALSE;
+bSetStatusOn_RVx05 := FALSE;
+
+IF RVx05.fOperatingPoint<10 AND NOT PUx05.bStatusOn THEN
+	bRampDownFinished := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="RampUp" Id="{102b737b-90cc-4a35-8a53-542b70d6ba9f}">
@@ -106,18 +149,23 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[SVx05.bSetStatusOnAutomatic := TRUE;
-SVx06.bSetStatusOnAutomatic := TRUE;
+        <ST><![CDATA[bSetStatusOn_SVx05 := TRUE;
+bSetStatusOn_SVx06 := TRUE;
+
 IF bLoading = TRUE THEN
-	SVx05.fSetPointAutomatic := 100;
-	SVx06.fSetPointAutomatic := 100;
-	IF SVx05.fOperatingPoint>90 THEN
+	fSetPoint_SVx05 := 100;
+	fSetPoint_SVx06 := 100;
+	nControlMode_RVx05 := 2; //cooling mode (heats network)
+	//fExternalTemperature_RVx05 := WMZ710.ReturnTemperature
+	IF SVx05.fOperatingPoint>90 AND SVx06.fOperatingPoint>90 THEN
 		bRampUpFinished := TRUE;
 	END_IF
 ELSE
-	SVx05.fSetPointAutomatic := 0;
-	SVx06.fSetPointAutomatic := 0;
-	IF SVx05.fOperatingPoint<10 THEN
+	fSetPoint_SVx05 := 0;
+	fSetPoint_SVx06 := 0;
+	nControlMode_RVx05 := 1; //heating mode (cools network)
+	//fExternalTemperature_RVx05 := WMZ105.FeedTemperature
+	IF SVx05.fOperatingPoint<10 AND SVx06.fOperatingPoint<10 THEN
 		bRampUpFinished := TRUE;
 	END_IF
 END_IF
@@ -154,37 +202,61 @@ VAR_OUTPUT
 	bSwitchToOperational : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[RVx05.fSetPointAutomatic := fSetPoint;]]></ST>
+        <ST><![CDATA[//Check if loading mode has changed during operation
+IF bLoading = TRUE THEN
+	fSetPoint_SVx05 := 100;
+	fSetPoint_SVx06 := 100;
+	nControlMode_RVx05 := 2; //cooling mode (heats network)
+	//fExternalTemperature_RVx05 := WMZ710.ReturnTemperature
+ELSE
+	fSetPoint_SVx05 := 0;
+	fSetPoint_SVx06 := 0;
+	nControlMode_RVx05 := 1; //heating mode (cools network)
+	//fExternalTemperature_RVx05 := WMZ105.FeedTemperature
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_HVFASystem">
       <LineId Id="9" Count="0" />
+      <LineId Id="103" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="27" Count="0" />
-      <LineId Id="30" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="80" Count="2" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="84" Count="0" />
       <LineId Id="33" Count="0" />
+      <LineId Id="85" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="34" Count="0" />
       <LineId Id="36" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="89" Count="1" />
       <LineId Id="38" Count="0" />
+      <LineId Id="91" Count="3" />
       <LineId Id="40" Count="0" />
       <LineId Id="39" Count="0" />
-      <LineId Id="41" Count="1" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="96" Count="3" />
+      <LineId Id="42" Count="0" />
     </LineIds>
     <LineIds Name="FB_HVFASystem.CheckError">
       <LineId Id="8" Count="0" />
+      <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="FB_HVFASystem.Operational">
       <LineId Id="13" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="14" Count="1" />
-      <LineId Id="8" Count="1" />
+      <LineId Id="8" Count="0" />
       <LineId Id="16" Count="1" />
       <LineId Id="10" Count="0" />
-      <LineId Id="18" Count="0" />
+      <LineId Id="28" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="21" Count="1" />
@@ -192,18 +264,14 @@ END_VAR]]></Declaration>
     </LineIds>
     <LineIds Name="FB_HVFASystem.RampDown">
       <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="1" />
     </LineIds>
     <LineIds Name="FB_HVFASystem.RampUp">
       <LineId Id="20" Count="1" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="24" Count="2" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="29" Count="1" />
-      <LineId Id="28" Count="0" />
+      <LineId Id="37" Count="16" />
       <LineId Id="10" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="22" Count="0" />
@@ -216,7 +284,11 @@ END_VAR]]></Declaration>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_HVFASystem.Working">
-      <LineId Id="7" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="16" Count="4" />
+      <LineId Id="24" Count="4" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

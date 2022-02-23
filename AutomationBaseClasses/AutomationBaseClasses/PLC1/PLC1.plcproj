@@ -93,34 +93,40 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Classes\FB_Actor2Point.TcPOU">
+    <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Classes\FB_ActorContinous.TcPOU">
+    <Compile Include="POUs\0 Base Classes\FB_ActorContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Classes\FB_Sensor.TcPOU">
+    <Compile Include="POUs\0 Base Classes\FB_Sensor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0_Base Classes\FB_SystemContinous.TcPOU">
+    <Compile Include="POUs\0 Base Classes\FB_SystemContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Actors\FB_DiscreteValve.TcPOU">
+    <Compile Include="POUs\1 Actors\FB_DiscreteValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Actors\FB_PumpGrundfosMagna3.TcPOU">
+    <Compile Include="POUs\1 Actors\FB_PumpGrundfosMagna3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Actors\FB_MixingValve.TcPOU">
+    <Compile Include="POUs\1 Actors\FB_MixingValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Sensors\FB_TemperatureSensor.TcPOU">
+    <Compile Include="POUs\2 Sensors\FB_TemperatureSensor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\0 Base\Limiter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\FB_eChiller.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\FB_HeatPump.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\01 Actors\Pumps\FB_PumpGrundfosCM.TcPOU">
@@ -132,25 +138,28 @@
     <Compile Include="POUs\XX_GA %28Delete before export%29\02 Sensors\FB_HVFAStorage.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_HeatPumpSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_HVFASystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\FB_TestSystem.TcPOU">
+    <Compile Include="POUs\XX_GA %28Delete before export%29\06 Strategy\BaseStrategyController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Utilities\Profibus\BufferIntToReal.TcPOU">
+    <Compile Include="POUs\4 Utilities\2 Profibus\BufferIntToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Utilities\Profibus\BufferRealToReal.TcPOU">
+    <Compile Include="POUs\4 Utilities\2 Profibus\BufferRealToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Utilities\Profibus\BufferUdintToReal.TcPOU">
+    <Compile Include="POUs\4 Utilities\2 Profibus\BufferUdintToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Utilities\AI_AO\FB_AnalogInput.TcPOU">
+    <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogInput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Utilities\AI_AO\FB_AnalogOutput.TcPOU">
+    <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\05 Networks\CoolingNetwork.TcPOU">
@@ -180,15 +189,16 @@
     <Folder Include="DUTs\XX_GA %28Delete before export%29\05 Strategy" />
     <Folder Include="GVLs" />
     <Folder Include="Global Variables %28Delete before export%29" />
-    <Folder Include="POUs\0_Base Classes" />
-    <Folder Include="POUs\Actors" />
+    <Folder Include="POUs\0 Base Classes" />
+    <Folder Include="POUs\1 Actors" />
+    <Folder Include="POUs\4 Utilities\0 Base" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors" />
-    <Folder Include="POUs\Sensors" />
-    <Folder Include="POUs\Utilities" />
-    <Folder Include="POUs\Systems" />
+    <Folder Include="POUs\2 Sensors" />
+    <Folder Include="POUs\4 Utilities" />
+    <Folder Include="POUs\3 Systems" />
     <Folder Include="POUs\XX_GA %28Delete before export%29" />
-    <Folder Include="POUs\Utilities\Profibus" />
-    <Folder Include="POUs\Utilities\AI_AO" />
+    <Folder Include="POUs\4 Utilities\2 Profibus" />
+    <Folder Include="POUs\4 Utilities\1 AI_AO" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\HeatingUnits" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\Pumps" />

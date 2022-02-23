@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_HeatPump" Id="{6be2a86b-9314-45b6-a0b8-c7e56c6270da}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HeatPump EXTENDS FB_Actor2Point
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//I/O Links
+	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SelectControlMode();]]></ST>
+    </Implementation>
+    <Method Name="SetState_BO" Id="{d936418b-3361-4568-804e-f0c81650d572}">
+      <Declaration><![CDATA[METHOD SetState_BO : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//control state
+controlState.bStatusOn := bSetStatusOn;
+
+//output
+bSetStatusOn_OUT := bSetStatusOn;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_HeatPump">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_HeatPump.SetState_BO">
+      <LineId Id="6" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

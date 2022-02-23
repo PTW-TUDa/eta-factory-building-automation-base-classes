@@ -6,6 +6,7 @@ VAR_INPUT
 	fSetPointAutomatic	: REAL; //unit depending setpoint
 END_VAR
 VAR_OUTPUT
+	fOperatingPoint : REAL;
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
@@ -19,19 +20,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[fOperatingPoint := setPointState.fOperatingPoint;]]></ST>
     </Implementation>
-    <Property Name="fOperatingPoint" Id="{9e55e02a-e000-449d-ace8-c0c0318e8e4a}">
-      <Declaration><![CDATA[PROPERTY fOperatingPoint : REAL]]></Declaration>
-      <Get Name="Get" Id="{646b79d7-340e-449c-a059-1923543a0f71}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[fOperatingPoint := setPointState.fOperatingPoint;]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Method Name="MAIN" Id="{7c71e98c-e88b-49de-b162-405ba243d74c}">
       <Declaration><![CDATA[METHOD PROTECTED MAIN : BOOL // Method that calls all needed function block methods
 VAR_INPUT
@@ -40,7 +30,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[SelectControlMode();
 SetSetPointLimits();
-SetPointCheck();]]></ST>
+SetPointCheck();
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="SelectControlMode" Id="{9487b088-9bc5-4a7e-8bf7-9767eafe3f05}">
@@ -83,11 +74,9 @@ END_VAR
     <LineIds Name="FB_ActorContinous">
       <LineId Id="91" Count="0" />
     </LineIds>
-    <LineIds Name="FB_ActorContinous.fOperatingPoint.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
     <LineIds Name="FB_ActorContinous.MAIN">
       <LineId Id="15" Count="2" />
+      <LineId Id="21" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.SelectControlMode">
       <LineId Id="38" Count="1" />
