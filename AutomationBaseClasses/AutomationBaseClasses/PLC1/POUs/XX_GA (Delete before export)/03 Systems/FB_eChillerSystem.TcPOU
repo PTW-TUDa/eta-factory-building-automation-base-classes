@@ -8,10 +8,10 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	//component - Efficient Energy eChiller 45-II
+	//Efficient Energy eChiller 45-II
 	eChiller : FB_eChiller;
 	
-	//component - valve 138
+	//discrete valve 138
 	ST_SV138DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0);
 	SV138 : FB_MixingValve := (ST_DefaultParameters := ST_SV138DefaultParameters); //valve motor needs continous signal but operates only between extreme positions	
 	
@@ -50,10 +50,10 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Check chiller for error
+        <ST><![CDATA[//check chiller for error
 bError_eChiller := eChiller.bError;
 
-//Check valve SV138 for error
+//check valve SV138 for error
 IF SV138.fOperatingPoint <= 95 AND eChiller.bStatusOn THEN
 	bError_SV138 := TRUE;
 END_IF
@@ -71,7 +71,6 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[bSetStatusOn_eChiller := TRUE;
 
-//Wait until eChiller is switched on
 IF eChiller.bStatusOn THEN
 	bSwitchToWorking := TRUE;
 END_IF]]></ST>
@@ -87,12 +86,12 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[bSetStatusOn_eChiller := FALSE;
 
-//Wait until eChiller is switched off before closing valve
+//wait until eChiller is switched off before closing valve
 IF NOT eChiller.bStatusOn THEN
 	bSetStatusOn_SV138 := FALSE;
 END_IF
 
-//Wait until valve is closed and ensure that eChiller is not switched on meanwhile
+//wait until valve is closed and ensure that eChiller is not switched on meanwhile
 IF SV138.fOperatingPoint < 5 AND NOT eChiller.bStatusOn THEN
 	bRampDownFinished := TRUE;
 END_IF]]></ST>
@@ -109,7 +108,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[bSetStatusOn_SV138 := TRUE;
 
-//Wait until valve is opened
+//wait until valve is opened
 IF SV138.fOperatingPoint > 95 THEN
 	bRampUpFinished := TRUE;
 END_IF]]></ST>
@@ -133,7 +132,7 @@ VAR_OUTPUT
 	bSwitchToOperational : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Check if eChiller is switched off (manually) but valve is still opened
+        <ST><![CDATA[//check if eChiller is switched off (manually) but valve is still opened
 IF NOT eChiller.bStatusOn AND SV138.fOperatingPoint > 95 THEN
 	bSwitchToOperational := TRUE;
 END_IF]]></ST>
@@ -163,7 +162,6 @@ END_IF]]></ST>
     </LineIds>
     <LineIds Name="FB_eChillerSystem.Operational">
       <LineId Id="13" Count="0" />
-      <LineId Id="22" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="12" Count="0" />
@@ -171,18 +169,18 @@ END_IF]]></ST>
     </LineIds>
     <LineIds Name="FB_eChillerSystem.RampDown">
       <LineId Id="7" Count="0" />
-      <LineId Id="22" Count="0" />
+      <LineId Id="29" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="10" Count="1" />
-      <LineId Id="23" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="1" />
     </LineIds>
     <LineIds Name="FB_eChillerSystem.RampUp">
       <LineId Id="8" Count="0" />
-      <LineId Id="21" Count="0" />
+      <LineId Id="28" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="12" Count="1" />

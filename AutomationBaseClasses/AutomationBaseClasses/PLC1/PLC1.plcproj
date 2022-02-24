@@ -17,64 +17,55 @@
     <LibraryReferences>{0ee310db-d5ce-47e5-8199-6a7dd473b96b}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\0_Base Data Structs\E_SystemControlState.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\E_SystemOperatingState.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\E_SystemOperatingState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\ST_Control.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\ST_Control.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\ST_ControlState.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\ST_ControlState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\ST_SensorState.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\ST_SensorState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\ST_SetPointState.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\ST_SetPointState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\ST_SetSetPoint.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\ST_SetSetPoint.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\0_Base Data Structs\ST_SystemState.TcDUT">
+    <Compile Include="DUTs\0 Base Data Structs\ST_SystemState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\DicreteValve\ST_DiscreteValveDefaultParameters.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\DicreteValve\ST_DiscreteValveDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\MixingValve\E_MixingValveControlMode.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\MixingValve\E_MixingValveControlMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\MixingValve\ST_MixingValveDefaultParameters.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\MixingValve\ST_MixingValveDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\MixingValve\ST_MixingValveSetParameters.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\MixingValve\ST_MixingValveSetParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\Pumps\E_GrundfosMagna3ControlMode.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\E_GrundfosMagna3ControlMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\Pumps\ST_GundfosMagna3DefaultParameters.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_GundfosMagna3DefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\System Data Structs\ST_TestSystemDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\System Data Structs\ST_TestSystemSetParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\System Data Structs\ST_TestSystemState.TcDUT">
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\ST_eChillerDefaultParameters.TcDUT">
@@ -85,10 +76,6 @@
     </Compile>
     <Compile Include="DUTs\XX_GA %28Delete before export%29\03 Systems\ST_HVFASystemDefaultParameters.TcDUT">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Global Variables %28Delete before export%29\GlobalVariables.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
@@ -168,17 +155,21 @@
     <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_eChillerSystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\XX_GA %28Delete before export%29\GlobalVariables.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
-    <Folder Include="DUTs\0_Base Data Structs" />
-    <Folder Include="DUTs\Actor Data Structs" />
-    <Folder Include="DUTs\Actor Data Structs\MixingValve" />
-    <Folder Include="DUTs\Actor Data Structs\DicreteValve" />
-    <Folder Include="DUTs\Actor Data Structs\Pumps" />
-    <Folder Include="DUTs\Sensor Data Structs" />
+    <Folder Include="DUTs\0 Base Data Structs" />
+    <Folder Include="DUTs\1 Actor Data Structs" />
+    <Folder Include="DUTs\1 Actor Data Structs\MixingValve" />
+    <Folder Include="DUTs\1 Actor Data Structs\DicreteValve" />
+    <Folder Include="DUTs\1 Actor Data Structs\Pumps" />
+    <Folder Include="DUTs\2 Sensor Data Structs" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29" />
-    <Folder Include="DUTs\System Data Structs" />
+    <Folder Include="DUTs\3 System Data Structs" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors\HeatingUnits" />
@@ -188,7 +179,6 @@
     <Folder Include="DUTs\XX_GA %28Delete before export%29\04 LinkageSystems" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\05 Strategy" />
     <Folder Include="GVLs" />
-    <Folder Include="Global Variables %28Delete before export%29" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
     <Folder Include="POUs\4 Utilities\0 Base" />

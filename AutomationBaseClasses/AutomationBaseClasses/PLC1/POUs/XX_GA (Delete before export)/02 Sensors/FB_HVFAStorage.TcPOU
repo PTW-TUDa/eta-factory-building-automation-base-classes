@@ -9,8 +9,8 @@ VAR_OUTPUT
 	LowerTemperature : REAL;
 END_VAR
 VAR
-	UpperTemperatureSensor : FB_TemperatureSensor;
-	LowerTemperatureSensor : FB_TemperatureSensor;
+	UpperTemperatureSensor : FB_TemperatureSensor; //upper temperature sensor
+	LowerTemperatureSensor : FB_TemperatureSensor; //lower temperature sensor
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -18,7 +18,7 @@ END_VAR
 UpperTemperatureSensor.SetState_AI();
 LowerTemperatureSensor.SetState_AI();
 
-//Set outputs
+//set outputs
 UpperTemperature := UpperTemperatureSensor.fTemperature;
 LowerTemperature := LowerTemperatureSensor.fTemperature;]]></ST>
     </Implementation>

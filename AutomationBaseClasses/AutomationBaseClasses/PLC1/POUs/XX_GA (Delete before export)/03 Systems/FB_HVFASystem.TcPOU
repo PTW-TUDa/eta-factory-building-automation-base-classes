@@ -95,7 +95,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Check for pump error
+        <ST><![CDATA[//check for pump error
 bError_PUx05 := PUx05.bError;]]></ST>
       </Implementation>
     </Method>
@@ -115,7 +115,6 @@ bSetStatusOn_PUx05 := TRUE;
 
 //temperature controlling valve
 bSetStatusOn_RVx05 := TRUE;
-//fExternalTemperature_RVx05 := WMZ710.ReturnTemperature
 
 IF PUx05.bStatusOn THEN
 	bSwitchToWorking := TRUE;
@@ -202,7 +201,7 @@ VAR_OUTPUT
 	bSwitchToOperational : BOOL := FALSE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Check if loading mode has changed during operation
+        <ST><![CDATA[//check if loading mode has changed during operation
 IF bLoading = TRUE THEN
 	fSetPoint_SVx05 := 100;
 	fSetPoint_SVx06 := 100;
@@ -256,7 +255,6 @@ END_IF
       <LineId Id="8" Count="0" />
       <LineId Id="16" Count="1" />
       <LineId Id="10" Count="0" />
-      <LineId Id="28" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="21" Count="1" />

@@ -7,10 +7,10 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	//component - Vitocal 350-G heat pump
+	//Vitocal 350-G heat pump
 	HeatPump : FB_HeatPump;
 	
-	//component - valve 138
+	//valve 146 and valve 246
 	ST_SV146DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);
 	ST_SV246DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);	
 	SV146 : FB_DiscreteValve := (ST_DefaultParameters := ST_SV146DefaultParameters);
@@ -56,7 +56,7 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[//empty method because system has no feedback signals]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operational" Id="{e9fc807b-7078-4eae-9f16-4902d1f22c08}">

@@ -31,7 +31,6 @@ VAR
 	PI_Controller_Heating		: FB_CTRL_PI;
 	PI_Controller_Cooling		: FB_CTRL_PI;
 	PI_Controler_Parameters 	: ST_CTRL_PI_PARAMS;
-	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[InputConverter();

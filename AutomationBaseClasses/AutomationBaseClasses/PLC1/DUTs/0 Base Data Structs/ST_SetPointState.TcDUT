@@ -8,7 +8,7 @@ STRUCT
 	fSetPoint			: REAL; //current set point
 	sSetPointUnit		: STRING; //current set point unit
 	sOperatingPointUnit : STRING; //current operating point unit 
-	aSetPointLimits	: ARRAY[1..2] OF REAL; //lower and upper limit of setpoint
+	aSetPointLimits		: ARRAY[1..2] OF REAL; //lower and upper limit of setpoint
 END_STRUCT
 END_TYPE
 ]]></Declaration>

@@ -16,10 +16,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//control state
-controlState.bStatusOn := bSetStatusOn; //pump does not have a status module, so control state gets internal bSetStatusOn variable
-
-//output
+        <ST><![CDATA[//output
 bSetStatusOn_OUT := bSetStatusOn;]]></ST>
       </Implementation>
     </Method>
@@ -27,9 +24,6 @@ bSetStatusOn_OUT := bSetStatusOn;]]></ST>
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosCM.SetState_BO">
-      <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="8" Count="0" />
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>

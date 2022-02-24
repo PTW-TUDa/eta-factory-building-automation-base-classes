@@ -21,7 +21,7 @@ UpperTemperatureSensor.SetState_AI();
 MidTemperatureSensor.SetState_AI();
 LowerTemperatureSensor.SetState_AI();
 
-//Set outputs
+//set outputs
 UpperTemperature := UpperTemperatureSensor.fTemperature;
 MidTemperature := MidTemperatureSensor.fTemperature;
 LowerTemperature := LowerTemperatureSensor.fTemperature;]]></ST>

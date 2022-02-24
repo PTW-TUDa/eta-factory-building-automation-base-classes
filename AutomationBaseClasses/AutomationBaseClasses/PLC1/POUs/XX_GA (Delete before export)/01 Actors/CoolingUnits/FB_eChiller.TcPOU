@@ -23,7 +23,6 @@ VAR
 	nSetPoint_OUT			AT %Q* : INT; //Set position linked to terminal
 	nActualTemperature_OUT 	AT %Q* : INT; //Actual temperature in buffer storage linked to terminal
 	bSetStatusOn_OUT 		AT %Q* : BOOL; //SetStatus linked to terminal
-	//bEmergencyStop_OUT 		AT %Q* : BOOL; //External triggered emergency stop linked to terminal - Needed?
 	bError_IN 				AT %I* : BOOL; //Error state linked to terminal
 	bWarning_IN 			AT %I* : BOOL; //Warning state linked to terminal
 	bStatusOn_IN 			AT %I* : BOOL; //Working state linked to terminal
