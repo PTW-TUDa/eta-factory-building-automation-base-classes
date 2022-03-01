@@ -7,7 +7,7 @@ VAR_INPUT
 	bAlgorithmPermission : BOOL; //is true if control by algorithm is allowed
 END_VAR
 VAR_OUTPUT
-	bStatusOn : BOOL;
+	bStatusOn : BOOL; //true if actor is on
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}

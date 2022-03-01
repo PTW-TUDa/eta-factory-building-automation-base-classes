@@ -6,7 +6,7 @@ VAR_INPUT
 	fSetPointAutomatic	: REAL; //unit depending setpoint
 END_VAR
 VAR_OUTPUT
-	fOperatingPoint : REAL;
+	fOperatingPoint : REAL; //unit depending operating point
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}

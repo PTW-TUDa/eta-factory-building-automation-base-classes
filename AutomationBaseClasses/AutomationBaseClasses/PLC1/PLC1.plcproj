@@ -15,6 +15,10 @@
     <Implicit_KindOfTask>{4cf91507-951e-49ce-a07e-51c7a17a9d78}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{1cdd92d9-d314-4185-9bfd-fb9f74ea4de4}</Implicit_Jitter_Distribution>
     <LibraryReferences>{0ee310db-d5ce-47e5-8199-6a7dd473b96b}</LibraryReferences>
+    <Company>PTW TU Darmstadt</Company>
+    <Released>false</Released>
+    <Title>AutomationBaseClasses</Title>
+    <ProjectVersion>1.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
