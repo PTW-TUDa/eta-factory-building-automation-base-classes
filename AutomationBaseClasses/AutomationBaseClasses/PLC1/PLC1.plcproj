@@ -180,7 +180,6 @@
     <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors\Pumps" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\02 Sensors" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\03 Systems" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\04 LinkageSystems" />
     <Folder Include="DUTs\XX_GA %28Delete before export%29\05 Strategy" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
