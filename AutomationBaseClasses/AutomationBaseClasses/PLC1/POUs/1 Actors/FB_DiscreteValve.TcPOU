@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="FB_DiscreteValve" Id="{7c2d056e-b7a5-47e0-8780-c9ad927c4f52}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DiscreteValve EXTENDS FB_Actor2Point
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//default parameters
+	localDefaultParameters : ST_DiscreteValveDefaultParameters;	
+
+	//I/O Links
+	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
+	bStatusOn_IN		AT %I* : BOOL := FALSE; //True if valve is (actual) open
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SelectControlMode();]]></ST>
+    </Implementation>
+    <Method Name="SetState_BI_BO" Id="{0e571675-b07a-4d0e-a5bb-9e330e7c5235}">
+      <Declaration><![CDATA[METHOD SetState_BI_BO : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//control state
+IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Use feedback signal if possible
+	controlState.bStatusOn := bStatusOn_IN;
+	bStatusOn := bStatusOn_IN;
+END_IF;
+
+//output
+bSetStatusOn_OUT := bSetStatusOn;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ST_DefaultParameters" Id="{8d33a13c-5650-4ddc-aac7-e5707e8c1b8d}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_DiscreteValveDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{33d3ed96-b96e-4f0c-89d2-38cef331df44}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_DiscreteValve">
+      <LineId Id="40" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.SetState_BI_BO">
+      <LineId Id="6" Count="2" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

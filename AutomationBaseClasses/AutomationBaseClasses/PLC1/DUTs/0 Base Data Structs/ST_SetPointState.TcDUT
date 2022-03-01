@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ST_SetPointState" Id="{a8ea9f16-1a3b-41a0-9776-e9b4f11e9876}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_SetPointState :
+STRUCT
+	fOperatingPoint		: REAL; //current operating point
+	fSetPoint			: REAL; //current set point
+	sSetPointUnit		: STRING; //current set point unit
+	sOperatingPointUnit : STRING; //current operating point unit 
+	aSetPointLimits		: ARRAY[1..2] OF REAL; //lower and upper limit of setpoint
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

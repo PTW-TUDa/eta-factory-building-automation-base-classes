@@ -1,0 +1,16 @@
+*.tpy
+*.tclrs
+*.compiled-library
+*.compileinfo
+*.tmc
+*.tmcRefac
+*.project.~u
+*.tsproj.bak
+*.xti.bak
+LineIDs.dbg
+LineIDs.dbg.bak
+_Boot/
+_CompileInfo/
+_ModuleInstall/
+AutomationBaseClasses/.vs/AutomationBaseClasses/v15/.suo
+**/.vs

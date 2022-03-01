@@ -15,22 +15,138 @@
     <Implicit_KindOfTask>{4cf91507-951e-49ce-a07e-51c7a17a9d78}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{1cdd92d9-d314-4185-9bfd-fb9f74ea4de4}</Implicit_Jitter_Distribution>
     <LibraryReferences>{0ee310db-d5ce-47e5-8199-6a7dd473b96b}</LibraryReferences>
+    <Company>PTW TU Darmstadt</Company>
+    <Released>false</Released>
+    <Title>AutomationBaseClasses</Title>
+    <ProjectVersion>1.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\E_SystemOperatingState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\ST_Control.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\ST_ControlState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\ST_SensorState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\ST_SetPointState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\ST_SetSetPoint.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\0 Base Data Structs\ST_SystemState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\DicreteValve\ST_DiscreteValveDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\MixingValve\E_MixingValveControlMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\MixingValve\ST_MixingValveDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\MixingValve\ST_MixingValveSetParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\E_GrundfosMagna3ControlMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_GundfosMagna3DefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\0 Base Classes\FB_ActorContinous.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\0 Base Classes\FB_Sensor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\0 Base Classes\FB_SystemContinous.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\1 Actors\FB_DiscreteValve.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\1 Actors\FB_PumpGrundfosMagna3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\1 Actors\FB_MixingValve.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\2 Sensors\FB_TemperatureSensor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\0 Base\Limiter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\2 Profibus\BufferIntToReal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\2 Profibus\BufferRealToReal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\2 Profibus\BufferUdintToReal.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogInput.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
+    <Folder Include="DUTs\0 Base Data Structs" />
+    <Folder Include="DUTs\1 Actor Data Structs" />
+    <Folder Include="DUTs\1 Actor Data Structs\MixingValve" />
+    <Folder Include="DUTs\1 Actor Data Structs\DicreteValve" />
+    <Folder Include="DUTs\1 Actor Data Structs\Pumps" />
+    <Folder Include="DUTs\2 Sensor Data Structs" />
+    <Folder Include="DUTs\3 System Data Structs" />
     <Folder Include="GVLs" />
+    <Folder Include="POUs\0 Base Classes" />
+    <Folder Include="POUs\1 Actors" />
+    <Folder Include="POUs\4 Utilities\0 Base" />
+    <Folder Include="POUs\2 Sensors" />
+    <Folder Include="POUs\4 Utilities" />
+    <Folder Include="POUs\3 Systems" />
+    <Folder Include="POUs\4 Utilities\2 Profibus" />
+    <Folder Include="POUs\4 Utilities\1 AI_AO" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Tc2_ControllerToolbox">
+      <DefaultResolution>Tc2_ControllerToolbox, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_ControllerToolbox</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -38,6 +154,10 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -52,8 +172,8 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-  <Data>
-    <o xml:space="preserve" t="OptionKey">
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
         <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
@@ -80,13 +200,13 @@
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-  </Data>
-  <TypeList>
-    <Type n="Hashtable">System.Collections.Hashtable</Type>
-    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-    <Type n="String">System.String</Type>
-  </TypeList>
-</XmlArchive>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>
