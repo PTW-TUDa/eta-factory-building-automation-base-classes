@@ -3,25 +3,13 @@
   <POU Name="MAIN" Id="{9f33f5a0-2a24-4206-9468-c589128c5602}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	//strategy controller
-	Strategy : BaseStrategyController; 
-
-	//thermal networks
-	CN : CoolingNetwork;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Strategy(fTemperature_CN := CN.fTemperatureBufferStorage);
-
-CN(fSetPointTemperature := Strategy.fSetPoint_CN,
-	bSetStatusOn_eChiller := Strategy.bSetStatusOn_eChiller,
-	bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);]]></ST>
+      <ST><![CDATA[]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="17" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="18" Count="1" />
+      <LineId Id="19" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

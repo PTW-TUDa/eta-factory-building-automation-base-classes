@@ -72,15 +72,6 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\ST_eChillerDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\ST_eChillerState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\XX_GA %28Delete before export%29\03 Systems\ST_HVFASystemDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -114,30 +105,6 @@
     <Compile Include="POUs\4 Utilities\0 Base\Limiter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\FB_eChiller.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits\FB_HeatPump.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\01 Actors\Pumps\FB_PumpGrundfosCM.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\02 Sensors\FB_BufferStorage.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\02 Sensors\FB_HVFAStorage.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_HeatPumpSystem.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_HVFASystem.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\05 Strategy\BaseStrategyController.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\4 Utilities\2 Profibus\BufferIntToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -153,16 +120,6 @@
     <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\04 Networks\CoolingNetwork.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_eChillerSystem.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\GlobalVariables.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
@@ -172,34 +129,16 @@
     <Folder Include="DUTs\1 Actor Data Structs\DicreteValve" />
     <Folder Include="DUTs\1 Actor Data Structs\Pumps" />
     <Folder Include="DUTs\2 Sensor Data Structs" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29" />
     <Folder Include="DUTs\3 System Data Structs" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors\HeatingUnits" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\01 Actors\Pumps" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\02 Sensors" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\03 Systems" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\04 LinkageSystems" />
-    <Folder Include="DUTs\XX_GA %28Delete before export%29\05 Strategy" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
     <Folder Include="POUs\4 Utilities\0 Base" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors" />
     <Folder Include="POUs\2 Sensors" />
     <Folder Include="POUs\4 Utilities" />
     <Folder Include="POUs\3 Systems" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29" />
     <Folder Include="POUs\4 Utilities\2 Profibus" />
     <Folder Include="POUs\4 Utilities\1 AI_AO" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\HeatingUnits" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\Pumps" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\04 Networks" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\02 Sensors" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\05 Strategy" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\03 Systems" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
