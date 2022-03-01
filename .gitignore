@@ -4,6 +4,7 @@
 *.compileinfo
 *.tmc
 *.tmcRefac
+*.library
 *.project.~u
 *.tsproj.bak
 *.xti.bak
