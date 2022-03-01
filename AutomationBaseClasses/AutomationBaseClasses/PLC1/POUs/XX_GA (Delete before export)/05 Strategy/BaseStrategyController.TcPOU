@@ -25,9 +25,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//fAmbientTemperature :=  Umwelt.Temp_Aussen
-
-//setpoint feed temperatures
+      <ST><![CDATA[//setpoint feed temperatures
 fSetPoint_CN := 15;
 
 //set hysteresis parameters for two-point controllers in cooling network
@@ -57,7 +55,6 @@ bSetStatusOn_HeatPump := Controller_HeatPump.bOut;
 	]]></ST>
     </Implementation>
     <LineIds Name="BaseStrategyController">
-      <LineId Id="60" Count="1" />
       <LineId Id="19" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="29" Count="1" />
@@ -70,9 +67,8 @@ bSetStatusOn_HeatPump := Controller_HeatPump.bOut;
       <LineId Id="39" Count="2" />
       <LineId Id="50" Count="0" />
       <LineId Id="45" Count="4" />
+      <LineId Id="88" Count="1" />
       <LineId Id="51" Count="0" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="53" Count="0" />
       <LineId Id="42" Count="2" />
     </LineIds>
   </POU>

@@ -12,7 +12,9 @@ VAR
 	eChiller : FB_eChiller;
 	
 	//discrete valve 138
-	ST_SV138DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0);
+	ST_SV138DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
+								fControllerAmplification := 0.265, tControllerIntegralTime := T#15S, 
+								tTaskCycleTime := GlobalVariables.tTaskCycleTime, tCtrlCycleTime := T#5S);
 	SV138 : FB_MixingValve := (ST_DefaultParameters := ST_SV138DefaultParameters); //valve motor needs continous signal but operates only between extreme positions	
 	
 	//internal variables

@@ -116,6 +116,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[//control state
 controlState.bStatusOn := StatusModule_IN[0].0;
+bStatusOn := StatusModule_IN[0].0;
 
 //error state
 localState.bError := StatusModule_IN[0].2;
@@ -127,6 +128,7 @@ localState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode
 setPointState.fSetPoint := fSetPoint;
 //setPointState.sSetPointUnit := 'percent'; missing implementation for internal setpoints
 setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
+fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
 //setPointState.sOperatingPointUnit := 'percent'; missing implementation for internal setpoints
 setPointState.aSetPointLimits := aSetPointLimits;
 
@@ -191,10 +193,13 @@ END_VAR
       <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.SetState_Profibus">
-      <LineId Id="6" Count="9" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="8" Count="7" />
       <LineId Id="46" Count="0" />
       <LineId Id="53" Count="0" />
       <LineId Id="16" Count="0" />
+      <LineId Id="62" Count="0" />
       <LineId Id="54" Count="0" />
       <LineId Id="17" Count="22" />
       <LineId Id="5" Count="0" />

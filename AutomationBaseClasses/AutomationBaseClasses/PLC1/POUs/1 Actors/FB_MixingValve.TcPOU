@@ -28,9 +28,9 @@ VAR
 	fSetPoint_internal 		: REAL; //internal, control mode depending setpoint between 0.0 and 100.0
 	
 	//controllers
-	PI_Controller_Heating		: FB_CTRL_PI;
+	PI_Controller_Heating		: FB_CTRL_PI; 
 	PI_Controller_Cooling		: FB_CTRL_PI;
-	PI_Controler_Parameters 	: ST_CTRL_PI_PARAMS;
+	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[InputConverter();
@@ -50,13 +50,13 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//set control parameters
-PI_Controler_Parameters.fKp 			:= localDefaultParameters.fControlerAmplification;
-PI_Controler_Parameters.tTn 			:= DINT_TO_TIME(localDefaultParameters.fControlerIntegralTime);
-PI_Controler_Parameters.fOutMaxLimit	:= 100.0;
-PI_Controler_Parameters.fOutMinLimit	:= 0.0;
-PI_Controler_Parameters.tTaskCycleTime	:= GlobalVariables.tTaskCycleTime;
-PI_Controler_Parameters.tCtrlCycleTime	:= DINT_TO_TIME(500);
-PI_Controler_Parameters.bARWOnIPartOnly	:= TRUE;
+PI_Controller_Parameters.fKp 				:= localDefaultParameters.fControllerAmplification;
+PI_Controller_Parameters.tTn 				:= localDefaultParameters.tControllerIntegralTime;
+PI_Controller_Parameters.fOutMaxLimit		:= 100.0;
+PI_Controller_Parameters.fOutMinLimit		:= 0.0;
+PI_Controller_Parameters.tTaskCycleTime		:= localDefaultParameters.tTaskCycleTime;
+PI_Controller_Parameters.tCtrlCycleTime		:= localDefaultParameters.tCtrlCycleTime;
+PI_Controller_Parameters.bARWOnIPartOnly	:= TRUE;
 
 IF bSetStatusOn THEN
 	CASE nControlMode OF
@@ -71,7 +71,7 @@ IF bSetStatusOn THEN
 				bSync			:= FALSE,
 				eMode			:= 2, (* mode active *)
 				bHold			:= FALSE,
-				stParams		:= PI_Controler_Parameters);
+				stParams		:= PI_Controller_Parameters);
 		fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Heating.fOut);
 				
 		2: //cooling mode
@@ -82,7 +82,7 @@ IF bSetStatusOn THEN
 			bSync			:= FALSE,
 			eMode			:= 2, (* mode active *)
 			bHold			:= FALSE,
-			stParams		:= PI_Controler_Parameters);
+			stParams		:= PI_Controller_Parameters);
 		fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Cooling.fOut);
 	END_CASE
 ELSE
@@ -144,19 +144,19 @@ CASE nControlMode OF
 END_CASE
 
 IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if there is a feedback signal 
-
+	InputConverter(nValue := nOperatingPoint_IN);
+	setPointState.fOperatingPoint := InputConverter.fValue;
+	fOperatingPoint := InputConverter.fValue;
 	setPointState.sOperatingPointUnit := 'percent';
 	setPointState.aSetPointLimits := aSetPointLimits;
 	IF setPointState.fOperatingPoint > 0 THEN //Set control state if valve is open
 		controlState.bStatusOn := TRUE;
+		bStatusOn := TRUE;
 	ELSE
 		controlState.bStatusOn := FALSE;
+		bStatusOn := FALSE;
 	END_IF
 END_IF;
-
-//input
-InputConverter(nValue := nOperatingPoint_IN);
-setPointState.fOperatingPoint := InputConverter.fValue;
 
 //Output
 OutputConverter(fValue := fSetPoint_internal);
@@ -190,7 +190,9 @@ END_VAR
     <LineIds Name="FB_MixingValve.ControlValve">
       <LineId Id="99" Count="0" />
       <LineId Id="104" Count="1" />
-      <LineId Id="100" Count="3" />
+      <LineId Id="100" Count="1" />
+      <LineId Id="121" Count="0" />
+      <LineId Id="120" Count="0" />
       <LineId Id="98" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="111" Count="0" />
@@ -231,16 +233,18 @@ END_VAR
       <LineId Id="99" Count="0" />
       <LineId Id="64" Count="0" />
       <LineId Id="52" Count="0" />
+      <LineId Id="113" Count="0" />
       <LineId Id="71" Count="0" />
+      <LineId Id="116" Count="0" />
       <LineId Id="101" Count="0" />
       <LineId Id="87" Count="0" />
       <LineId Id="84" Count="0" />
-      <LineId Id="81" Count="2" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="82" Count="1" />
+      <LineId Id="115" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="53" Count="0" />
-      <LineId Id="104" Count="1" />
-      <LineId Id="108" Count="0" />
-      <LineId Id="107" Count="0" />
       <LineId Id="68" Count="0" />
       <LineId Id="67" Count="0" />
       <LineId Id="72" Count="0" />

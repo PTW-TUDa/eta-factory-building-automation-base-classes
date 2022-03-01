@@ -20,7 +20,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[bStatusOn := controlState.bStatusOn;]]></ST>
+      <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="SelectControlMode" Id="{3e578076-f21b-4cb6-b8d9-37cde3c10288}">
       <Declaration><![CDATA[METHOD PROTECTED SelectControlMode : BOOL

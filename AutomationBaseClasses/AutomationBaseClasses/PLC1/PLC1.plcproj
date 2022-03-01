@@ -131,7 +131,7 @@
     <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_HVFASystem.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\06 Strategy\BaseStrategyController.TcPOU">
+    <Compile Include="POUs\XX_GA %28Delete before export%29\05 Strategy\BaseStrategyController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\2 Profibus\BufferIntToReal.TcPOU">
@@ -149,7 +149,7 @@
     <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\XX_GA %28Delete before export%29\05 Networks\CoolingNetwork.TcPOU">
+    <Compile Include="POUs\XX_GA %28Delete before export%29\04 Networks\CoolingNetwork.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\XX_GA %28Delete before export%29\03 Systems\FB_eChillerSystem.TcPOU">
@@ -192,10 +192,9 @@
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\CoolingUnits" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\HeatingUnits" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\01 Actors\Pumps" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\05 Networks" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\04 LinkageSystems" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\04 Networks" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\02 Sensors" />
-    <Folder Include="POUs\XX_GA %28Delete before export%29\06 Strategy" />
+    <Folder Include="POUs\XX_GA %28Delete before export%29\05 Strategy" />
     <Folder Include="POUs\XX_GA %28Delete before export%29\03 Systems" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />

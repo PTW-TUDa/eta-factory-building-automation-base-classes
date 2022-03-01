@@ -49,11 +49,13 @@ END_VAR
       <Implementation>
         <ST><![CDATA[//control state
 controlState.bStatusOn := bStatusOn_IN;
+bStatusOn := bStatusOn_IN;
 
 //setpoint state
 setPointState.fSetPoint := fSetPoint;
 setPointState.sSetPointUnit := 'degreeC';
 setPointState.fOperatingPoint := fExternalTemperature;
+fOperatingPoint := fExternalTemperature;
 setPointState.sOperatingPointUnit := 'degreeC';
 setPointState.aSetPointLimits := aSetPointLimits;
 
@@ -104,11 +106,13 @@ END_VAR
     <LineIds Name="FB_eChiller.SetState">
       <LineId Id="22" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="67" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="26" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="35" Count="0" />
+      <LineId Id="68" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="37" Count="1" />

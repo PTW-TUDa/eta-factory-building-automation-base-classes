@@ -20,7 +20,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fOperatingPoint := setPointState.fOperatingPoint;]]></ST>
+      <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="MAIN" Id="{7c71e98c-e88b-49de-b162-405ba243d74c}">
       <Declaration><![CDATA[METHOD PROTECTED MAIN : BOOL // Method that calls all needed function block methods

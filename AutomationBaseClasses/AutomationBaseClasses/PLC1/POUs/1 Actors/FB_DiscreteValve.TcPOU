@@ -28,6 +28,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[//control state
 IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Use feedback signal if possible
 	controlState.bStatusOn := bStatusOn_IN;
+	bStatusOn := bStatusOn_IN;
 END_IF;
 
 //output
@@ -50,7 +51,9 @@ END_VAR
       <LineId Id="40" Count="0" />
     </LineIds>
     <LineIds Name="FB_DiscreteValve.SetState_BI_BO">
-      <LineId Id="6" Count="5" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="9" Count="2" />
       <LineId Id="5" Count="0" />
       <LineId Id="15" Count="0" />
     </LineIds>
