@@ -88,7 +88,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
-    <Compile Include="PlcTask.TcTTO">
+    <Compile Include="TaskHeatCounter.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TaskMAIN.TcTTO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
@@ -167,6 +170,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
