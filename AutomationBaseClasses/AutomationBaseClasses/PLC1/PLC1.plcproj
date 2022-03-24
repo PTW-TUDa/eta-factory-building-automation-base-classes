@@ -88,6 +88,24 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="POUs\99 GA\04 Networks\HighTemperatureHeatingNetwork.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\04 Networks\HNHT_HNLT_Linkage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\04 Networks\HNLT_CN_Linkage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\04 Networks\LowTemperatureHeatingNetwork.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\HeatCounter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TaskHeatCounter.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -148,9 +166,6 @@
     <Compile Include="POUs\99 GA\05 Strategy\BaseStrategyController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\2 Sensors\FB_TemperatureSensor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -170,9 +185,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

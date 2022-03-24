@@ -21,13 +21,13 @@ VAR
 	//valves
 	ST_SVx05DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
 								fControllerAmplification := 0.265, tControllerIntegralTime := T#15S, 
-								tTaskCycleTime := GlobalVariables.tTaskCycleTime, tCtrlCycleTime := T#5S);
+								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
 	ST_SVx06DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
 								fControllerAmplification := 0.265, tControllerIntegralTime := T#15S, 
-								tTaskCycleTime := GlobalVariables.tTaskCycleTime, tCtrlCycleTime := T#5S);
+								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
 	ST_RVx05DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
 								fControllerAmplification := 0.265, tControllerIntegralTime := T#15S, 
-								tTaskCycleTime := GlobalVariables.tTaskCycleTime, tCtrlCycleTime := T#5S);
+								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
 
 	bFeedbackSignal : BOOL; //true if valve gets a feedback signal for acual position
 	fDefaultPosition : REAL; //default position when bSetStatusOn = false

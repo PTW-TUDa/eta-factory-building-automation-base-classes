@@ -8,6 +8,7 @@ VAR
 
 	//thermal networks
 	CN : CoolingNetwork;
+	HNLT_CN : HNLT_CN_Linkage;
 	
 	//cycle counter
 	MAIN_CycleCount : UDINT;
@@ -21,9 +22,10 @@ END_VAR
 
 Strategy(fTemperature_CN := CN.fTemperatureBufferStorage);
 
-CN(fSetPointTemperature := Strategy.fSetPoint_CN,
-	bSetStatusOn_eChiller := Strategy.bSetStatusOn_eChiller,
-	bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);
+CN(fSetPointTemperature := Strategy.fTargetTemperature_CN,
+	bSetStatusOn_eChiller := Strategy.bSetStatusOn_eChiller);
+
+HNLT_CN(bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);
 	
 	
 //test output for checking variable exchange between tasks with different cycle time
@@ -32,7 +34,10 @@ info();
 MAIN_CycleCount := _TaskInfo[info.index].CycleCount;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="44" Count="8" />
+      <LineId Id="44" Count="6" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="52" Count="0" />
       <LineId Id="56" Count="1" />
       <LineId Id="53" Count="1" />
       <LineId Id="40" Count="0" />

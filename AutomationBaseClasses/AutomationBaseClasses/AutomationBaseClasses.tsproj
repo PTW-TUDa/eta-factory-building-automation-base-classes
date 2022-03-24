@@ -160,12 +160,12 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HeatPumpSystem.SV146.bStatusOn_IN</Name>
+							<Name>MAIN.HNLT_CN.HeatPumpSystem.SV146.bStatusOn_IN</Name>
 							<Comment><![CDATA[True if valve is (actual) open]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HeatPumpSystem.SV246.bStatusOn_IN</Name>
+							<Name>MAIN.HNLT_CN.HeatPumpSystem.SV246.bStatusOn_IN</Name>
 							<Comment><![CDATA[True if valve is (actual) open]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
@@ -217,17 +217,17 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HeatPumpSystem.HeatPump.bSetStatusOn_OUT</Name>
+							<Name>MAIN.HNLT_CN.HeatPumpSystem.HeatPump.bSetStatusOn_OUT</Name>
 							<Comment><![CDATA[I/O Links]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HeatPumpSystem.SV146.bSetStatusOn_OUT</Name>
+							<Name>MAIN.HNLT_CN.HeatPumpSystem.SV146.bSetStatusOn_OUT</Name>
 							<Comment><![CDATA[I/O Links]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HeatPumpSystem.SV246.bSetStatusOn_OUT</Name>
+							<Name>MAIN.HNLT_CN.HeatPumpSystem.SV246.bSetStatusOn_OUT</Name>
 							<Comment><![CDATA[I/O Links]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
