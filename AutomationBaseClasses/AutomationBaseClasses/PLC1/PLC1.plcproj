@@ -75,6 +75,19 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\99 GA\01 Actors\CoolingUnits\ST_eChillerDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\01 Actors\CoolingUnits\ST_eChillerState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\03 Systems\ST_HVFASystemDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GlobalVariables.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +113,36 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_MollineC3HeatCounter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\01 Actors\CoolingUnits\FB_eChiller.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\01 Actors\HeatingUnits\FB_HeatPump.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\01 Actors\Pumps\FB_PumpGrundfosCM.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\02 Sensors\FB_BufferStorage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\02 Sensors\FB_HVFAStorage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\03 Systems\FB_eChillerSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\03 Systems\FB_HeatPumpSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\03 Systems\FB_HVFASystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\04 Networks\CoolingNetwork.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 GA\05 Strategy\BaseStrategyController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -136,6 +179,14 @@
     <Folder Include="DUTs\1 Actor Data Structs\Pumps" />
     <Folder Include="DUTs\2 Sensor Data Structs" />
     <Folder Include="DUTs\3 System Data Structs" />
+    <Folder Include="DUTs\99 GA" />
+    <Folder Include="DUTs\99 GA\01 Actors" />
+    <Folder Include="DUTs\99 GA\01 Actors\CoolingUnits" />
+    <Folder Include="DUTs\99 GA\01 Actors\HeatingUnits" />
+    <Folder Include="DUTs\99 GA\01 Actors\Pumps" />
+    <Folder Include="DUTs\99 GA\02 Sensors" />
+    <Folder Include="DUTs\99 GA\03 Systems" />
+    <Folder Include="DUTs\99 GA\05 Strategy" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
@@ -145,6 +196,15 @@
     <Folder Include="POUs\3 Systems" />
     <Folder Include="POUs\4 Utilities\2 Profibus" />
     <Folder Include="POUs\4 Utilities\1 AI_AO" />
+    <Folder Include="POUs\99 GA" />
+    <Folder Include="POUs\99 GA\01 Actors" />
+    <Folder Include="POUs\99 GA\01 Actors\CoolingUnits" />
+    <Folder Include="POUs\99 GA\01 Actors\HeatingUnits" />
+    <Folder Include="POUs\99 GA\01 Actors\Pumps" />
+    <Folder Include="POUs\99 GA\02 Sensors" />
+    <Folder Include="POUs\99 GA\03 Systems" />
+    <Folder Include="POUs\99 GA\04 Networks" />
+    <Folder Include="POUs\99 GA\05 Strategy" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

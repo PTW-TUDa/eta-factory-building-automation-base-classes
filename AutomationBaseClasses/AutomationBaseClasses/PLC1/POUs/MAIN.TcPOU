@@ -1,14 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="MAIN" Id="{9f33f5a0-2a24-4206-9468-c589128c5602}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	//strategy controller
+	Strategy : BaseStrategyController; 
+
+	//thermal networks
+	CN : CoolingNetwork;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//Updated implementation
+//Strategy(fTemperature_CN := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_mitte);
+
+Strategy(fTemperature_CN := CN.fTemperatureBufferStorage);
+
+CN(fSetPointTemperature := Strategy.fSetPoint_CN,
+	bSetStatusOn_eChiller := Strategy.bSetStatusOn_eChiller,
+	bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="23" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="25" Count="2" />
       <LineId Id="19" Count="0" />
     </LineIds>
   </POU>
