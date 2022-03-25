@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="HNHT_HNLT_Linkage" Id="{6a3baad8-61ea-416c-a36f-d39a6e6cabde}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK HNHT_HNLT_Linkage
+  <POU Name="FB_EmagVLC100Y" Id="{4ac2b736-01a2-4d1f-b989-3b78e78daef7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EmagVLC100Y
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -12,7 +12,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <LineIds Name="HNHT_HNLT_Linkage">
+    <LineIds Name="FB_EmagVLC100Y">
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

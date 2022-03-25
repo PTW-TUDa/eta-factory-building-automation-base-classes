@@ -67,24 +67,6 @@ bAlgorithmPermission_HNLT := Limiter(fInput := fTemperature_HNLT, fLowerLimit :=
 bAlgorithmPermission_HNHT := Limiter(fInput := fTemperature_HNHT, fLowerLimit := aTemperatureLimits_HNHT[1], fUpperLimit := aTemperatureLimits_HNHT[2]);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Control_HNLT_CN_Linkage" Id="{47fe50a8-fa6a-42c9-86f6-4129fa6636fe}">
-      <Declaration><![CDATA[METHOD Control_HNLT_CN_Linkage : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//set hysteresis parameters for hnlt cn linkage systems
-Controller_HeatPump_Parameters.fHysteresisRange := 4;
-Controller_HeatPump_Parameters.tCtrlCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
-Controller_HeatPump_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
-
-Controller_HeatPump(fSetpointValue := fTemperature_CN,
-	fActualValue := fTargetTemperature_CN,
-	eMode := eCTRL_MODE_ACTIVE,
-	stParams := Controller_HeatPump_Parameters);
-bSetStatusOn_HeatPump := Controller_HeatPump.bOut;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="ControlCoolingNetwork" Id="{c114617d-ff2b-491a-a80e-d1c974ffb859}">
       <Declaration><![CDATA[METHOD ControlCoolingNetwork : BOOL
 VAR_INPUT
@@ -104,6 +86,24 @@ Controller_eChiller(fSetpointValue := fTemperature_CN,
 bSetStatusOn_eChiller := Controller_eChiller.bOut;
 
 //controller for HVFA is missing because free cooling information via eChiller opc ua is missing]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ControlHnltCnLinkage" Id="{47fe50a8-fa6a-42c9-86f6-4129fa6636fe}">
+      <Declaration><![CDATA[METHOD ControlHnltCnLinkage : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//set hysteresis parameters for hnlt cn linkage systems
+Controller_HeatPump_Parameters.fHysteresisRange := 4;
+Controller_HeatPump_Parameters.tCtrlCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
+Controller_HeatPump_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
+
+Controller_HeatPump(fSetpointValue := fTemperature_CN,
+	fActualValue := fTargetTemperature_CN,
+	eMode := eCTRL_MODE_ACTIVE,
+	stParams := Controller_HeatPump_Parameters);
+bSetStatusOn_HeatPump := Controller_HeatPump.bOut;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetTargetTemperatures" Id="{6be7450f-8e0b-4497-9741-f2ddcfb682eb}">
@@ -129,18 +129,18 @@ fTargetTemperature_HNHT := 70;]]></ST>
       <LineId Id="8" Count="0" />
       <LineId Id="20" Count="1" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.Control_HNLT_CN_Linkage">
-      <LineId Id="11" Count="0" />
-      <LineId Id="9" Count="1" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="13" Count="4" />
-      <LineId Id="12" Count="0" />
-    </LineIds>
     <LineIds Name="BaseStrategyController.ControlCoolingNetwork">
       <LineId Id="6" Count="3" />
       <LineId Id="13" Count="6" />
       <LineId Id="26" Count="0" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="BaseStrategyController.ControlHnltCnLinkage">
+      <LineId Id="11" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="4" />
+      <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="BaseStrategyController.SetTargetTemperatures">
       <LineId Id="6" Count="0" />

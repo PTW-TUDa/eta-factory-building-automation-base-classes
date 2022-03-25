@@ -5,12 +5,12 @@
 VAR_INPUT
 	//feed temperature setpoint and system enabling
 	fSetPointTemperature : REAL;
+	bAlgorithmPermission : BOOL;
 	bSetStatusOn_eChiller : BOOL;	
 END_VAR
 VAR_OUTPUT
 	//temperatures in buffer storage
 	fTemperatureBufferStorage : REAL;
-	bAlgorithmPermission : BOOL;
 END_VAR
 VAR
 	//default parameters

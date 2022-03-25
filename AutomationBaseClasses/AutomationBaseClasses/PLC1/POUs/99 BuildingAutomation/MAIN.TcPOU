@@ -8,7 +8,9 @@ VAR
 
 	//thermal networks
 	CN : CoolingNetwork;
-	HNLT_CN : HNLT_CN_Linkage;
+	HNLT_CN : HnltCnLinkage;
+	HNLT : LowTemperatureHeatingNetwork;
+	HNHT : HighTemperatureHeatingNetwork;
 	
 	//cycle counter
 	MAIN_CycleCount : UDINT;
@@ -17,16 +19,17 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Updated implementation
-//Strategy(fTemperature_CN := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_mitte);
-
+      <ST><![CDATA[//strategy controller
 Strategy(fTemperature_CN := CN.fTemperatureBufferStorage);
 
+//thermal networks
 CN(fSetPointTemperature := Strategy.fTargetTemperature_CN,
+	bAlgorithmPermission := Strategy.bAlgorithmPermission_CN,
 	bSetStatusOn_eChiller := Strategy.bSetStatusOn_eChiller);
 
-HNLT_CN(bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);
-	
+HNLT_CN(bAlgorithmPermission_CN := Strategy.bAlgorithmPermission_CN,
+	bAlgorithmPermission_HNLT := Strategy.bAlgorithmPermission_HNLT,
+	bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);
 	
 //test output for checking variable exchange between tasks with different cycle time
 test_output := HeatCounter.test_output;
@@ -34,11 +37,18 @@ info();
 MAIN_CycleCount := _TaskInfo[info.index].CycleCount;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="44" Count="6" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="59" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="78" Count="0" />
       <LineId Id="52" Count="0" />
-      <LineId Id="56" Count="1" />
+      <LineId Id="57" Count="0" />
       <LineId Id="53" Count="1" />
       <LineId Id="40" Count="0" />
     </LineIds>
