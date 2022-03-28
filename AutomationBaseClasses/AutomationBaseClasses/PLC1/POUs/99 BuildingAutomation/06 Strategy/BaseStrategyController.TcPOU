@@ -20,6 +20,9 @@ VAR_OUTPUT
 	//outputs for low temperature heating network
 	fTargetTemperature_HNLT : REAL;
 	bAlgorithmPermission_HNLT : BOOL;
+	bSetStatusOn_OuterCapillaryTubeMats : BOOL;
+	
+	//outputs for linkage systems
 	bSetStatusOn_HeatPump : BOOL;
 	
 	//outputs for high temperature heating network
@@ -30,25 +33,29 @@ END_VAR
 VAR
 	//temperature limits for thermal networks
 	aTemperatureLimits_HNHT : ARRAY[1..2] OF REAL := [70,90]; //temperature limits for high temperature heating network
-	aTemperatureLimits_HNLT : ARRAY[1..2] OF REAL := [30,50]; //temperature limits for low temperature heating network
+	aTemperatureLimits_HNLT : ARRAY[1..2] OF REAL := [30,45]; //temperature limits for low temperature heating network
 	aTemperatureLimits_CN : ARRAY[1..2] OF REAL := [5,25]; //temperature limits for cooling network
 
 	//controllers for cooling network
 	Controller_eChiller : FB_CTRL_2POINT;
 	Controller_eChiller_Parameters : ST_CTRL_2POINT_PARAMS;
 	
+	//controllers for low temperature heating network
+	Controller_OuterCapillaryTubeMats : FB_CTRL_2POINT;
+	Controller_OuterCapillaryTubeMats_Parameters : ST_CTRL_2POINT_PARAMS;
+	
 	//controllers for hnlt and cn linkage
 	Controller_HeatPump : FB_CTRL_2POINT;
 	Controller_HeatPump_Parameters : ST_CTRL_2POINT_PARAMS;
-	
-
-
 END_VAR
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[SetTargetTemperatures();
 CheckAlgorithmPermission();
+ControlCN();
+ControlHNLT();
+ControlHnltCnLinkage();
 	
 	
 	]]></ST>
@@ -67,8 +74,8 @@ bAlgorithmPermission_HNLT := Limiter(fInput := fTemperature_HNLT, fLowerLimit :=
 bAlgorithmPermission_HNHT := Limiter(fInput := fTemperature_HNHT, fLowerLimit := aTemperatureLimits_HNHT[1], fUpperLimit := aTemperatureLimits_HNHT[2]);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ControlCoolingNetwork" Id="{c114617d-ff2b-491a-a80e-d1c974ffb859}">
-      <Declaration><![CDATA[METHOD ControlCoolingNetwork : BOOL
+    <Method Name="ControlCN" Id="{c114617d-ff2b-491a-a80e-d1c974ffb859}">
+      <Declaration><![CDATA[METHOD ControlCN : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -86,6 +93,25 @@ Controller_eChiller(fSetpointValue := fTemperature_CN,
 bSetStatusOn_eChiller := Controller_eChiller.bOut;
 
 //controller for HVFA is missing because free cooling information via eChiller opc ua is missing]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ControlHNLT" Id="{57bcb54f-1f56-4d59-8bc6-dbfcc2a5773d}">
+      <Declaration><![CDATA[METHOD ControlHNLT : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//set hysteresis parameters for two-point controllers in cooling network
+Controller_OuterCapillaryTubeMats_Parameters.fHysteresisRange := 4;
+Controller_OuterCapillaryTubeMats_Parameters.tCtrlCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
+Controller_OuterCapillaryTubeMats_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
+
+//control strategy for cooling network - fSetpointValue and fActualValue are changed for cooling applications
+Controller_OuterCapillaryTubeMats(fSetpointValue := fTemperature_HNLT,
+	fActualValue := aTemperatureLimits_HNLT[2],
+	eMode := eCTRL_MODE_ACTIVE,
+	stParams := Controller_OuterCapillaryTubeMats_Parameters);
+bSetStatusOn_OuterCapillaryTubeMats := Controller_OuterCapillaryTubeMats.bOut;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ControlHnltCnLinkage" Id="{47fe50a8-fa6a-42c9-86f6-4129fa6636fe}">
@@ -121,6 +147,7 @@ fTargetTemperature_HNHT := 70;]]></ST>
     <LineIds Name="BaseStrategyController">
       <LineId Id="112" Count="0" />
       <LineId Id="115" Count="0" />
+      <LineId Id="168" Count="2" />
       <LineId Id="57" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>
@@ -129,10 +156,14 @@ fTargetTemperature_HNHT := 70;]]></ST>
       <LineId Id="8" Count="0" />
       <LineId Id="20" Count="1" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.ControlCoolingNetwork">
+    <LineIds Name="BaseStrategyController.ControlCN">
       <LineId Id="6" Count="3" />
       <LineId Id="13" Count="6" />
       <LineId Id="26" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="BaseStrategyController.ControlHNLT">
+      <LineId Id="6" Count="9" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="BaseStrategyController.ControlHnltCnLinkage">
