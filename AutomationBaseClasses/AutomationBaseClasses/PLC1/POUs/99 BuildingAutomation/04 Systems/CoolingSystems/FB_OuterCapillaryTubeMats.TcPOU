@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_OuterCapillaryTubeMats" Id="{f8d40369-147e-4cbe-aff1-5204bfee2138}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OuterCapillaryTubeMats EXTENDS FB_SystemContinous
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//default parameters
+	localDefaultParameters : ST_OuterCapillaryTubeMatsDefaultParameters;	
+	
+	//pumps
+	PU235 : FB_PumpGrundfosMagna3;
+	PU600 : FB_PumpGrundfosMagna3;
+
+	//valves
+	ST_SV235DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := TRUE);
+	ST_RV600DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
+								fControllerAmplification := 0.265, tControllerIntegralTime := T#15S, 
+								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
+	
+	SV235 : FB_DiscreteValve := (ST_DefaultParameters := ST_SV235DefaultParameters);
+	RV600 : FB_MixingValve := (ST_DefaultParameters := ST_RV600DefaultParameters);
+	
+	//sensors
+	//WMZ missing
+	
+	//internal variables
+	bSetStatusOn_PU235 : BOOL;
+	bSetStatusOn_PU600 : BOOL;
+	bSetStatusOn_SV235 : BOOL;	
+	bSetStatusOn_RV600 : BOOL;
+	fSetPoint_RV600 : REAL;
+	fExternalTemperature_RV600 : REAL;
+	nControlMode_RV600 : E_MixingValveControlMode;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MAIN();
+
+//pumps
+//differential temperature control according to PTW6 data sheet
+PU235(bSetStatusOnAutomatic := bSetStatusOn_PU235,
+	fSetPointAutomatic := 5,
+	bAlgorithmPermission := bAlgorithmPermission,
+	nControlModeAutomatic := 9);
+PU235.SetState_Profibus();
+
+PU600(bSetStatusOnAutomatic := bSetStatusOn_PU600,
+	fSetPointAutomatic := 100,
+	bAlgorithmPermission := bAlgorithmPermission,
+	nControlModeAutomatic := 0);
+PU600.SetState_Profibus();
+
+//valves
+SV235(bSetStatusOnAutomatic := bSetStatusOn_SV235,
+	bAlgorithmPermission := bAlgorithmPermission);
+SV235.SetState_BI_BO();
+
+//RV600 uses heating mode to control inlet temperature into PWT6
+RV600(bSetStatusOnAutomatic := bSetStatusOn_RV600,
+	fSetPointAutomatic := fSetPoint,
+	bAlgorithmPermission := bAlgorithmPermission,
+	fTemperatureExternal := PU600.fTemperatureExternal,
+	nControlModeAutomatic := 1);
+RV600.SetState_AI_AO();]]></ST>
+    </Implementation>
+    <LineIds Name="FB_OuterCapillaryTubeMats">
+      <LineId Id="61" Count="0" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="67" Count="6" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="75" Count="3" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="89" Count="5" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

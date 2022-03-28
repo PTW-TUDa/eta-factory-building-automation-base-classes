@@ -81,7 +81,10 @@
     <Compile Include="DUTs\99 GA\01 Actors\CoolingUnits\ST_eChillerState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\99 GA\03 Systems\ST_HVFASystemDefaultParameters.TcDUT">
+    <Compile Include="DUTs\99 GA\03 Systems\CoolingSystems\ST_OuterCapillaryTubeMatsDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\03 Systems\StorageSystems\ST_HVFASystemDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GVLs\GlobalVariables.TcGVL">
@@ -155,6 +158,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99 BuildingAutomation\04 Systems\CoolingSystems\FB_eChillerSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\CoolingSystems\FB_OuterCapillaryTubeMats.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99 BuildingAutomation\04 Systems\HeatingSystems\FB_CHPSystem.TcPOU">
@@ -279,6 +285,11 @@
     <Folder Include="DUTs\99 GA\01 Actors\Pumps" />
     <Folder Include="DUTs\99 GA\02 Sensors" />
     <Folder Include="DUTs\99 GA\03 Systems" />
+    <Folder Include="DUTs\99 GA\03 Systems\ConsumerSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\CoolingSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\HeatingSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\LinkageSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\StorageSystems" />
     <Folder Include="DUTs\99 GA\05 Strategy" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
