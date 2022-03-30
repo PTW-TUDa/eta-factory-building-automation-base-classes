@@ -39,6 +39,8 @@ VAR
 	bSetStatusOn_PU600 : BOOL;
 	bSetStatusOn_SV235 : BOOL;	
 	bSetStatusOn_RV600 : BOOL;
+	bSetStatusOn_RV640 : BOOL;
+	bSetStatusOn_RV660 : BOOL;
 	fSetPoint_RV600 : REAL;
 	fExternalTemperature_RV600 : REAL;
 	nControlMode_RV600 : E_MixingValveControlMode;
@@ -82,13 +84,13 @@ RV600(bSetStatusOnAutomatic := bSetStatusOn_RV600,
 RV600.SetState_AI_AO();
 
 //RV640 and RV660 are alwas open
-RV640(bSetStatusOnAutomatic := TRUE,
+RV640(bSetStatusOnAutomatic := bSetStatusOn_RV640,
 	fSetPointAutomatic := 100,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
 RV640.SetState_AI_AO();
 
-RV660(bSetStatusOnAutomatic := TRUE,
+RV660(bSetStatusOnAutomatic := bSetStatusOn_RV660,
 	fSetPointAutomatic := 100,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
