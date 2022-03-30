@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_ClockState" Id="{bd937340-5223-4909-9670-5b42222d7763}">
+    <Declaration><![CDATA[TYPE ST_ClockState :
+STRUCT
+	sintMonth 	: SINT;
+	sintDay 	: SINT;
+	sintWeekday : SINT;
+	fHour 		: REAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
