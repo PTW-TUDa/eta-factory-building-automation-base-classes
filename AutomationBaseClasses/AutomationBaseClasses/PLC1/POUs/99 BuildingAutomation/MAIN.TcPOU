@@ -4,13 +4,16 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	//strategy controller
-	Strategy : BaseStrategyController; 
+	Strategy : FB_BaseStrategyController; 
 
 	//thermal networks
-	CN : CoolingNetwork;
-	HNLT_CN : HnltCnLinkage;
-	HNLT : LowTemperatureHeatingNetwork;
-	HNHT : HighTemperatureHeatingNetwork;
+	CN : FB_CoolingNetwork;
+	HNLT_CN : FB_HnltCnLinkage;
+	HNLT : FB_LowTemperatureHeatingNetwork;
+	HNHT : FB_HighTemperatureHeatingNetwork;
+	
+	//ambient state
+	Ambient : FB_Ambient;
 	
 	//cycle counter
 	MAIN_CycleCount : UDINT;
@@ -20,8 +23,9 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//strategy controller
-Strategy(fTemperature_CN := CN.fTemperatureBufferStorage,
-		fTemperature_HNLT := HNLT.fTemperatureBufferStorage);
+Strategy(stAmbientState := Ambient.stAmtbientState,
+	fTemperature_CN := CN.fTemperatureBufferStorage,
+	fTemperature_HNLT := HNLT.fTemperatureBufferStorage);
 
 //thermal networks
 CN(fSetPointTemperature := Strategy.fTargetTemperature_CN,
@@ -32,9 +36,13 @@ HNLT_CN(bAlgorithmPermission_CN := Strategy.bAlgorithmPermission_CN,
 	bAlgorithmPermission_HNLT := Strategy.bAlgorithmPermission_HNLT,
 	bSetStatusOn_HeatPump := Strategy.bSetStatusOn_HeatPump);
 	
-HNLT(fSetPointTemperature := Strategy.fTargetTemperature_HNLT,
+HNLT(stAmbientState := Ambient.stAmtbientState,
+	fSetPointTemperature := Strategy.fTargetTemperature_HNLT,
 	bAlgorithmPermission := Strategy.bAlgorithmPermission_HNLT,
 	bSetStatusOn_OuterCapillaryTubeMats := Strategy.bSetStatusOn_OuterCapillaryTubeMats);
+	
+//ambient state
+Ambient();
 	
 //test output for checking variable exchange between tasks with different cycle time
 test_output := HeatCounter.test_output;
@@ -44,6 +52,7 @@ MAIN_CycleCount := _TaskInfo[info.index].CycleCount;]]></ST>
     <LineIds Name="MAIN">
       <LineId Id="45" Count="0" />
       <LineId Id="47" Count="0" />
+      <LineId Id="128" Count="0" />
       <LineId Id="102" Count="0" />
       <LineId Id="75" Count="0" />
       <LineId Id="48" Count="1" />
@@ -54,7 +63,10 @@ MAIN_CycleCount := _TaskInfo[info.index].CycleCount;]]></ST>
       <LineId Id="79" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="96" Count="1" />
+      <LineId Id="127" Count="0" />
       <LineId Id="100" Count="1" />
+      <LineId Id="122" Count="1" />
+      <LineId Id="125" Count="0" />
       <LineId Id="52" Count="0" />
       <LineId Id="57" Count="0" />
       <LineId Id="53" Count="1" />

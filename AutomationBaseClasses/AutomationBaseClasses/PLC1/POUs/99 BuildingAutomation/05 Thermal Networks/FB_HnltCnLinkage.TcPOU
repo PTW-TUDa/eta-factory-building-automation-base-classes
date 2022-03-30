@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="HnltCnLinkage" Id="{49b9fb4a-ee7f-4dd8-8511-b340abe8c57d}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK HnltCnLinkage
+  <POU Name="FB_HnltCnLinkage" Id="{49b9fb4a-ee7f-4dd8-8511-b340abe8c57d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HnltCnLinkage
 VAR_INPUT
 	bSetStatusOn_HeatPump : BOOL;
 	bAlgorithmPermission_HNLT : BOOL;
@@ -25,7 +25,7 @@ HeatPumpSystem(bSetStatusOnAutomatic := bSetStatusOn_HeatPump,
 	bAlgorithmPermission := bAlgorithmPermission,
 	fSetPointAutomatic := 0);]]></ST>
     </Implementation>
-    <LineIds Name="HnltCnLinkage">
+    <LineIds Name="FB_HnltCnLinkage">
       <LineId Id="21" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="22" Count="0" />

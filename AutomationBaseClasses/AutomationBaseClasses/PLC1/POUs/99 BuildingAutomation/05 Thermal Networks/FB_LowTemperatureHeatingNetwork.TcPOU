@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="CoolingNetwork" Id="{3e3c7edc-aa3e-40d5-adb7-105c87a52325}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK CoolingNetwork
+  <POU Name="FB_LowTemperatureHeatingNetwork" Id="{41e3edb3-66e7-411c-a35e-b44e9a5d66f1}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LowTemperatureHeatingNetwork
 VAR_INPUT
+	stAmbientState : ST_AmbientState;
 	//feed temperature setpoint and system enabling
 	fSetPointTemperature : REAL;
 	bAlgorithmPermission : BOOL;
-	bSetStatusOn_eChiller : BOOL;	
+	bSetStatusOn_OuterCapillaryTubeMats : BOOL;	
 END_VAR
 VAR_OUTPUT
 	//temperatures in buffer storage
@@ -14,15 +15,14 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//default parameters
-	ST_HVFADefaultParameters : ST_HVFASystemDefaultParameters := (aSetPointLimitsTemperature:=[5,25]);
+	ST_HVFADefaultParameters : ST_HVFASystemDefaultParameters := (aSetPointLimitsTemperature:=[25,50]);
 
 	//systems
 	BufferStorage : FB_BufferStorage;
-	eChillerSystem : FB_eChillerSystem;
+	OuterCapillaryTubeMats : FB_OuterCapillaryTubeMats;
 	HVFAStorage : FB_HVFASystem := (ST_DefaultParameters := ST_HVFADefaultParameters);
 	
 END_VAR
-
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//buffer storage system
@@ -30,18 +30,21 @@ BufferStorage();
 fTemperatureBufferStorage := BufferStorage.MidTemperature;
 
 //producer
-eChillerSystem(bSetStatusOnAutomatic := bSetStatusOn_eChiller,
+
+//consumer
+OuterCapillaryTubeMats(bSetStatusOnAutomatic := bSetStatusOn_OuterCapillaryTubeMats,
 	bAlgorithmPermission := bAlgorithmPermission,
 	fSetPointAutomatic := fSetPointTemperature,
-	fExternalTemperature := BufferStorage.MidTemperature);
+	stAmbientState := stAmbientState);
 	
-//external storages
-
-				]]></ST>
+//external storages]]></ST>
     </Implementation>
-    <LineIds Name="CoolingNetwork">
-      <LineId Id="40" Count="8" />
-      <LineId Id="54" Count="2" />
+    <LineIds Name="FB_LowTemperatureHeatingNetwork">
+      <LineId Id="32" Count="2" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="35" Count="4" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="41" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

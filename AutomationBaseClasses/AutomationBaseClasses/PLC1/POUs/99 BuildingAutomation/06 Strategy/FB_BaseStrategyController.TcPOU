@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="BaseStrategyController" Id="{2cc24fef-e41e-40c1-8491-4b4c0461b6c2}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK BaseStrategyController
+  <POU Name="FB_BaseStrategyController" Id="{2cc24fef-e41e-40c1-8491-4b4c0461b6c2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_BaseStrategyController
 VAR_INPUT
-	fAmbientTemperature : REAL;
+	stAmbientState : ST_AmbientState;
 	//temperature inputs from thermal networks
 	fTemperature_CN : REAL;
 	fTemperature_HNLT : REAL;
@@ -144,36 +144,36 @@ fTargetTemperature_HNLT := 40;
 fTargetTemperature_HNHT := 70;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="BaseStrategyController">
+    <LineIds Name="FB_BaseStrategyController">
       <LineId Id="112" Count="0" />
       <LineId Id="115" Count="0" />
       <LineId Id="168" Count="2" />
       <LineId Id="57" Count="1" />
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.CheckAlgorithmPermission">
+    <LineIds Name="FB_BaseStrategyController.CheckAlgorithmPermission">
       <LineId Id="6" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="20" Count="1" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.ControlCN">
+    <LineIds Name="FB_BaseStrategyController.ControlCN">
       <LineId Id="6" Count="3" />
       <LineId Id="13" Count="6" />
       <LineId Id="26" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.ControlHNLT">
+    <LineIds Name="FB_BaseStrategyController.ControlHNLT">
       <LineId Id="6" Count="9" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.ControlHnltCnLinkage">
+    <LineIds Name="FB_BaseStrategyController.ControlHnltCnLinkage">
       <LineId Id="11" Count="0" />
       <LineId Id="9" Count="1" />
       <LineId Id="5" Count="0" />
       <LineId Id="13" Count="4" />
       <LineId Id="12" Count="0" />
     </LineIds>
-    <LineIds Name="BaseStrategyController.SetTargetTemperatures">
+    <LineIds Name="FB_BaseStrategyController.SetTargetTemperatures">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="7" Count="1" />

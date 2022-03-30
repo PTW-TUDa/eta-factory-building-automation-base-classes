@@ -3,6 +3,7 @@
   <POU Name="FB_OuterCapillaryTubeMats" Id="{f8d40369-147e-4cbe-aff1-5204bfee2138}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_OuterCapillaryTubeMats EXTENDS FB_SystemContinous
 VAR_INPUT
+	stAmbientState : ST_AmbientState;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -12,7 +13,8 @@ VAR
 	
 	//pumps
 	PU235 : FB_PumpGrundfosMagna3;
-	PU600 : FB_PumpGrundfosMagna3;
+	PU600 : FB_PumpGrundfosMagna3;	
+	PU690 : FB_PumpGrundfosCM; //CM pump (storage side)
 
 	//valves
 	ST_SV235DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);
@@ -35,15 +37,15 @@ VAR
 	//WMZ missing
 	
 	//internal variables
-	bSetStatusOn_PU235 : BOOL;
-	bSetStatusOn_PU600 : BOOL;
-	bSetStatusOn_SV235 : BOOL;	
-	bSetStatusOn_RV600 : BOOL;
-	bSetStatusOn_RV640 : BOOL;
-	bSetStatusOn_RV660 : BOOL;
-	fSetPoint_RV600 : REAL;
-	fExternalTemperature_RV600 : REAL;
-	nControlMode_RV600 : E_MixingValveControlMode;
+	bSetStatusOn_PU235 	: BOOL;
+	bSetStatusOn_PU600 	: BOOL;
+	bSetStatusOn_PU690 	: BOOL;
+	bSetStatusOn_SV235 	: BOOL;	
+	bSetStatusOn_RV600 	: BOOL;
+	bSetStatusOn_RV640 	: BOOL;
+	fSetPoint_RV640 	: REAL;
+	bSetStatusOn_RV660 	: BOOL;
+	fSetPoint_RV660 	: REAL;
 	
 	bStartTimer : BOOL;
 	Timer : TON;
@@ -70,6 +72,10 @@ PU600(bSetStatusOnAutomatic := bSetStatusOn_PU600,
 	nControlModeAutomatic := 128);
 PU600.SetState_Profibus();
 
+PU690(bSetStatusOnAutomatic := bSetStatusOn_PU690,
+	bAlgorithmPermission := bAlgorithmPermission);
+PU690.SetState_BO();
+
 //valves
 SV235(bSetStatusOnAutomatic := bSetStatusOn_SV235,
 	bAlgorithmPermission := bAlgorithmPermission);
@@ -85,17 +91,32 @@ RV600.SetState_AI_AO();
 
 //RV640 and RV660 are alwas open
 RV640(bSetStatusOnAutomatic := bSetStatusOn_RV640,
-	fSetPointAutomatic := 100,
+	fSetPointAutomatic := fSetPoint_RV640,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
 RV640.SetState_AI_AO();
 
 RV660(bSetStatusOnAutomatic := bSetStatusOn_RV660,
-	fSetPointAutomatic := 100,
+	fSetPointAutomatic := fSetPoint_RV660,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
 RV660.SetState_AI_AO();]]></ST>
     </Implementation>
+    <Method Name="AmbientControl" Id="{b2f335d5-b1d7-4d6d-9430-234f06cd466b}">
+      <Declaration><![CDATA[METHOD AmbientControl : BOOL //method to control RV640, RV660, PU690 depending on ambient conditions
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//check for rain
+IF stAmbientState.bRain THEN
+	bSetStatusOn_PU690 := TRUE;
+END_IF
+
+//check time for east/west activation
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="CheckError" Id="{b5c5e5e8-42f6-4651-a2ed-f1d07717775f}">
       <Declaration><![CDATA[METHOD PROTECTED  CheckError : BOOL
 VAR_INPUT
@@ -150,6 +171,8 @@ END_VAR]]></Declaration>
 bSetStatusOn_PU235 := FALSE;
 bSetStatusOn_SV235 := FALSE;
 bSetStatusOn_RV600 := FALSE;
+bSetStatusOn_RV640 := FALSE;
+bSetStatusOn_RV660 := FALSE;
 bStartTimer := TRUE;
 
 IF Timer.Q THEN
@@ -169,6 +192,8 @@ END_VAR
       <Implementation>
         <ST><![CDATA[bSetStatusOn_SV235 := TRUE;
 bSetStatusOn_RV600 := TRUE;
+bSetStatusOn_RV640 := TRUE;
+bSetStatusOn_RV660 := TRUE;
 bStartTimer := TRUE;
 
 IF Timer.Q THEN
@@ -210,7 +235,11 @@ END_VAR]]></Declaration>
       <LineId Id="96" Count="0" />
       <LineId Id="74" Count="0" />
       <LineId Id="97" Count="0" />
-      <LineId Id="75" Count="3" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="225" Count="0" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="227" Count="1" />
+      <LineId Id="76" Count="2" />
       <LineId Id="98" Count="0" />
       <LineId Id="82" Count="0" />
       <LineId Id="99" Count="0" />
@@ -222,6 +251,13 @@ END_VAR]]></Declaration>
       <LineId Id="157" Count="0" />
       <LineId Id="163" Count="3" />
       <LineId Id="156" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_OuterCapillaryTubeMats.AmbientControl">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="2" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="FB_OuterCapillaryTubeMats.CheckError">
       <LineId Id="9" Count="1" />
@@ -239,12 +275,15 @@ END_VAR]]></Declaration>
     <LineIds Name="FB_OuterCapillaryTubeMats.RampDown">
       <LineId Id="8" Count="0" />
       <LineId Id="16" Count="0" />
-      <LineId Id="9" Count="6" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="11" Count="4" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_OuterCapillaryTubeMats.RampUp">
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="0" />
+      <LineId Id="23" Count="1" />
       <LineId Id="11" Count="4" />
       <LineId Id="8" Count="0" />
     </LineIds>
