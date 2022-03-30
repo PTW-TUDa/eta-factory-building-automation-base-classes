@@ -39,6 +39,9 @@ VAR
 	//controllers for cooling network
 	Controller_eChiller : FB_CTRL_2POINT;
 	Controller_eChiller_Parameters : ST_CTRL_2POINT_PARAMS;
+	Controller_HVFA_CN : FB_CTRL_2POINT;
+	Controller_HVFA_CN_Parameters : ST_CTRL_2POINT_PARAMS;
+	bEnable_HVFA_CN : BOOL;
 	
 	//controllers for low temperature heating network
 	Controller_OuterCapillaryTubeMats : FB_CTRL_2POINT;
@@ -92,7 +95,8 @@ Controller_eChiller(fSetpointValue := fTemperature_CN,
 	stParams := Controller_eChiller_Parameters);
 bSetStatusOn_eChiller := Controller_eChiller.bOut;
 
-//controller for HVFA is missing because free cooling information via eChiller opc ua is missing]]></ST>
+//control hvfa storage
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="ControlHNLT" Id="{57bcb54f-1f56-4d59-8bc6-dbfcc2a5773d}">
@@ -161,6 +165,7 @@ fTargetTemperature_HNHT := 70;]]></ST>
       <LineId Id="13" Count="6" />
       <LineId Id="26" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="30" Count="0" />
     </LineIds>
     <LineIds Name="FB_BaseStrategyController.ControlHNLT">
       <LineId Id="6" Count="9" />
