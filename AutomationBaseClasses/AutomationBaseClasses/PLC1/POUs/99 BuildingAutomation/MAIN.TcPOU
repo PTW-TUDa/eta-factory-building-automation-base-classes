@@ -14,6 +14,8 @@ VAR
 	
 	//ambient state
 	Ambient : FB_Ambient;
+	parameters : ST_ClockDefaultParameters := (tTaskCycleTime:=GlobalVariables.tTaskCycleTime_MAIN,tCtrlCycleTime := T#1M);
+	Clock : FB_Clock := (ST_DefaultParameters := parameters);;
 	
 	//cycle counter
 	MAIN_CycleCount : UDINT;
@@ -22,7 +24,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//strategy controller
+      <ST><![CDATA[Clock();
+
+//strategy controller
 Strategy(stAmbientState := Ambient.stAmtbientState,
 	fTemperature_CN := CN.fTemperatureBufferStorage,
 	fTemperature_HNLT := HNLT.fTemperatureBufferStorage);
@@ -50,6 +54,7 @@ info();
 MAIN_CycleCount := _TaskInfo[info.index].CycleCount;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="150" Count="1" />
       <LineId Id="45" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="128" Count="0" />

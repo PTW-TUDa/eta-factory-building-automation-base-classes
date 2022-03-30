@@ -75,6 +75,12 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\4 Utility Data Structs\ST_ClockDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\4 Utility Data Structs\ST_ClockState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\99 GA\01 Actors\CoolingUnits\ST_eChillerDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     <Compile Include="GVLs\GlobalVariables.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_AnnealingOven.TcPOU">
       <SubType>Code</SubType>
@@ -297,6 +306,7 @@
     <Folder Include="DUTs\99 GA\03 Systems\LinkageSystems" />
     <Folder Include="DUTs\99 GA\03 Systems\StorageSystems" />
     <Folder Include="DUTs\99 GA\05 Strategy" />
+    <Folder Include="DUTs\4 Utility Data Structs" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
