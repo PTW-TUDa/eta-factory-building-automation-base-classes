@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_HnhtHnltLinkage" Id="{6a3baad8-61ea-416c-a36f-d39a6e6cabde}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HnhtHnltLinkage
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <LineIds Name="FB_HnhtHnltLinkage">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

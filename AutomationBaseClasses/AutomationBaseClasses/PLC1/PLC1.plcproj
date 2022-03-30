@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>1.1</ProjectVersion>
+    <ProjectVersion>1.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -75,7 +75,146 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PlcTask.TcTTO">
+    <Compile Include="DUTs\4 Utility Data Structs\ST_ClockDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\4 Utility Data Structs\ST_ClockState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\01 Actors\CoolingUnits\ST_eChillerDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\01 Actors\CoolingUnits\ST_eChillerState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\03 Systems\CoolingSystems\ST_OuterCapillaryTubeMatsDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\03 Systems\StorageSystems\ST_HVFASystemDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\99 GA\05 Strategy\ST_AmbientState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GVLs\GlobalVariables.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_AnnealingOven.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_Compressor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_DCControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_EmagGT.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_EmagVLC100Y.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_HydraulicDemonstrator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_MafacJava.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits\FB_Ventilation.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\CoolingUnits\FB_AbsorptionChiller.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits\FB_CondensingBoiler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits\FB_ImmersionHeater.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\02 Sensors\FB_ElectricityMeter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\02 Sensors\FB_WeatherStation.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\03 Storages\FB_HybridEnergyStorage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\FB_AnnealingOvenSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\FB_HallHeatingSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\FB_StaticHeatingSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\FB_UnderfloorHeatingSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\CentralMachineSystems\FB_CNMachineSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\CentralMachineSystems\FB_HNHTMachineSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\CentralMachineSystems\FB_HNLTMachineSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\FB_VentilationSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\CoolingSystems\FB_eChillerSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\CoolingSystems\FB_OuterCapillaryTubeMats.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\HeatingSystems\FB_CHPSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\HeatingSystems\FB_CondensingBoilerSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\LinkageSystems\FB_HeatPumpSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\LinkageSystems\FB_PWT1System.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\04 Systems\StorageSystems\FB_HVFASystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\05 Thermal Networks\FB_Ambient.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\05 Thermal Networks\FB_HighTemperatureHeatingNetwork.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\05 Thermal Networks\FB_HnhtHnltLinkage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\05 Thermal Networks\FB_HnltCnLinkage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\05 Thermal Networks\FB_LowTemperatureHeatingNetwork.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\HeatCounter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TaskHeatCounter.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TaskMAIN.TcTTO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
@@ -102,7 +241,25 @@
     <Compile Include="POUs\2 Sensors\FB_MollineC3HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\CoolingUnits\FB_eChiller.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits\FB_HeatPump.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\01 Actors\Pumps\FB_PumpGrundfosCM.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\03 Storages\FB_BufferStorage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\03 Storages\FB_HVFAStorage.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\05 Thermal Networks\FB_CoolingNetwork.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99 BuildingAutomation\06 Strategy\FB_BaseStrategyController.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_TemperatureSensor.TcPOU">
@@ -136,6 +293,20 @@
     <Folder Include="DUTs\1 Actor Data Structs\Pumps" />
     <Folder Include="DUTs\2 Sensor Data Structs" />
     <Folder Include="DUTs\3 System Data Structs" />
+    <Folder Include="DUTs\99 GA" />
+    <Folder Include="DUTs\99 GA\01 Actors" />
+    <Folder Include="DUTs\99 GA\01 Actors\CoolingUnits" />
+    <Folder Include="DUTs\99 GA\01 Actors\HeatingUnits" />
+    <Folder Include="DUTs\99 GA\01 Actors\Pumps" />
+    <Folder Include="DUTs\99 GA\02 Sensors" />
+    <Folder Include="DUTs\99 GA\03 Systems" />
+    <Folder Include="DUTs\99 GA\03 Systems\ConsumerSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\CoolingSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\HeatingSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\LinkageSystems" />
+    <Folder Include="DUTs\99 GA\03 Systems\StorageSystems" />
+    <Folder Include="DUTs\99 GA\05 Strategy" />
+    <Folder Include="DUTs\4 Utility Data Structs" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
@@ -145,6 +316,23 @@
     <Folder Include="POUs\3 Systems" />
     <Folder Include="POUs\4 Utilities\2 Profibus" />
     <Folder Include="POUs\4 Utilities\1 AI_AO" />
+    <Folder Include="POUs\99 BuildingAutomation" />
+    <Folder Include="POUs\99 BuildingAutomation\01 Actors" />
+    <Folder Include="POUs\99 BuildingAutomation\01 Actors\CoolingUnits" />
+    <Folder Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits" />
+    <Folder Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits" />
+    <Folder Include="POUs\99 BuildingAutomation\01 Actors\Pumps" />
+    <Folder Include="POUs\99 BuildingAutomation\03 Storages" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems\CentralMachineSystems" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems\HeatingSystems" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems\CoolingSystems" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems\ConsumerSystems" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems\LinkageSystems" />
+    <Folder Include="POUs\99 BuildingAutomation\04 Systems\StorageSystems" />
+    <Folder Include="POUs\99 BuildingAutomation\05 Thermal Networks" />
+    <Folder Include="POUs\99 BuildingAutomation\06 Strategy" />
+    <Folder Include="POUs\99 BuildingAutomation\02 Sensors" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
