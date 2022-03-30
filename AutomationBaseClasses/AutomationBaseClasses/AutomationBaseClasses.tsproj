@@ -27,7 +27,10 @@
 			</Settings>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
-					<Name>PlcTask</Name>
+					<Name>TaskMAIN</Name>
+				</Task>
+				<Task Id="4" Priority="21" CycleTime="20000" AmsPort="351" AdtTasks="true">
+					<Name>TaskHeatCounter</Name>
 				</Task>
 			</Tasks>
 		</System>
@@ -471,6 +474,11 @@
 							<Type GUID="{14CEA088-1F4A-00F5-F531-CD5B99CC8C4C}">ARRAY [0..4] OF BYTE</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.HNLT.OuterCapillaryTubeMats.PU690.bSetStatusOn_OUT</Name>
+							<Comment><![CDATA[I/O Links]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.HNLT.OuterCapillaryTubeMats.SV235.bSetStatusOn_OUT</Name>
 							<Comment><![CDATA[I/O Links]]></Comment>
 							<Type>BOOL</Type>
@@ -528,10 +536,16 @@
 						<Context>
 							<Id NeedCalleeCall="true">1</Id>
 							<Name>TaskHeatCounter</Name>
+							<ManualConfig>
+								<OTCID>#x02010040</OTCID>
+							</ManualConfig>
+							<Priority>21</Priority>
+							<CycleTime>2000000</CycleTime>
 						</Context>
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="20" OTCID="#x08502001"/>
+						<TaskPouOid Prio="21" OTCID="#x08502002"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
