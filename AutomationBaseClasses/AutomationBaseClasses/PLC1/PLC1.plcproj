@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>1.0</ProjectVersion>
+    <ProjectVersion>1.1</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -69,6 +69,9 @@
     <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3State.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -94,6 +97,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\1 Actors\FB_MixingValve.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_MollineC3HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
@@ -146,6 +152,10 @@
     <PlaceholderReference Include="Tc2_ControllerToolbox">
       <DefaultResolution>Tc2_ControllerToolbox, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_ControllerToolbox</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_MBus">
+      <DefaultResolution>Tc2_MBus, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_MBus</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
