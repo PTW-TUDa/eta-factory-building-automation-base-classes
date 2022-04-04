@@ -10,10 +10,15 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[(*
+- kontinuierlich geregeltes Blockheizkraftwerk, erhält Stellgröße zwischen 0 und 1 via Analog Input
+- in bestehendem Projekt prüfen, welche Größen via AnalogOutput bzw. ModbusTCP zur Verfügung gestellt werden
+*)]]></ST>
     </Implementation>
     <LineIds Name="FB_CHP">
       <LineId Id="9" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="17" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
