@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="FB_HVFASystem" Id="{5fa1e97c-987f-49c1-82cf-2ddae1379d7b}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_HVFASystem EXTENDS FB_SystemContinous
+  <POU Name="FB_HVFAStorageSystem" Id="{5fa1e97c-987f-49c1-82cf-2ddae1379d7b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HVFAStorageSystem EXTENDS FB_SystemContinous
 VAR_INPUT
 	bLoading : BOOL; //variable to determine if storage is in loading mode
 END_VAR
@@ -9,14 +9,14 @@ VAR_OUTPUT
 END_VAR
 VAR
 	//default parameters
-	localDefaultParameters : ST_HVFASystemDefaultParameters;	
+	localDefaultParameters : ST_HVFAStorageSystemDefaultParameters;	
 
 	//storage
 	HVFAStorage : FB_HVFAStorage;
 	
 	//pumps
 	PUx05 : FB_PumpGrundfosMagna3; //Magna 3 pump (network side)
-	PU7x0 : FB_PumpGrundfosCM; //CM pump (storage side)
+	PU7x0 : FB_Pump2Point; //CM pump (storage side)
 
 	//valves
 	ST_SVx05DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
@@ -27,26 +27,15 @@ VAR
 								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
 	ST_RVx05DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := TRUE,aSetPointLimitsPosition := [0,100],fDefaultPosition := 0, aSetPointLimitsTemperature := [0,100], 
 								fControllerAmplification := 0.265, tControllerIntegralTime := T#15S, 
-								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
-
-	bFeedbackSignal : BOOL; //true if valve gets a feedback signal for acual position
-	fDefaultPosition : REAL; //default position when bSetStatusOn = false
-	fControlerAmplification : LREAL;
-	fControlerIntegralTime : DINT;
-	tTaskCycleTime	: TIME;
-	tCtrlCycleTime	: TIME;
-	aSetPointLimitsPosition	: ARRAY[1..2] OF REAL; //setpoint limits for position mode
-	aSetPointLimitsTemperature : ARRAY[1..2] OF REAL; //setpoint limits for temperature mode
-	
-	
-	
+								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);	
 	
 	SVx05 : FB_MixingValve := (ST_DefaultParameters := ST_SVx05DefaultParameters); //discrete inlet valve, valve motor needs continous signal but operates only between extreme positions
 	SVx06 : FB_MixingValve := (ST_DefaultParameters := ST_SVx06DefaultParameters); //discrete outlet valve	, valve motor needs continous signal but operates only between extreme positions
 	RVx05 : FB_MixingValve := (ST_DefaultParameters := ST_RVx05DefaultParameters); //continous mixing valve
 	
 	//sensors
-	//WMZ missing
+	WMZ7x0 : FB_MollineC3HeatCounter;
+	WMZx05 : FB_MollineC3HeatCounter;
 	
 	//internal variables
 	bSetStatusOn_PUx05 : BOOL;
@@ -59,11 +48,19 @@ VAR
 	fSetPoint_RVx05 : REAL;
 	fExternalTemperature_RVx05 : REAL;
 	nControlMode_RVx05 : E_MixingValveControlMode;
+	
+	//timer will be deleted when DI-terminal has been installed
+	bStartTimer : BOOL;
+	Timer : TON;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[MAIN();
+      <ST><![CDATA[//timer will be deleted when DI-terminal has been installed
+Timer(IN := bStartTimer,
+	PT := T#75S);
+
+MAIN();
 
 //storage
 HVFAStorage();
@@ -97,7 +94,11 @@ RVx05(bSetStatusOnAutomatic := bSetStatusOn_RVx05,
 	bAlgorithmPermission := bAlgorithmPermission,
 	fTemperatureExternal := fExternalTemperature_RVx05,
 	nControlModeAutomatic := nControlMode_RVx05);
-RVx05.SetState_AI_AO();]]></ST>
+RVx05.SetState_AI_AO();
+
+//insert heat counter telegramm from other task
+WMZ7x0();
+WMZx05();]]></ST>
     </Implementation>
     <Method Name="CheckError" Id="{0a750c43-7566-4b1a-a185-b01eaf088ced}">
       <Declaration><![CDATA[METHOD PROTECTED  CheckError : BOOL
@@ -151,8 +152,17 @@ END_VAR]]></Declaration>
 bSetStatusOn_PUx05 := FALSE;
 bSetStatusOn_RVx05 := FALSE;
 
+(*
 IF RVx05.fOperatingPoint<10 AND NOT PUx05.bStatusOn THEN
 	bRampDownFinished := TRUE;
+END_IF
+*)
+
+bStartTimer := TRUE;
+
+IF Timer.Q THEN
+	bRampDownFinished := TRUE;
+	bStartTimer := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -172,18 +182,28 @@ IF bLoading = TRUE THEN
 	fSetPoint_SVx05 := 100;
 	fSetPoint_SVx06 := 100;
 	nControlMode_RVx05 := 2; //cooling mode (heats network)
-	//fExternalTemperature_RVx05 := WMZ710.ReturnTemperature
+	fExternalTemperature_RVx05 := WMZ7x0.fReturnTemperazure;
+	(*
 	IF SVx05.fOperatingPoint>90 AND SVx06.fOperatingPoint>90 THEN
 		bRampUpFinished := TRUE;
 	END_IF
+	*)
 ELSE
 	fSetPoint_SVx05 := 0;
 	fSetPoint_SVx06 := 0;
 	nControlMode_RVx05 := 1; //heating mode (cools network)
-	//fExternalTemperature_RVx05 := WMZ105.FeedTemperature
+	fExternalTemperature_RVx05 := WMZx05.fFeedTemperature;
+	(*
 	IF SVx05.fOperatingPoint<10 AND SVx06.fOperatingPoint<10 THEN
 		bRampUpFinished := TRUE;
 	END_IF
+	*)
+END_IF
+
+bStartTimer := TRUE;
+IF Timer.Q THEN
+	bRampUpFinished := TRUE;
+	bStartTimer := FALSE; //resets timer
 END_IF
 
 ]]></ST>
@@ -200,7 +220,7 @@ aSetPointLimits[2] := localDefaultParameters.aSetPointLimitsTemperature[2];]]></
       </Implementation>
     </Method>
     <Property Name="ST_DefaultParameters" Id="{f1db4656-edfb-47d5-af6a-23dbe9289a24}">
-      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_HVFASystemDefaultParameters]]></Declaration>
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_HVFAStorageSystemDefaultParameters]]></Declaration>
       <Set Name="Set" Id="{293bdd0c-657e-4a38-8183-ebcb37193829}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -223,45 +243,68 @@ IF bLoading = TRUE THEN
 	fSetPoint_SVx05 := 100;
 	fSetPoint_SVx06 := 100;
 	nControlMode_RVx05 := 2; //cooling mode (heats network)
-	//fExternalTemperature_RVx05 := WMZ710.ReturnTemperature
+	fExternalTemperature_RVx05 := WMZ7x0.fReturnTemperazure;
 ELSE
 	fSetPoint_SVx05 := 0;
 	fSetPoint_SVx06 := 0;
 	nControlMode_RVx05 := 1; //heating mode (cools network)
-	//fExternalTemperature_RVx05 := WMZ105.FeedTemperature
+	fExternalTemperature_RVx05 := WMZx05.fFeedTemperature;
 END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_HVFASystem">
+    <LineIds Name="FB_HVFAStorageSystem">
+      <LineId Id="169" Count="1" />
+      <LineId Id="167" Count="1" />
       <LineId Id="69" Count="33" />
       <LineId Id="9" Count="0" />
+      <LineId Id="174" Count="2" />
+      <LineId Id="173" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.CheckError">
+    <LineIds Name="FB_HVFAStorageSystem.CheckError">
       <LineId Id="9" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.Operational">
+    <LineIds Name="FB_HVFAStorageSystem.Operational">
       <LineId Id="8" Count="11" />
       <LineId Id="7" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.RampDown">
-      <LineId Id="8" Count="5" />
+    <LineIds Name="FB_HVFAStorageSystem.RampDown">
+      <LineId Id="8" Count="2" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="11" Count="2" />
       <LineId Id="7" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="20" Count="5" />
+      <LineId Id="19" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.RampUp">
-      <LineId Id="9" Count="20" />
+    <LineIds Name="FB_HVFAStorageSystem.RampUp">
+      <LineId Id="9" Count="8" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="20" Count="5" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="37" Count="4" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="29" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.SetSetPointLimits">
+    <LineIds Name="FB_HVFAStorageSystem.SetSetPointLimits">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.ST_DefaultParameters.Set">
+    <LineIds Name="FB_HVFAStorageSystem.ST_DefaultParameters.Set">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="FB_HVFASystem.Working">
-      <LineId Id="8" Count="11" />
+    <LineIds Name="FB_HVFAStorageSystem.Working">
+      <LineId Id="8" Count="0" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="35" Count="4" />
+      <LineId Id="19" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>

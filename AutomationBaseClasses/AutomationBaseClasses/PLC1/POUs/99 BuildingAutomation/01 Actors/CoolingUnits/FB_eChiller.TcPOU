@@ -13,7 +13,7 @@ VAR
 	localDefaultParameters : ST_eChillerDefaultParameters;
 
 	{attribute 'OPC.UA.DA' := '1'}
-	localState : ST_PumpGrundfosMagna3State;
+	localState : ST_eChillerState;
 	
 	//analog converters
 	OutputConverter_SetpointValue : FB_AnalogOutput(fUpperLimit := 28, fLowerLimit := 10);

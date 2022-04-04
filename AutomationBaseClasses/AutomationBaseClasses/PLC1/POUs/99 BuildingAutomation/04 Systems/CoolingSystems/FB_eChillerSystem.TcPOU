@@ -17,14 +17,28 @@ VAR
 								tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN, tCtrlCycleTime := T#5S);
 	SV138 : FB_MixingValve := (ST_DefaultParameters := ST_SV138DefaultParameters); //valve motor needs continous signal but operates only between extreme positions	
 	
+	//heat counters
+	WMZ135 : FB_MollineC3HeatCounter;
+	WMZ138 : FB_MollineC3HeatCounter;
+	
+	
 	//internal variables
 	bSetStatusOn_eChiller : BOOL;
 	bSetStatusOn_SV138 : BOOL;
+	
+	//timer will be deleted when DI-terminal has been installed
+	bStartTimer : BOOL;
+	Timer : TON;
 END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[MAIN();
+      <ST><![CDATA[//timer will be deleted when DI-terminal has been installed
+Timer(IN := bStartTimer,
+	PT := T#75S);
+
+
+MAIN();
 eChiller(
 	bSetStatusOnAutomatic := bSetStatusOn_eChiller,
 	fSetPointAutomatic := fSetPoint,
@@ -38,7 +52,11 @@ SV138(
 	fSetPointAutomatic := 100,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
-SV138.SetState_AI_AO();]]></ST>
+SV138.SetState_AI_AO();
+
+//insert heat counter telegramm from other task
+WMZ135();
+WMZ138();]]></ST>
     </Implementation>
     <Method Name="CheckError" Id="{87b68d69-7506-4fd5-920f-31c8ac6bc4f2}">
       <Declaration><![CDATA[METHOD PROTECTED  CheckError : BOOL
@@ -95,9 +113,17 @@ IF NOT eChiller.bStatusOn THEN
 	bSetStatusOn_SV138 := FALSE;
 END_IF
 
+(*
 //wait until valve is closed and ensure that eChiller is not switched on meanwhile
 IF SV138.fOperatingPoint < 5 AND NOT eChiller.bStatusOn THEN
 	bRampDownFinished := TRUE;
+END_IF
+*)
+
+bStartTimer := TRUE;
+IF Timer.Q THEN
+	bRampDownFinished := TRUE;
+	bStartTimer := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -113,8 +139,16 @@ END_VAR
         <ST><![CDATA[bSetStatusOn_SV138 := TRUE;
 
 //wait until valve is opened
+(* Comment, because DI-terminal is missing - Workaround use timer
 IF SV138.fOperatingPoint > 95 THEN
 	bRampUpFinished := TRUE;
+END_IF
+*)
+
+bStartTimer := TRUE;
+IF Timer.Q THEN
+	bRampUpFinished := TRUE;
+	bStartTimer := FALSE; //resets timer
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -143,8 +177,14 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_eChillerSystem">
+      <LineId Id="72" Count="1" />
+      <LineId Id="69" Count="2" />
       <LineId Id="30" Count="13" />
       <LineId Id="9" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="82" Count="0" />
     </LineIds>
     <LineIds Name="FB_eChillerSystem.CheckError">
       <LineId Id="9" Count="7" />
@@ -155,12 +195,24 @@ END_IF]]></ST>
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_eChillerSystem.RampDown">
-      <LineId Id="8" Count="9" />
+      <LineId Id="8" Count="5" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="14" Count="3" />
       <LineId Id="7" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="27" Count="2" />
+      <LineId Id="23" Count="0" />
     </LineIds>
     <LineIds Name="FB_eChillerSystem.RampUp">
-      <LineId Id="9" Count="4" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="12" Count="1" />
       <LineId Id="8" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="23" Count="3" />
+      <LineId Id="22" Count="0" />
     </LineIds>
     <LineIds Name="FB_eChillerSystem.SetSetPointLimits">
       <LineId Id="6" Count="0" />

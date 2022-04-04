@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="FB_EmagVLC100Y" Id="{4ac2b736-01a2-4d1f-b989-3b78e78daef7}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_EmagVLC100Y
+  <POU Name="FB_HeatExchanger1" Id="{bca56c6b-1b09-4f57-a186-5b7562770c5b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_HeatExchanger1 EXTENDS FB_SystemContinous
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -12,7 +12,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <LineIds Name="FB_EmagVLC100Y">
+    <LineIds Name="FB_HeatExchanger1">
       <LineId Id="9" Count="0" />
     </LineIds>
   </POU>

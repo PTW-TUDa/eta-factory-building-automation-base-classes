@@ -29,9 +29,6 @@
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>TaskMAIN</Name>
 				</Task>
-				<Task Id="4" Priority="21" CycleTime="20000" AmsPort="351" AdtTasks="true">
-					<Name>TaskHeatCounter</Name>
-				</Task>
 			</Tasks>
 		</System>
 		<Plc>
@@ -77,85 +74,85 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.HVFAStorage.UpperTemperatureSensor.temperature_IN</Name>
+							<Name>MAIN.CN.HVFASystem.HVFAStorage.UpperTemperatureSensor.temperature_IN</Name>
 							<Comment><![CDATA[I/O-Links]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.HVFAStorage.LowerTemperatureSensor.temperature_IN</Name>
+							<Name>MAIN.CN.HVFASystem.HVFAStorage.LowerTemperatureSensor.temperature_IN</Name>
 							<Comment><![CDATA[I/O-Links]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.StatusModule_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.StatusModule_IN</Name>
 							<Comment><![CDATA[I/O links]]></Comment>
 							<Type GUID="{12E80FF5-6251-C867-A464-3036E21E986D}">ARRAY [0..5] OF BYTE</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.nAlarmCode_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.nAlarmCode_IN</Name>
 							<Type>USINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.nWarningCode_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.nWarningCode_IN</Name>
 							<Type>USINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fVolumeFlowRate_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fVolumeFlowRate_IN</Name>
 							<Comment><![CDATA[m^3/h volume flow rate from pump]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fPressureDifference_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fPressureDifference_IN</Name>
 							<Comment><![CDATA[pa = 10^-5 bar]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fPowerElectric_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fPowerElectric_IN</Name>
 							<Comment><![CDATA[W]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fTemperatureInternal_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fTemperatureInternal_IN</Name>
 							<Comment><![CDATA[°C]]></Comment>
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fActualSetpoint_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fActualSetpoint_IN</Name>
 							<Comment><![CDATA[%]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fRotationalSpeed_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fRotationalSpeed_IN</Name>
 							<Comment><![CDATA[rpm]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fTemperatureExternal_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fTemperatureExternal_IN</Name>
 							<Comment><![CDATA[°C external temperature from sensor connected to pump]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fTemperatureDifference_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fTemperatureDifference_IN</Name>
 							<Comment><![CDATA[°C]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.fPowerThermal_IN</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.fPowerThermal_IN</Name>
 							<Comment><![CDATA[W]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.SVx05.nOperatingPoint_IN</Name>
+							<Name>MAIN.CN.HVFASystem.SVx05.nOperatingPoint_IN</Name>
 							<Comment><![CDATA[Actual valve position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.SVx06.nOperatingPoint_IN</Name>
+							<Name>MAIN.CN.HVFASystem.SVx06.nOperatingPoint_IN</Name>
 							<Comment><![CDATA[Actual valve position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.RVx05.nOperatingPoint_IN</Name>
+							<Name>MAIN.CN.HVFASystem.RVx05.nOperatingPoint_IN</Name>
 							<Comment><![CDATA[Actual valve position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
@@ -321,85 +318,85 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.HVFAStorage.UpperTemperatureSensor.temperature_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.HVFAStorage.UpperTemperatureSensor.temperature_IN</Name>
 							<Comment><![CDATA[I/O-Links]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.HVFAStorage.LowerTemperatureSensor.temperature_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.HVFAStorage.LowerTemperatureSensor.temperature_IN</Name>
 							<Comment><![CDATA[I/O-Links]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.StatusModule_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.StatusModule_IN</Name>
 							<Comment><![CDATA[I/O links]]></Comment>
 							<Type GUID="{12E80FF5-6251-C867-A464-3036E21E986D}">ARRAY [0..5] OF BYTE</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.nAlarmCode_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.nAlarmCode_IN</Name>
 							<Type>USINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.nWarningCode_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.nWarningCode_IN</Name>
 							<Type>USINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fVolumeFlowRate_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fVolumeFlowRate_IN</Name>
 							<Comment><![CDATA[m^3/h volume flow rate from pump]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fPressureDifference_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fPressureDifference_IN</Name>
 							<Comment><![CDATA[pa = 10^-5 bar]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fPowerElectric_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fPowerElectric_IN</Name>
 							<Comment><![CDATA[W]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fTemperatureInternal_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fTemperatureInternal_IN</Name>
 							<Comment><![CDATA[°C]]></Comment>
 							<Type>REAL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fActualSetpoint_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fActualSetpoint_IN</Name>
 							<Comment><![CDATA[%]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fRotationalSpeed_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fRotationalSpeed_IN</Name>
 							<Comment><![CDATA[rpm]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fTemperatureExternal_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fTemperatureExternal_IN</Name>
 							<Comment><![CDATA[°C external temperature from sensor connected to pump]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fTemperatureDifference_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fTemperatureDifference_IN</Name>
 							<Comment><![CDATA[°C]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.fPowerThermal_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.fPowerThermal_IN</Name>
 							<Comment><![CDATA[W]]></Comment>
 							<Type>UDINT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.SVx05.nOperatingPoint_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.SVx05.nOperatingPoint_IN</Name>
 							<Comment><![CDATA[Actual valve position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.SVx06.nOperatingPoint_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.SVx06.nOperatingPoint_IN</Name>
 							<Comment><![CDATA[Actual valve position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.RVx05.nOperatingPoint_IN</Name>
+							<Name>MAIN.HNLT.HVFASystem.RVx05.nOperatingPoint_IN</Name>
 							<Comment><![CDATA[Actual valve position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
@@ -427,26 +424,26 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PUx05.ControlModule_OUT</Name>
+							<Name>MAIN.CN.HVFASystem.PUx05.ControlModule_OUT</Name>
 							<Type GUID="{14CEA088-1F4A-00F5-F531-CD5B99CC8C4C}">ARRAY [0..4] OF BYTE</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.PU7x0.bSetStatusOn_OUT</Name>
+							<Name>MAIN.CN.HVFASystem.PU7x0.bSetStatusOn_OUT</Name>
 							<Comment><![CDATA[I/O Links]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.SVx05.nSetPoint_OUT</Name>
+							<Name>MAIN.CN.HVFASystem.SVx05.nSetPoint_OUT</Name>
 							<Comment><![CDATA[Set position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.SVx06.nSetPoint_OUT</Name>
+							<Name>MAIN.CN.HVFASystem.SVx06.nSetPoint_OUT</Name>
 							<Comment><![CDATA[Set position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.CN.HVFAStorage.RVx05.nSetPoint_OUT</Name>
+							<Name>MAIN.CN.HVFASystem.RVx05.nSetPoint_OUT</Name>
 							<Comment><![CDATA[Set position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
@@ -499,26 +496,26 @@
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PUx05.ControlModule_OUT</Name>
+							<Name>MAIN.HNLT.HVFASystem.PUx05.ControlModule_OUT</Name>
 							<Type GUID="{14CEA088-1F4A-00F5-F531-CD5B99CC8C4C}">ARRAY [0..4] OF BYTE</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.PU7x0.bSetStatusOn_OUT</Name>
+							<Name>MAIN.HNLT.HVFASystem.PU7x0.bSetStatusOn_OUT</Name>
 							<Comment><![CDATA[I/O Links]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.SVx05.nSetPoint_OUT</Name>
+							<Name>MAIN.HNLT.HVFASystem.SVx05.nSetPoint_OUT</Name>
 							<Comment><![CDATA[Set position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.SVx06.nSetPoint_OUT</Name>
+							<Name>MAIN.HNLT.HVFASystem.SVx06.nSetPoint_OUT</Name>
 							<Comment><![CDATA[Set position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.HNLT.HVFAStorage.RVx05.nSetPoint_OUT</Name>
+							<Name>MAIN.HNLT.HVFASystem.RVx05.nSetPoint_OUT</Name>
 							<Comment><![CDATA[Set position linked to terminal]]></Comment>
 							<Type>INT</Type>
 						</Var>
@@ -533,19 +530,9 @@
 							<Priority>20</Priority>
 							<CycleTime>10000000</CycleTime>
 						</Context>
-						<Context>
-							<Id NeedCalleeCall="true">1</Id>
-							<Name>TaskHeatCounter</Name>
-							<ManualConfig>
-								<OTCID>#x02010040</OTCID>
-							</ManualConfig>
-							<Priority>21</Priority>
-							<CycleTime>2000000</CycleTime>
-						</Context>
 					</Contexts>
 					<TaskPouOids>
 						<TaskPouOid Prio="20" OTCID="#x08502001"/>
-						<TaskPouOid Prio="21" OTCID="#x08502002"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>

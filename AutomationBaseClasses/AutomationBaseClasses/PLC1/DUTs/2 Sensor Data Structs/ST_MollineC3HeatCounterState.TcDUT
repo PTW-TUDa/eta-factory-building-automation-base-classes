@@ -13,7 +13,7 @@ STRUCT
 	fVolumeFlowRate				: REAL;
 	sVolumeFlowRateUnit			: STRING := 'm3/h';
 	fHeatEnergy					: REAL;
-	sHeatEnergyUnit				: STRING := "MWh";
+	sHeatEnergyUnit				: STRING := 'MWh';
 	fHeatFlowRate				: REAL;
 	sHeatFlowRateUnit			: STRING := 'kW';
 	fTemperatureDifference		: REAL;
