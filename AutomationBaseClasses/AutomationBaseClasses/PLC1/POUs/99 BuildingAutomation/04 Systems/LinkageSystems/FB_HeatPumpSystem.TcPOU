@@ -38,15 +38,15 @@ HeatPump(bSetStatusOnAutomatic := bSetStatusOn_HeatPump,
 HeatPump.SetState_BO();
 
 //valves
+SV146.GetState_BI();
 SV146(bSetStatusOnAutomatic := bSetStatusOn_SV146,
 		bAlgorithmPermission := bAlgorithmPermission);
-SV146.SetState_BI_BO();
-		
+SV146.SetState_BO();
+
+SV246.GetState_BI();
 SV246(bSetStatusOnAutomatic := bSetStatusOn_SV246,
 		bAlgorithmPermission := bAlgorithmPermission);
-SV246.SetState_BI_BO();
-
-]]></ST>
+SV246.SetState_BO();]]></ST>
     </Implementation>
     <Method Name="CheckError" Id="{e6a4ede8-dc18-488e-9b82-544068cf9d4e}">
       <Declaration><![CDATA[METHOD PROTECTED  CheckError : BOOL
@@ -133,8 +133,12 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <LineIds Name="FB_HeatPumpSystem">
-      <LineId Id="33" Count="18" />
-      <LineId Id="9" Count="0" />
+      <LineId Id="33" Count="10" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="44" Count="2" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="48" Count="2" />
     </LineIds>
     <LineIds Name="FB_HeatPumpSystem.CheckError">
       <LineId Id="8" Count="0" />

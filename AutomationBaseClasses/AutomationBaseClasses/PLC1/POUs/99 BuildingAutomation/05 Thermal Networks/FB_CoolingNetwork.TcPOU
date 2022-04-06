@@ -11,13 +11,10 @@ VAR_OUTPUT
 	fTemperatureBufferStorage : REAL;
 END_VAR
 VAR
-	//default parameters
-	ST_HVFADefaultParameters : ST_HVFAStorageSystemDefaultParameters := (aSetPointLimitsTemperature:=[5,25]);
-
 	//systems
 	BufferStorage : FB_BufferStorage;
 	eChillerSystem : FB_eChillerSystem;
-	HVFASystem : FB_HVFAStorageSystem := (ST_DefaultParameters := ST_HVFADefaultParameters);
+	HVFASystem : FB_HVFAStorageSystem;
 	
 	//internal variables
 	fSetPoint_HVFASystem : REAL;
@@ -36,21 +33,23 @@ eChillerSystem(bSetStatusOnAutomatic := stCNControl.bSetStatusOn_eChiller,
 	fExternalTemperature := BufferStorage.fMidTemperature);
 	
 //external storages
+//setpoint depends on loading mode -> storage must be cooler than setpoint temperature in network
 IF stCNControl.bLoading_HVFASystem THEN
-	fSetPoint_HVFASystem := stCNControl.fTargetTemperature-5; //storage must be cooler than setpoint temperature in network
+	fSetPoint_HVFASystem := stCNControl.fTargetTemperature-5;
 ELSE
 	fSetPoint_HVFASystem := stCNControl.fTargetTemperature;
 END_IF
 HVFASystem(bSetStatusOnAutomatic := stCNControl.bSetStatusOn_HVFASystem,
 	bAlgorithmPermission := stCNControl.bAlgorithmPermission,
 	fSetPointAutomatic := fSetpoint_HVFASystem,
-	bLoading := stCNControl.bLoading_HVFASystem);
+	bLoadingAutomatic := stCNControl.bLoading_HVFASystem);
 
 				]]></ST>
     </Implementation>
     <LineIds Name="FB_CoolingNetwork">
       <LineId Id="40" Count="8" />
       <LineId Id="54" Count="1" />
+      <LineId Id="118" Count="0" />
       <LineId Id="88" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="90" Count="0" />

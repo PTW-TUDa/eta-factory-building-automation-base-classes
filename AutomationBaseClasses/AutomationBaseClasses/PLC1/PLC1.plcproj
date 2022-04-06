@@ -60,7 +60,7 @@
     <Compile Include="DUTs\1 Actor Data Structs\Pumps\E_GrundfosMagna3ControlMode.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_GundfosMagna3DefaultParameters.TcDUT">
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3DefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
@@ -93,6 +93,9 @@
     <Compile Include="DUTs\99 BuildingAutomation\03 Systems\StorageSystems\ST_HVFAStorageSystemDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\99 BuildingAutomation\03 Systems\StorageSystems\ST_HVFAStorageSetParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\99 BuildingAutomation\04 Thermal Networks\ST_AmbientState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -116,6 +119,12 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\2 Profibus\ConvertBitToByte.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\2 Profibus\ConvertByteToBit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits\FB_CHP.TcPOU">

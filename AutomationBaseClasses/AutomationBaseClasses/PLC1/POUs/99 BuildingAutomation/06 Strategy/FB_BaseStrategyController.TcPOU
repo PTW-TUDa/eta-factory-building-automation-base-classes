@@ -6,7 +6,7 @@ VAR_INPUT
 	{attribute 'OPC.UA.DA.StructuredType' := '1'}
 	stAmbientState : ST_AmbientState;
 	
-	//temperature inputs from thermal networks
+	//actual temperatures in thermal networks
 	fTemperature_CN : REAL;
 	fTemperature_HNLT : REAL;
 	fTemperature_HNHT : REAL;
@@ -30,18 +30,17 @@ VAR
 	aTemperatureLimits_HNLT : ARRAY[1..2] OF REAL := [30,45]; //temperature limits for low temperature heating network
 	aTemperatureLimits_CN : ARRAY[1..2] OF REAL := [5,25]; //temperature limits for cooling network
 
-	//controllers for cooling network
+	//controllers and variables for cooling network
 	Controller_eChiller : FB_CTRL_2POINT;
 	Controller_eChiller_Parameters : ST_CTRL_2POINT_PARAMS;
 	Controller_HVFA_CN : FB_CTRL_2POINT;
 	Controller_HVFA_CN_Parameters : ST_CTRL_2POINT_PARAMS;
-	bEnable_HVFA_CN : BOOL;
 	
-	//controllers for low temperature heating network
+	//controllers and variables for low temperature heating network
 	Controller_OuterCapillaryTubeMats : FB_CTRL_2POINT;
 	Controller_OuterCapillaryTubeMats_Parameters : ST_CTRL_2POINT_PARAMS;
 	
-	//controllers for hnlt and cn linkage
+	//controllers and variables for hnlt and cn linkage
 	Controller_HeatPump : FB_CTRL_2POINT;
 	Controller_HeatPump_Parameters : ST_CTRL_2POINT_PARAMS;
 END_VAR
@@ -175,7 +174,8 @@ stHnhtHnltLinkageControl.fTargetTemperature_HNLT := stHNLTControl.fTargetTempera
       <LineId Id="20" Count="1" />
       <LineId Id="28" Count="0" />
       <LineId Id="27" Count="0" />
-      <LineId Id="29" Count="3" />
+      <LineId Id="29" Count="2" />
+      <LineId Id="38" Count="0" />
     </LineIds>
     <LineIds Name="FB_BaseStrategyController.ControlCN">
       <LineId Id="6" Count="3" />

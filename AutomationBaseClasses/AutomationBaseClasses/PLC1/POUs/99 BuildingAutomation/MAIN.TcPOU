@@ -21,6 +21,9 @@ Strategy(stAmbientState := Ambient.stAmtbientState,
 	fTemperature_CN := CN.fTemperatureBufferStorage,
 	fTemperature_HNLT := HNLT.fTemperatureBufferStorage);
 
+//ambient state
+Ambient();
+	
 //thermal networks
 CN(stCNControl := Strategy.stCNControl);
 
@@ -29,22 +32,24 @@ HNLT_CN(stHnltCnLinkageControl := Strategy.stHnltCnLinkageControl);
 HNLT(stAmbientState := Ambient.stAmtbientState,
 	stHNLTControl := Strategy.stHNLTControl);
 	
-//ambient state
-Ambient();]]></ST>
+]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="45" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="128" Count="0" />
       <LineId Id="102" Count="0" />
+      <LineId Id="205" Count="0" />
       <LineId Id="75" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="203" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="174" Count="0" />
       <LineId Id="60" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="96" Count="1" />
       <LineId Id="101" Count="0" />
-      <LineId Id="122" Count="1" />
+      <LineId Id="122" Count="0" />
       <LineId Id="125" Count="0" />
     </LineIds>
   </POU>

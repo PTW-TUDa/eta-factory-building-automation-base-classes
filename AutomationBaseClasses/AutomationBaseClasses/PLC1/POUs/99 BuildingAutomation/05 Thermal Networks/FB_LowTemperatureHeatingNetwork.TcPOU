@@ -13,13 +13,10 @@ VAR_OUTPUT
 	fTemperatureBufferStorage : REAL;
 END_VAR
 VAR
-	//default parameters
-	ST_HVFADefaultParameters : ST_HVFAStorageSystemDefaultParameters := (aSetPointLimitsTemperature:=[25,50]);
-
 	//systems
 	BufferStorage : FB_BufferStorage;
 	OuterCapillaryTubeMats : FB_OuterCapillaryTubeMats;
-	HVFASystem : FB_HVFAStorageSystem := (ST_DefaultParameters := ST_HVFADefaultParameters);
+	HVFASystem : FB_HVFAStorageSystem;
 	
 	//internal variables
 	fSetPoint_HVFASystem : REAL;
@@ -39,15 +36,16 @@ OuterCapillaryTubeMats(bSetStatusOnAutomatic := stHNLTControl.bSetStatusOn_Outer
 	stAmbientState := stAmbientState);
 	
 //external storages
+//setpoint depends on loading mode -> storage must be warmer than setpoint temperature in network
 IF stHNLTControl.bLoading_HVFASystem THEN
-	fSetPoint_HVFASystem := stHNLTControl.fTargetTemperature+5; //storage must be warmer than setpoint temperature in network
+	fSetPoint_HVFASystem := stHNLTControl.fTargetTemperature+5;
 ELSE
 	fSetPoint_HVFASystem := stHNLTControl.fTargetTemperature;
 END_IF
 HVFASystem(bSetStatusOnAutomatic := stHNLTControl.bSetStatusOn_HVFASystem,
 	bAlgorithmPermission := stHNLTControl.bAlgorithmPermission,
 	fSetPointAutomatic := fSetpoint_HVFASystem,
-	bLoading := stHNLTControl.bLoading_HVFASystem);]]></ST>
+	bLoadingAutomatic := stHNLTControl.bLoading_HVFASystem);]]></ST>
     </Implementation>
     <LineIds Name="FB_LowTemperatureHeatingNetwork">
       <LineId Id="32" Count="2" />
@@ -56,6 +54,7 @@ HVFASystem(bSetStatusOnAutomatic := stHNLTControl.bSetStatusOn_HVFASystem,
       <LineId Id="87" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="149" Count="0" />
       <LineId Id="122" Count="3" />
       <LineId Id="121" Count="0" />
       <LineId Id="114" Count="2" />

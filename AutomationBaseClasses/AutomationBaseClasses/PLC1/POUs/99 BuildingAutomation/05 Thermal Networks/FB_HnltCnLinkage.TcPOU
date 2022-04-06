@@ -9,6 +9,7 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	//systems
 	HeatPumpSystem : FB_HeatPumpSystem;
 	
 	//internal variables

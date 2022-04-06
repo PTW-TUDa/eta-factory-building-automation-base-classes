@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="ConvertBitToByte" Id="{37e64ccf-99f2-4ec0-9360-2f3c33adac29}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ConvertBitToByte : BYTE
+VAR_INPUT
+	dataBit : ARRAY[0..7] OF BOOL;
+END_VAR
+VAR
+	dataByte : BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[dataByte.0 := dataBit[0];
+dataByte.1 := dataBit[1];
+dataByte.2 := dataBit[2];
+dataByte.3 := dataBit[3];
+dataByte.4 := dataBit[4];
+dataByte.5 := dataBit[5];
+dataByte.6 := dataBit[6];
+dataByte.7 := dataBit[7];
+
+ConvertBitToByte := dataByte;]]></ST>
+    </Implementation>
+    <LineIds Name="ConvertBitToByte">
+      <LineId Id="7" Count="0" />
+      <LineId Id="12" Count="6" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
