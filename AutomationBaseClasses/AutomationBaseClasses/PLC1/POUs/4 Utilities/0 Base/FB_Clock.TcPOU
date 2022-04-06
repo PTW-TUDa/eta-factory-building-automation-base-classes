@@ -10,7 +10,7 @@ END_VAR
 VAR
 	localDefaultParameters : ST_ClockDefaultParameters;
 
-	Clock			: FB_CTRL_GET_SYSTEM_TIME;
+	Clock				: FB_CTRL_GET_SYSTEM_TIME;
 	Clock_Parameters	: ST_CTRL_GET_SYSTEM_TIME_PARAMS;
 END_VAR
 ]]></Declaration>

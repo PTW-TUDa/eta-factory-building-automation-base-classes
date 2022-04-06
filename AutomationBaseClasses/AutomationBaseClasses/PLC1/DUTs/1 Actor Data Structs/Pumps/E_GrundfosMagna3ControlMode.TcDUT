@@ -1,23 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <DUT Name="E_GrundfosMagna3ControlMode" Id="{0ebc95ca-56b0-475f-9f3e-553d6515e4b2}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
 TYPE E_GrundfosMagna3ControlMode :
 (
 	constantSpeed := 0,
-	constantFrequency := 1,
-	constantHead := 3,
-	constantPressure := 4,
-	constantDifferentialPressure := 5,
-	proportionalPressure := 6,
-	constantFlow := 7,
-	constantTemperature := 8,
-	differentialTemperature := 9,
-	constantLevel := 10,
-	autoAdapt := 128,
-	flowAdapt := 129,
-	closedLoopSensor := 130
+	constantTemperature_Heating := 1,
+	constantTemperature_Cooling := 2,
+	temperatureDifference := 3
 );
 END_TYPE
 ]]></Declaration>

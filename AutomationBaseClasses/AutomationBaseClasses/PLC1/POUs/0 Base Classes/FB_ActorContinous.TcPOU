@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_ActorContinous" Id="{c8bff7e9-c02c-4471-8259-14c86f2cd564}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_ActorContinous EXTENDS FB_Actor2Point
 VAR_INPUT
@@ -22,16 +22,15 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="MAIN" Id="{7c71e98c-e88b-49de-b162-405ba243d74c}">
-      <Declaration><![CDATA[METHOD PROTECTED MAIN : BOOL // Method that calls all needed function block methods
+    <Method Name="MAIN" Id="{10fd2c38-d0f2-4506-83f5-f9de93d73f1f}">
+      <Declaration><![CDATA[METHOD MAIN : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SelectControlMode();
 SetSetPointLimits();
-SetPointCheck();
-]]></ST>
+SetPointCheck();]]></ST>
       </Implementation>
     </Method>
     <Method Name="SelectControlMode" Id="{9487b088-9bc5-4a7e-8bf7-9767eafe3f05}">
@@ -75,8 +74,8 @@ END_VAR
       <LineId Id="91" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.MAIN">
-      <LineId Id="15" Count="2" />
-      <LineId Id="21" Count="0" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.SelectControlMode">
       <LineId Id="38" Count="1" />

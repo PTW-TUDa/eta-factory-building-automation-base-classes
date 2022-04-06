@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_SystemContinous" Id="{96d5c5c8-8c8e-4fc0-9cb9-dd455bc0dccf}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_SystemContinous EXTENDS FB_ActorContinous
 VAR_INPUT
@@ -28,7 +28,7 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="MAIN" Id="{0f6296ee-45f5-4e45-b70e-a6b0f33b8461}">
-      <Declaration><![CDATA[METHOD PROTECTED MAIN : BOOL // Method that calls all needed function block methods
+      <Declaration><![CDATA[METHOD MAIN : BOOL // Method that calls all needed function block methods
 VAR_INPUT
 END_VAR
 ]]></Declaration>

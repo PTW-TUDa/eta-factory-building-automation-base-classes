@@ -3,8 +3,8 @@
   <DUT Name="ST_ClockDefaultParameters" Id="{e67b2ea3-fe26-46dd-9e02-fb491d9b8c40}">
     <Declaration><![CDATA[TYPE ST_ClockDefaultParameters :
 STRUCT
-	tTaskCycleTime : TIME;
-	tCtrlCycleTime : TIME;
+	tTaskCycleTime : TIME := GlobalVariables.tCtrlCycleTime_MAIN;
+	tCtrlCycleTime : TIME := GlobalVariables.tCtrlCycleTime_MAIN;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

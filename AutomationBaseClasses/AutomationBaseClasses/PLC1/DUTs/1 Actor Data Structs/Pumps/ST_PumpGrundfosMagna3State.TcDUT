@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <DUT Name="ST_PumpGrundfosMagna3State" Id="{2e0e0d05-2e8a-40b3-8fdf-0cb5e297c45b}">
     <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
 TYPE ST_PumpGrundfosMagna3State :
@@ -9,7 +9,6 @@ STRUCT
 	bWarning : BOOL; //true if pump shows a warning
 	sErrorMessage : STRING; //error code
 	sWarningMessage : STRING; //warning code
-	nControlMode : INT; //control mode
 	fVolumeFlowRate : REAL; //m^3/h volume flow rate from pump or external sensor
 	fTemperatureInternal : REAL; //°C
 	fTemperatureExternal : REAL; //°C

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
 VAR_INPUT
@@ -33,12 +33,11 @@ VAR
 	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[InputConverter();
-OutputConverter();
-MAIN();
+      <ST><![CDATA[MAIN();
 SelectValveControlMode();
 ControlValve();
-
+InputConverter(nValue := nOperatingPoint_IN);
+OutputConverter(fValue := fSetPoint_internal);
 ]]></ST>
     </Implementation>
     <Method Name="ControlValve" Id="{1e52182a-8bdc-49bd-b2bd-13ceeb4d93b8}">
@@ -93,6 +92,26 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="GetState_AI" Id="{dc3d6fb1-9f1b-4e7f-9ecc-63053271497c}">
+      <Declaration><![CDATA[METHOD GetState_AI : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if there is a feedback signal 
+	setPointState.fOperatingPoint := InputConverter.fValue;
+	fOperatingPoint := setPointState.fOperatingPoint;
+	setPointState.sOperatingPointUnit := 'percent';
+	IF setPointState.fOperatingPoint > 0 THEN //Set control state if valve is open
+		controlState.bStatusOn := TRUE;
+		bStatusOn := TRUE;
+	ELSE
+		controlState.bStatusOn := FALSE;
+		bStatusOn := FALSE;
+	END_IF
+END_IF;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="SelectValveControlMode" Id="{69d2db34-6658-4b13-ae91-6cb6bcdc3229}">
       <Declaration><![CDATA[METHOD PRIVATE SelectValveControlMode : BOOL
 VAR_INPUT
@@ -125,13 +144,13 @@ END_VAR
 END_CASE]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetState_AI_AO" Id="{be832a62-70d4-4ec0-8ee4-578237454401}">
-      <Declaration><![CDATA[METHOD SetState_AI_AO : BOOL
+    <Method Name="SetState_AO" Id="{be832a62-70d4-4ec0-8ee4-578237454401}">
+      <Declaration><![CDATA[METHOD SetState_AO : BOOL
 VAR
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//setpoint and control state
-setPointState.fSetPoint := fSetPoint;
+        <ST><![CDATA[setPointState.fSetPoint := fSetPoint;
+setPointState.aSetPointLimits := aSetPointLimits;
 CASE nControlMode OF
 	0: //position mode
 	setPointState.sSetPointUnit := 'percent';
@@ -143,23 +162,6 @@ CASE nControlMode OF
 	setPointState.sSetPointUnit := 'degreeC';
 END_CASE
 
-IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Set operating point if there is a feedback signal 
-	InputConverter(nValue := nOperatingPoint_IN);
-	setPointState.fOperatingPoint := InputConverter.fValue;
-	fOperatingPoint := InputConverter.fValue;
-	setPointState.sOperatingPointUnit := 'percent';
-	setPointState.aSetPointLimits := aSetPointLimits;
-	IF setPointState.fOperatingPoint > 0 THEN //Set control state if valve is open
-		controlState.bStatusOn := TRUE;
-		bStatusOn := TRUE;
-	ELSE
-		controlState.bStatusOn := FALSE;
-		bStatusOn := FALSE;
-	END_IF
-END_IF;
-
-//Output
-OutputConverter(fValue := fSetPoint_internal);
 nSetPoint_OUT := OutputConverter.nValue;  //converts real setpoint for terminal
 
 
@@ -180,10 +182,10 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_MixingValve">
-      <LineId Id="158" Count="1" />
       <LineId Id="58" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="94" Count="0" />
+      <LineId Id="190" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="31" Count="0" />
     </LineIds>
@@ -214,6 +216,16 @@ END_VAR
       <LineId Id="44" Count="0" />
       <LineId Id="23" Count="0" />
     </LineIds>
+    <LineIds Name="FB_MixingValve.GetState_AI">
+      <LineId Id="19" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="27" Count="1" />
+    </LineIds>
     <LineIds Name="FB_MixingValve.SelectValveControlMode">
       <LineId Id="6" Count="5" />
       <LineId Id="5" Count="0" />
@@ -225,29 +237,11 @@ END_VAR
       <LineId Id="9" Count="5" />
       <LineId Id="8" Count="0" />
     </LineIds>
-    <LineIds Name="FB_MixingValve.SetState_AI_AO">
-      <LineId Id="39" Count="0" />
-      <LineId Id="56" Count="0" />
-      <LineId Id="91" Count="7" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="99" Count="0" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="113" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="82" Count="1" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="72" Count="0" />
+    <LineIds Name="FB_MixingValve.SetState_AO">
+      <LineId Id="108" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="109" Count="8" />
+      <LineId Id="106" Count="1" />
       <LineId Id="69" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="65" Count="0" />
