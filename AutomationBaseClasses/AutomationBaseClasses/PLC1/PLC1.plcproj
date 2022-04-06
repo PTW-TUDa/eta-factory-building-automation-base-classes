@@ -18,7 +18,8 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>1.0</ProjectVersion>
+    <ProjectVersion>1.3</ProjectVersion>
+    <Description>Last export: 06.04.22 14:22</Description>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -81,12 +82,6 @@
     <Compile Include="DUTs\4 Utility Data Structs\ST_ClockState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\99 BuildingAutomation\01 Actors\CoolingUnits\ST_eChillerDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\99 BuildingAutomation\01 Actors\CoolingUnits\ST_eChillerState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\99 BuildingAutomation\03 Systems\CoolingSystems\ST_OuterCapillaryTubeMatsDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -113,10 +108,6 @@
     </Compile>
     <Compile Include="DUTs\99 BuildingAutomation\04 Thermal Networks\ST_LowTemperatureHeatingNetworkControl.TcDUT">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GVLs\GlobalVariables.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
       <SubType>Code</SubType>
@@ -160,9 +151,6 @@
     <Compile Include="POUs\99 BuildingAutomation\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TaskMAIN.TcTTO">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -185,9 +173,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_MollineC3HeatCounter.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\99 BuildingAutomation\01 Actors\CoolingUnits\FB_eChiller.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits\FB_HeatPump.TcPOU">
@@ -241,8 +226,6 @@
     <Folder Include="DUTs\3 System Data Structs" />
     <Folder Include="DUTs\99 BuildingAutomation" />
     <Folder Include="DUTs\99 BuildingAutomation\01 Actors" />
-    <Folder Include="DUTs\99 BuildingAutomation\01 Actors\CoolingUnits" />
-    <Folder Include="DUTs\99 BuildingAutomation\01 Actors\HeatingUnits" />
     <Folder Include="DUTs\99 BuildingAutomation\02 Sensors" />
     <Folder Include="DUTs\99 BuildingAutomation\03 Systems" />
     <Folder Include="DUTs\99 BuildingAutomation\03 Systems\ConsumerSystems" />
@@ -253,7 +236,6 @@
     <Folder Include="DUTs\99 BuildingAutomation\04 Thermal Networks" />
     <Folder Include="DUTs\99 BuildingAutomation\05 Strategy" />
     <Folder Include="DUTs\4 Utility Data Structs" />
-    <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
     <Folder Include="POUs\4 Utilities\0 Base" />
@@ -264,9 +246,7 @@
     <Folder Include="POUs\4 Utilities\1 AI_AO" />
     <Folder Include="POUs\99 BuildingAutomation" />
     <Folder Include="POUs\99 BuildingAutomation\01 Actors" />
-    <Folder Include="POUs\99 BuildingAutomation\01 Actors\CoolingUnits" />
     <Folder Include="POUs\99 BuildingAutomation\01 Actors\HeatingUnits" />
-    <Folder Include="POUs\99 BuildingAutomation\01 Actors\ConsumerUnits" />
     <Folder Include="POUs\99 BuildingAutomation\01 Actors\Pumps" />
     <Folder Include="POUs\99 BuildingAutomation\03 Storages" />
     <Folder Include="POUs\99 BuildingAutomation\04 Systems" />
