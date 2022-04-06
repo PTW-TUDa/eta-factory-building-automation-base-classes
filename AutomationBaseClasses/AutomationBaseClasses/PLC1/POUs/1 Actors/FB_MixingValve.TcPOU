@@ -33,12 +33,11 @@ VAR
 	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[InputConverter(nValue := nOperatingPoint_IN);
-OutputConverter(fValue := fSetPoint_internal);
-MAIN();
+      <ST><![CDATA[MAIN();
 SelectValveControlMode();
 ControlValve();
-
+InputConverter(nValue := nOperatingPoint_IN);
+OutputConverter(fValue := fSetPoint_internal);
 ]]></ST>
     </Implementation>
     <Method Name="ControlValve" Id="{1e52182a-8bdc-49bd-b2bd-13ceeb4d93b8}">
@@ -183,10 +182,10 @@ END_VAR
       </Set>
     </Property>
     <LineIds Name="FB_MixingValve">
-      <LineId Id="158" Count="1" />
       <LineId Id="58" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="94" Count="0" />
+      <LineId Id="190" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="31" Count="0" />
     </LineIds>

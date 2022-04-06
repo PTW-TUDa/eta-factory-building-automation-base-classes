@@ -74,18 +74,21 @@ PU7x0(bSetStatusOnAutomatic := bSetStatusOn_PU7x0,
 PU7x0.SetState_BO();
 
 //valves
+SVx05.GetState_AI();
 SVx05(bSetStatusOnAutomatic := bSetStatusOn_SVx05,
 	fSetPointAutomatic := fSetPoint_SVx05,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
 SVx05.SetState_AO();
 
+SVx06.GetState_AI();
 SVx06(bSetStatusOnAutomatic := bSetStatusOn_SVx06,
 	fSetPointAutomatic := fSetPoint_SVx06,
 	bAlgorithmPermission := bAlgorithmPermission,
 	nControlModeAutomatic := 0);
 SVx06.SetState_AO();
 
+RVx05.GetState_AI();
 RVx05(bSetStatusOnAutomatic := bSetStatusOn_RVx05,
 	fSetPointAutomatic := fSetPoint,
 	bAlgorithmPermission := bAlgorithmPermission,
@@ -155,8 +158,8 @@ IF RVx05.fOperatingPoint<10 AND NOT PUx05.bStatusOn THEN
 END_IF
 *)
 
+//delete when input terminal for feedback signal is installed
 bStartTimer := TRUE;
-
 IF Timer.Q THEN
 	bRampDownFinished := TRUE;
 	bStartTimer := FALSE;
@@ -179,7 +182,7 @@ IF bLoading = TRUE THEN
 	fSetPoint_SVx05 := 100;
 	fSetPoint_SVx06 := 100;
 	nControlMode_RVx05 := 2; //cooling mode (heats network)
-	fExternalTemperature_RVx05 := WMZ7x0.fReturnTemperazure;
+	fExternalTemperature_RVx05 := WMZ7x0.fReturnTemperazure;	
 	(*
 	IF SVx05.fOperatingPoint>90 AND SVx06.fOperatingPoint>90 THEN
 		bRampUpFinished := TRUE;
@@ -197,6 +200,7 @@ ELSE
 	*)
 END_IF
 
+//delete when input terminal for feedback signal is installed
 bStartTimer := TRUE;
 IF Timer.Q THEN
 	bRampUpFinished := TRUE;
@@ -270,7 +274,13 @@ END_IF
       <LineId Id="167" Count="1" />
       <LineId Id="69" Count="5" />
       <LineId Id="230" Count="0" />
-      <LineId Id="75" Count="27" />
+      <LineId Id="75" Count="10" />
+      <LineId Id="280" Count="0" />
+      <LineId Id="86" Count="4" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="91" Count="5" />
+      <LineId Id="282" Count="0" />
+      <LineId Id="97" Count="5" />
       <LineId Id="9" Count="0" />
       <LineId Id="174" Count="2" />
       <LineId Id="173" Count="0" />
@@ -289,11 +299,16 @@ END_IF
       <LineId Id="11" Count="2" />
       <LineId Id="7" Count="0" />
       <LineId Id="26" Count="0" />
-      <LineId Id="20" Count="5" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="25" Count="0" />
       <LineId Id="19" Count="0" />
     </LineIds>
     <LineIds Name="FB_HVFAStorageSystem.RampUp">
-      <LineId Id="9" Count="8" />
+      <LineId Id="9" Count="7" />
+      <LineId Id="52" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="18" Count="1" />
       <LineId Id="43" Count="0" />
@@ -302,6 +317,7 @@ END_IF
       <LineId Id="26" Count="1" />
       <LineId Id="45" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="53" Count="0" />
       <LineId Id="37" Count="4" />
       <LineId Id="36" Count="0" />
       <LineId Id="29" Count="0" />

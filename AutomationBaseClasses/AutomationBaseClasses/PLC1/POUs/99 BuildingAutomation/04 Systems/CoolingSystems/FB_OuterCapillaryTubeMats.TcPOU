@@ -120,6 +120,8 @@ END_VAR
         <ST><![CDATA[//check for rain
 IF NOT stAmbientState.bRain THEN
 	bSetStatusOn_PU690 := TRUE;
+ELSE
+	bSetStatusOn_PU690 := FALSE;
 END_IF
 
 //check for time
@@ -286,7 +288,9 @@ END_VAR]]></Declaration>
       <LineId Id="335" Count="0" />
     </LineIds>
     <LineIds Name="FB_OuterCapillaryTubeMats.AmbientControl">
-      <LineId Id="6" Count="13" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="9" Count="10" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_OuterCapillaryTubeMats.CheckError">

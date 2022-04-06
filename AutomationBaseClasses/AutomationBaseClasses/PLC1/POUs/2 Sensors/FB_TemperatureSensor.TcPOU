@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_TemperatureSensor" Id="{5862196d-9579-4df5-99e3-f378128664c6}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_TemperatureSensor EXTENDS FB_Sensor
 VAR_INPUT
@@ -8,9 +8,6 @@ VAR_OUTPUT
 	fTemperature : REAL; //measured temperature in degreeC
 END_VAR
 VAR	
-	//default parameters
-	localDefaultParameters : ST_TemperatureSensorDefaultParameters;	
-
 	//I/O-Links
 	temperature_IN AT %I* : INT;
 END_VAR
@@ -31,21 +28,10 @@ fTemperature := (INT_TO_REAL(temperature_IN))*0.01;
 
 //sensor state
 sensorState.fValue := fTemperature;
-sensorState.sUnit := localDefaultParameters.sUnit;
+sensorState.sUnit := 'degreeC';
 ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="ST_DefaultParameters" Id="{5d8d5df2-304d-42ad-ad33-aa6063b91df0}">
-      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_TemperatureSensorDefaultParameters]]></Declaration>
-      <Set Name="Set" Id="{7de6bca6-54f7-41a1-b870-78a80dba2c53}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <LineIds Name="FB_TemperatureSensor">
       <LineId Id="9" Count="0" />
     </LineIds>
@@ -57,9 +43,6 @@ END_VAR
       <LineId Id="15" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="16" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_TemperatureSensor.ST_DefaultParameters.Set">
-      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
