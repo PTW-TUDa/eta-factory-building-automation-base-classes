@@ -46,7 +46,16 @@
     <Compile Include="DUTs\0 Base Data Structs\ST_SystemState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\DicreteValve\E_DiscreteValveFeedbackMode.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\DicreteValve\E_DiscreteValvePosition.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\1 Actor Data Structs\DicreteValve\ST_DiscreteValveDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\DicreteValve\ST_DiscreteValveState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\1 Actor Data Structs\MixingValve\E_MixingValveControlMode.TcDUT">
