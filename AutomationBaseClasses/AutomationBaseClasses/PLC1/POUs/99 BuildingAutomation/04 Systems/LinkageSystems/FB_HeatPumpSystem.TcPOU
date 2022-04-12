@@ -11,8 +11,8 @@ VAR
 	HeatPump : FB_HeatPump;
 	
 	//valve 146 and valve 246
-	ST_SV146DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);
-	ST_SV246DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);	
+	ST_SV146DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 0);
+	ST_SV246DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 0);	
 	SV146 : FB_DiscreteValve := (ST_DefaultParameters := ST_SV146DefaultParameters);
 	SV246 : FB_DiscreteValve := (ST_DefaultParameters := ST_SV246DefaultParameters);	
 	

@@ -3,25 +3,19 @@
   <POU Name="FB_BaseStrategyController" Id="{2cc24fef-e41e-40c1-8491-4b4c0461b6c2}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_BaseStrategyController
 VAR_INPUT
-	{attribute 'OPC.UA.DA.StructuredType' := '1'}
-	stAmbientState : ST_AmbientState;
+	ambientState : ST_AmbientState;
 	
 	//actual temperatures in thermal networks
-	fTemperature_CN : REAL;
-	fTemperature_HNLT : REAL;
-	fTemperature_HNHT : REAL;
+	cnState : ST_BufferStorageState;
+	hnltState : ST_BufferStorageState;
 END_VAR
 VAR_OUTPUT	
 	{attribute 'OPC.UA.DA.StructuredType' := '1'}
-	stCNControl : ST_CoolingNetworkControl;
+	cnControl : ST_CoolingNetworkControl;
 	{attribute 'OPC.UA.DA.StructuredType' := '1'}	
-	stHNLTControl : ST_LowTemperatureHeatingNetworkControl;
+	hnltControl : ST_LowTemperatureHeatingNetworkControl;
 	{attribute 'OPC.UA.DA.StructuredType' := '1'}
-	stHnltCnLinkageControl : ST_HnltCnLinkageControl;
-	{attribute 'OPC.UA.DA.StructuredType' := '1'}
-	stHNHTControl : ST_HighTemperatureHeatingNetworkControl;
-	{attribute 'OPC.UA.DA.StructuredType' := '1'}
-	stHnhtHnltLinkageControl : ST_HnhtHnltLinkageControl;
+	hnltCnLinkageControl : ST_HnltCnLinkageControl;
 	
 END_VAR
 VAR
@@ -42,7 +36,9 @@ VAR
 	
 	//controllers and variables for hnlt and cn linkage
 	Controller_HeatPump : FB_CTRL_2POINT;
-	Controller_HeatPump_Parameters : ST_CTRL_2POINT_PARAMS;
+	Controller_HeatPump_Parameters : ST_CTRL_2POINT_PARAMS;	
+	Controller_HeatPump_Permission : FB_CTRL_2POINT;
+	Controller_HeatPump_Permission_Parameters : ST_CTRL_2POINT_PARAMS;
 END_VAR
 
 ]]></Declaration>
@@ -65,15 +61,14 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//check for algorithm permissions
-stCNControl.bAlgorithmPermission := Limiter(fInput := fTemperature_CN,fLowerLimit := aTemperatureLimits_CN[1],fUpperLimit := aTemperatureLimits_CN[2]);
-stHNLTControl.bAlgorithmPermission := Limiter(fInput := fTemperature_HNLT, fLowerLimit := aTemperatureLimits_HNLT[1], fUpperLimit := aTemperatureLimits_HNLT[2]);
-stHNHTControl.bAlgorithmPermission := Limiter(fInput := fTemperature_HNHT, fLowerLimit := aTemperatureLimits_HNHT[1], fUpperLimit := aTemperatureLimits_HNHT[2]);
+cnControl.bAlgorithmPermission := Limiter(fInput := cnState.fMidTemperature,fLowerLimit := aTemperatureLimits_CN[1],fUpperLimit := aTemperatureLimits_CN[2]);
+hnltControl.bAlgorithmPermission := Limiter(fInput := hnltState.fMidTemperature, fLowerLimit := aTemperatureLimits_HNLT[1], fUpperLimit := aTemperatureLimits_HNLT[2]);
+
 
 //set algorithm permissions to linkage structs
-stHnltCnLinkageControl.bAlgorithmPermission_CN := stCNControl.bAlgorithmPermission;
-stHnltCnLinkageControl.bAlgorithmPermission_HNLT := stHNLTControl.bAlgorithmPermission;
-stHnhtHnltLinkageControl.bAlgorithmPermission_HNHT := stHNHTControl.bAlgorithmPermission;
-stHnhtHnltLinkageControl.bAlgorithmPermission_HNLT := stHNLTControl.bAlgorithmPermission;]]></ST>
+hnltCnLinkageControl.bAlgorithmPermission_CN := cnControl.bAlgorithmPermission;
+hnltCnLinkageControl.bAlgorithmPermission_HNLT := hnltControl.bAlgorithmPermission;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="ControlCN" Id="{c114617d-ff2b-491a-a80e-d1c974ffb859}">
@@ -88,16 +83,16 @@ Controller_eChiller_Parameters.tCtrlCycleTime := GlobalVariables.tTaskCycleTime_
 Controller_eChiller_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
 
 //control strategy for cooling network - fSetpointValue and fActualValue are changed for cooling applications
-Controller_eChiller(fSetpointValue := fTemperature_CN,
-	fActualValue := stCNControl.fTargetTemperature+2,
+Controller_eChiller(fSetpointValue := cnState.fMidTemperature,
+	fActualValue := cnControl.fTargetTemperature+2,
 	eMode := eCTRL_MODE_ACTIVE,
 	stParams := Controller_eChiller_Parameters);
-stCNControl.bSetStatusOn_eChiller := Controller_eChiller.bOut;
+cnControl.bSetStatusOn_eChiller := Controller_eChiller.bOut;
 
 //control hvfa storage
 //hvfa storage is currently not used
-stCNControl.bSetStatusOn_HVFASystem := FALSE;
-stCNControl.bLoading_HVFASystem := FALSE;
+cnControl.bSetStatusOn_HVFASystem := FALSE;
+cnControl.bLoading_HVFASystem := FALSE;
 ]]></ST>
       </Implementation>
     </Method>
@@ -113,16 +108,16 @@ Controller_OuterCapillaryTubeMats_Parameters.tCtrlCycleTime := GlobalVariables.t
 Controller_OuterCapillaryTubeMats_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
 
 //control strategy for cooling network - fSetpointValue and fActualValue are changed for cooling applications
-Controller_OuterCapillaryTubeMats(fSetpointValue := fTemperature_HNLT,
+Controller_OuterCapillaryTubeMats(fSetpointValue := hnltState.fMidTemperature,
 	fActualValue := aTemperatureLimits_HNLT[2],
 	eMode := eCTRL_MODE_ACTIVE,
 	stParams := Controller_OuterCapillaryTubeMats_Parameters);
-stHNLTControl.bSetStatusOn_OuterCapillaryTubeMats := Controller_OuterCapillaryTubeMats.bOut;
+hnltControl.bSetStatusOn_OuterCapillaryTubeMats := Controller_OuterCapillaryTubeMats.bOut;
 
 //control hvfa storage
 //hvfa storage is currently not used
-stHNLTControl.bSetStatusOn_HVFASystem := FALSE;
-stHNLTControl.bLoading_HVFASystem := FALSE;]]></ST>
+hnltControl.bSetStatusOn_HVFASystem := FALSE;
+hnltControl.bLoading_HVFASystem := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="ControlHnltCnLinkage" Id="{47fe50a8-fa6a-42c9-86f6-4129fa6636fe}">
@@ -136,11 +131,23 @@ Controller_HeatPump_Parameters.fHysteresisRange := 4;
 Controller_HeatPump_Parameters.tCtrlCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
 Controller_HeatPump_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
 
-Controller_HeatPump(fSetpointValue := fTemperature_CN,
-	fActualValue := stHnltCnLinkageControl.fTargetTemperature_CN,
+Controller_HeatPump_Permission_Parameters.fHysteresisRange := 4;
+Controller_HeatPump_Permission_Parameters.tCtrlCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
+Controller_HeatPump_Permission_Parameters.tTaskCycleTime := GlobalVariables.tTaskCycleTime_MAIN;
+
+//control heat depending on cooling demand in cn
+Controller_HeatPump(fSetpointValue := cnState.fMidTemperature,
+	fActualValue := cnControl.fTargetTemperature,
 	eMode := eCTRL_MODE_ACTIVE,
 	stParams := Controller_HeatPump_Parameters);
-stHnltCnLinkageControl.bSetStatusOn_HeatPump := Controller_HeatPump.bOut;]]></ST>
+	
+//control heat pump permission depending on critical temperature in hnlt
+Controller_HeatPump_Permission(fSetpointValue := aTemperatureLimits_HNLT[2],
+	fActualValue := hnltState.fMidTemperature,
+	eMode := eCTRL_MODE_ACTIVE,
+	stParams := Controller_HeatPump_Parameters);
+	
+hnltCnLinkageControl.bSetStatusOn_HeatPump := Controller_HeatPump.bOut AND Controller_HeatPump_Permission.bOut;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetTargetTemperatures" Id="{6be7450f-8e0b-4497-9741-f2ddcfb682eb}">
@@ -150,15 +157,14 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//set default target temperatures
-stCNControl.fTargetTemperature := 15;
-stHNLTControl.fTargetTemperature := 40;
-stHNHTControl.fTargetTemperature := 70;
+cnControl.fTargetTemperature := 15;
+hnltControl.fTargetTemperature := 40;
+
 
 //set target temperatures to linkage structs
-stHnltCnLinkageControl.fTargetTemperature_CN := stCNControl.fTargetTemperature;
-stHnltCnLinkageControl.fTargetTemperature_HNLT := stHNLTControl.fTargetTemperature;
-stHnhtHnltLinkageControl.fTargetTemperature_HNHT := stHNHTControl.fTargetTemperature;
-stHnhtHnltLinkageControl.fTargetTemperature_HNLT := stHNLTControl.fTargetTemperature;]]></ST>
+hnltCnLinkageControl.fTargetTemperature_CN := cnControl.fTargetTemperature;
+hnltCnLinkageControl.fTargetTemperature_HNLT := hnltControl.fTargetTemperature;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_BaseStrategyController">
@@ -174,7 +180,7 @@ stHnhtHnltLinkageControl.fTargetTemperature_HNLT := stHNLTControl.fTargetTempera
       <LineId Id="20" Count="1" />
       <LineId Id="28" Count="0" />
       <LineId Id="27" Count="0" />
-      <LineId Id="29" Count="2" />
+      <LineId Id="29" Count="1" />
       <LineId Id="38" Count="0" />
     </LineIds>
     <LineIds Name="FB_BaseStrategyController.ControlCN">
@@ -196,14 +202,22 @@ stHnhtHnltLinkageControl.fTargetTemperature_HNLT := stHNLTControl.fTargetTempera
       <LineId Id="11" Count="0" />
       <LineId Id="9" Count="1" />
       <LineId Id="5" Count="0" />
+      <LineId Id="32" Count="2" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="21" Count="0" />
       <LineId Id="13" Count="4" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="27" Count="2" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="23" Count="0" />
       <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_BaseStrategyController.SetTargetTemperatures">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="7" Count="1" />
-      <LineId Id="13" Count="4" />
+      <LineId Id="13" Count="3" />
       <LineId Id="12" Count="0" />
     </LineIds>
   </POU>

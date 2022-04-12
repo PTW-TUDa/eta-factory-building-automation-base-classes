@@ -20,8 +20,8 @@ VAR
 	PU690 : FB_Pump2Point; //CM pump (storage side)
 
 	//valves
-	stSV235DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);
-	stSV605DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE); 
+	stSV235DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 0);
+	stSV605DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 3);
 	stRV600DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE);	
 	stRV640DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE);
 	stRV660DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE);

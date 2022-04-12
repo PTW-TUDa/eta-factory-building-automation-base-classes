@@ -4,7 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_HnltCnLinkage
 VAR_INPUT
 	//control struct for hnlt cn linkage
-	stHnltCnLinkageControl : ST_HnltCnLinkageControl;
+	controlAutomatic : ST_HnltCnLinkageControl;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -18,10 +18,10 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//check for algorithm permission
-bAlgorithmPermission := stHnltCnLinkageControl.bAlgorithmPermission_CN AND stHnltCnLinkageControl.bAlgorithmPermission_HNLT;
+bAlgorithmPermission := controlAutomatic.bAlgorithmPermission_CN AND controlAutomatic.bAlgorithmPermission_HNLT;
 
 //NOTE: heat pump systems contains only two-point actors -> fSetPointAutomatic = 0	
-HeatPumpSystem(bSetStatusOnAutomatic := stHnltCnLinkageControl.bSetStatusOn_HeatPump,
+HeatPumpSystem(bSetStatusOnAutomatic := controlAutomatic.bSetStatusOn_HeatPump,
 	bAlgorithmPermission := bAlgorithmPermission,
 	fSetPointAutomatic := 0);]]></ST>
     </Implementation>

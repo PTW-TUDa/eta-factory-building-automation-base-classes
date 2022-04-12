@@ -16,28 +16,30 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//fTemperature_CN := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_mitte;
-//fTemperature_HNLT := Speicher.Pufferspeicher_Warmwasser_295.Zustand.Temp_mitte;
+      <ST><![CDATA[//implement states and linked them to exisiting buffer storage components
+//Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_mitte;
+//Speicher.Pufferspeicher_Warmwasser_295.Zustand.Temp_mitte
 
 //strategy controller
-Strategy(stAmbientState := Ambient.stAmtbientState,
-	fTemperature_CN := CN.fTemperatureBufferStorage,
-	fTemperature_HNLT := HNLT.fTemperatureBufferStorage);
+Strategy(ambientState := Ambient.localState,
+	cnState := CN.localState,
+	hnltState := HNLT.localState);
 
 //ambient state
 Ambient();
 	
 //thermal networks
-CN(stCNControl := Strategy.stCNControl);
+CN(controlAutomatic := Strategy.cnControl);
 
-HNLT_CN(stHnltCnLinkageControl := Strategy.stHnltCnLinkageControl);
+HNLT_CN(controlAutomatic := Strategy.hnltCnLinkageControl);
 	
-HNLT(stAmbientState := Ambient.stAmtbientState,
-	stHNLTControl := Strategy.stHNLTControl);
+HNLT(ambientState := Ambient.localState,
+	controlAutomatic := Strategy.hnltControl);
 	
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="237" Count="0" />
       <LineId Id="219" Count="0" />
       <LineId Id="221" Count="0" />
       <LineId Id="220" Count="0" />
@@ -54,7 +56,7 @@ HNLT(stAmbientState := Ambient.stAmtbientState,
       <LineId Id="60" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="96" Count="1" />
-      <LineId Id="101" Count="0" />
+      <LineId Id="238" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="125" Count="0" />
     </LineIds>

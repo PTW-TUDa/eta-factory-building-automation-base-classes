@@ -61,7 +61,9 @@ END_VAR
 	END_IF
 ELSE
 	localState.nPosition := 0; //no valid information
-END_CASE]]></ST>
+	controlState.bStatusOn := 0; //no valid information
+END_CASE
+bStatusOn := controlState.bStatusOn;]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetState_BO" Id="{0e571675-b07a-4d0e-a5bb-9e330e7c5235}">
@@ -91,7 +93,9 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_DiscreteValve.GetState_BI">
       <LineId Id="13" Count="27" />
+      <LineId Id="44" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="45" Count="0" />
     </LineIds>
     <LineIds Name="FB_DiscreteValve.SetState_BO">
       <LineId Id="5" Count="0" />
