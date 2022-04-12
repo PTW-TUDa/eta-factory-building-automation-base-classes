@@ -38,6 +38,9 @@ VAR
 	//controllers
 	PI_Controller				: FB_CTRL_PI; 
 	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
+	fSetpointValue : LREAL; //internal setpoint value (is switched depending on heating/cooling application)
+	fActualValue : LREAL; //internal setpoint value (is switched depending on heating/cooling application)
+	fAct : REAL; //actual measured value from internal pump sensor or external sensor
 		
 	//internal variables:
 	nControlMode : E_GrundfosMagna3ControlMode; //actual pump control mode
@@ -63,9 +66,6 @@ END_VAR
 VAR_INPUT
 END_VAR
 VAR
-	fSetpointValue : LREAL;
-	fActualValue : LREAL;
-	fAct : REAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -108,8 +108,8 @@ CASE nControlMode OF
 	fActualValue := fAct;
 	
 	3: //temperature difference
-	fSetpointValue := ABS(fSetPoint);
-	fActualValue := ABS(fAct);
+	fSetpointValue := ABS(fAct);
+	fActualValue := ABS(fSetPoint);
 END_CASE
 
 PI_Controller (

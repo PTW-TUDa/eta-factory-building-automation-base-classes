@@ -21,11 +21,13 @@ VAR
 
 	//valves
 	stSV235DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE);
+	stSV605DefaultParameters : ST_DiscreteValveDefaultParameters := (bFeedbackSignal := FALSE); 
 	stRV600DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE);	
 	stRV640DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE);
 	stRV660DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE);
 	
 	SV235 : FB_DiscreteValve := (ST_DefaultParameters := stSV235DefaultParameters);
+	SV605 : FB_DiscreteValve := (ST_DefaultParameters := stSV605DefaultParameters);
 	RV600 : FB_MixingValve := (ST_DefaultParameters := stRV600DefaultParameters);
 	RV640 : FB_MixingValve := (ST_DefaultParameters := stRV640DefaultParameters); //east
 	RV660 : FB_MixingValve := (ST_DefaultParameters := stRV660DefaultParameters); //west
@@ -84,6 +86,11 @@ SV235.GetState_BI();
 SV235(bSetStatusOnAutomatic := bSetStatusOn_SV235,
 	bAlgorithmPermission := bAlgorithmPermission);
 SV235.SetState_BO();
+
+SV605.GetState_BI();
+SV605(bSetStatusOnAutomatic := TRUE,
+	bAlgorithmPermission := bAlgorithmPermission);
+SV605.SetState_BO();
 
 //RV600 uses heating mode to control inlet temperature into PWT6 (with temperature difference of 7 K of primary and secondary side)
 RV600.GetState_AI();
@@ -272,6 +279,8 @@ END_VAR]]></Declaration>
       <LineId Id="78" Count="0" />
       <LineId Id="98" Count="0" />
       <LineId Id="82" Count="0" />
+      <LineId Id="445" Count="3" />
+      <LineId Id="444" Count="0" />
       <LineId Id="99" Count="0" />
       <LineId Id="89" Count="0" />
       <LineId Id="390" Count="0" />

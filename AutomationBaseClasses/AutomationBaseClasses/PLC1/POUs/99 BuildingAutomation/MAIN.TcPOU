@@ -16,7 +16,10 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//strategy controller
+      <ST><![CDATA[//fTemperature_CN := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_mitte;
+//fTemperature_HNLT := Speicher.Pufferspeicher_Warmwasser_295.Zustand.Temp_mitte;
+
+//strategy controller
 Strategy(stAmbientState := Ambient.stAmtbientState,
 	fTemperature_CN := CN.fTemperatureBufferStorage,
 	fTemperature_HNLT := HNLT.fTemperatureBufferStorage);
@@ -35,6 +38,9 @@ HNLT(stAmbientState := Ambient.stAmtbientState,
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="219" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="220" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="128" Count="0" />
