@@ -5,6 +5,8 @@
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
+	{attribute 'OPC.UA.DA' := '1'}
+	localState : ST_DiscreteValveState;
 END_VAR
 VAR
 	//default parameters
@@ -12,7 +14,14 @@ VAR
 
 	//I/O Links
 	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
-	bStatusOn_IN		AT %I* : BOOL := FALSE; //True if valve is (actual) open
+	bStatusOn_IN		AT %I* : BOOL := FALSE; //True if valve is 100 % open
+	bStatusOff_IN		AT %I* : BOOL := FALSE; //True if valve is 0% open (= closed)
+	(* NOTE: 
+	If valve provides only one feedback signal, bStatusOn_IN must be linked to the terminal. 
+	If valve provides feedback signals for reaching open/closed position, bStatusOff_IN must be also linked to the terminal.
+	If there is no feedback signal, no input signal must be linked.
+	The correct mode must be declared using localDefaultParameters.nFeedback
+	*)
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,10 +33,35 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF localDefaultParameters.bFeedbackSignal = TRUE THEN //Use feedback signal if possible
+        <ST><![CDATA[CASE localDefaultParameters.nFeedback OF
+	1: //feedback - valve opened
 	controlState.bStatusOn := bStatusOn_IN;
-	bStatusOn := bStatusOn_IN;
-END_IF;]]></ST>
+	IF bStatusOn_IN THEN
+		localState.nPosition := 3;
+	ELSE
+		localState.nPosition := 0;
+	END_IF 
+	
+	2: //feedback - valve closed
+	controlState.bStatusOn := NOT bStatusOff_IN;
+	IF bStatusOff_IN THEN
+		localState.nPosition := 2;
+	ELSE
+		localState.nPosition := 0;
+	END_IF 
+
+	3: //feedback - both states
+	controlState.bStatusOn := bStatusOn_IN;
+	IF bStatusOff_IN THEN
+		localState.nPosition := 2;
+	ELSIF bStatusOn_IN THEN
+		localState.nPosition := 3;
+	ELSE
+		localState.nPosition := 1;
+	END_IF
+ELSE
+	localState.nPosition := 0; //no valid information
+END_CASE]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetState_BO" Id="{0e571675-b07a-4d0e-a5bb-9e330e7c5235}">
@@ -56,7 +90,7 @@ END_VAR
       <LineId Id="40" Count="0" />
     </LineIds>
     <LineIds Name="FB_DiscreteValve.GetState_BI">
-      <LineId Id="7" Count="2" />
+      <LineId Id="13" Count="27" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_DiscreteValve.SetState_BO">
