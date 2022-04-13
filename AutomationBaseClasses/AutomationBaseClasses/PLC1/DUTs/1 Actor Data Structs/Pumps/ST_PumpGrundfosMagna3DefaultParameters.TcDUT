@@ -7,8 +7,8 @@ STRUCT
 	bPumpBeforeApplication : BOOL := TRUE;
 	fControllerAmplification : LREAL := 0.265;
 	tControllerIntegralTime : TIME := T#15S;
-	tTaskCycleTime	: TIME := GlobalVariables.tTaskCycleTime_MAIN;
-	tCtrlCycleTime	: TIME := GlobalVariables.tCtrlCycleTime_MAIN;	
+	tTaskCycleTime	: TIME;
+	tCtrlCycleTime	: TIME;	
 	aSetPointLimits	: ARRAY[1..2] OF REAL := [0,100];
 END_STRUCT
 END_TYPE
