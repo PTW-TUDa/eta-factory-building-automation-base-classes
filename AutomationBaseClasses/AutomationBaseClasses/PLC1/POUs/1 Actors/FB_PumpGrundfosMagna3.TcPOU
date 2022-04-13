@@ -45,6 +45,9 @@ VAR
 	//internal variables:
 	nControlMode : E_GrundfosMagna3ControlMode; //actual pump control mode
 	fSetPoint_controlled : REAL; //controlled setpoint
+	statusModule0Bits : ARRAY[0..7] OF BOOL;
+	tmp : STRING;
+	controlModule0Bits : ARRAY[0..7] OF BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[MAIN();
@@ -138,14 +141,13 @@ END_CASE
 VAR_INPUT
 END_VAR
 VAR
-	controlModule0Bits : ARRAY[0..7] OF BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[controlModule0Bits := ConvertByteToBit(dataByte:=StatusModule_IN[0]);
+        <ST><![CDATA[statusModule0Bits := ConvertByteToBit(dataByte:=StatusModule_IN[0]);
 
 //control state
 controlState.bStatusOn := controlModule0Bits[1];
-bSetStatusOn := controlState.bStatusOn;
+bStatusOn := controlState.bStatusOn;
 
 //setpoint state
 setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
@@ -153,19 +155,19 @@ fOperatingPoint := setPointState.fOperatingPoint;
 setPointState.sOperatingPointUnit := 'percent';
 
 //local state
-localState.bError := controlModule0Bits[2];
-localState.bWarning := controlModule0Bits[3];
+localState.bError := statusModule0Bits[2];
+localState.bWarning := statusModule0Bits[3];
 bError := localState.bError;
 localState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(nAlarmCode_IN));
 localState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode_IN));
-localState.bRemoteControlOn := controlModule0Bits[0];
+localState.bRemoteControlOn := statusModule0Bits[0];
 localState.fVolumeFlowRate := BufferUdintToReal(raw_input := fVolumeFlowRate_IN);
 localState.fTemperatureInternal := BufferRealToReal(raw_input := fTemperatureInternal_IN);
 fTemperatureInternal := localState.fTemperatureInternal;
 IF localDefaultParameters.bExternalTemperatureSensor THEN //Set external temperature and temperature difference if temperature sensor is connected
 	localState.fTemperatureExternal := BufferUdintToReal(raw_input := fTemperatureExternal_IN);
 	fTemperatureExternal := localState.fTemperatureExternal;
-	localState.fTemperatureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
+	localState.fTemperatureDifference := BufferUdintToReal(raw_input := fTemperatureDifference_IN);
 END_IF;
 localState.fPressureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
 localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN);
@@ -203,8 +205,6 @@ END_VAR
 VAR_INPUT
 END_VAR
 VAR
-	tmp : STRING;
-	controlModule0Bits : ARRAY[0..7] OF BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
