@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="MAIN" Id="{f4373c39-f5a7-4799-b8f8-e268e2a0cb7c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	init_done		: BOOL := FALSE;
+	
+	//strategy controller
+	Strategy : FB_BaseStrategyController; 
+
+	//states thermal networks
+	cnState : ST_BufferStorageState;
+	hnltState : ST_BufferStorageState;
+	
+	//thermal networks
+	CN : FB_CoolingNetwork;
+	HNLT_CN : FB_HnltCnLinkage;
+	HNLT : FB_LowTemperatureHeatingNetwork;
+	
+	//ambient state
+	Ambient : FB_Ambient;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//implement states and linked them to exisiting buffer storage components
+(*
+cnState.fLowerTemperature := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_unten;
+cnState.fMidTemperature := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_mitte;
+cnState.fUpperTemperature := Speicher.Pufferspeicher_Kaltwasser_195.Zustand.Temp_oben;
+hnltState.fLowerTemperature := Speicher.Pufferspeicher_Warmwasser_295.Zustand.Temp_unten;
+hnltState.fMidTemperature := Speicher.Pufferspeicher_Warmwasser_295.Zustand.Temp_mitte;
+hnltState.fUpperTemperature := Speicher.Pufferspeicher_Warmwasser_295.Zustand.Temp_oben;
+*)
+
+//strategy controller
+Strategy(ambientState := Ambient.localState,
+	cnState := cnState,
+	hnltState := hnltState);
+
+//ambient state
+Ambient();
+	
+//thermal networks
+CN(controlAutomatic := Strategy.cnControl);
+
+HNLT_CN(controlAutomatic := Strategy.hnltCnLinkageControl);
+	
+HNLT(ambientState := Ambient.localState,
+	controlAutomatic := Strategy.hnltControl);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="112" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="170" Count="4" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="115" Count="14" />
+      <LineId Id="102" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
