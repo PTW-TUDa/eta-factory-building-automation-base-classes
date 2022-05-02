@@ -99,6 +99,9 @@
     <Compile Include="DUTs\99_BuildingAutomation\03 Systems\CoolingSystems\ST_OuterCapillaryTubeMatsDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\99_BuildingAutomation\03 Systems\LinkageSystems\ST_InnerCapillaryTubeMatsDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\99_BuildingAutomation\03 Systems\StorageSystems\BufferStorage\ST_BufferStorageState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -176,6 +179,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99_BuildingAutomation\04 Systems\LinkageSystems\FB_HeatPumpSystem.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\99_BuildingAutomation\04 Systems\LinkageSystems\FB_InnerCapillaryTubeMats.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\99_BuildingAutomation\04 Systems\StorageSystems\FB_HVFAStorageSystem.TcPOU">

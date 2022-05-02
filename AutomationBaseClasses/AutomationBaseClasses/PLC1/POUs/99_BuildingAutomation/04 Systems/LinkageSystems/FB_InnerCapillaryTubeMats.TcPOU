@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_InnerCapillaryTubeMats" Id="{46ec983e-b705-43aa-aa03-31694ea1c351}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_InnerCapillaryTubeMats EXTENDS FB_SystemContinous
+VAR_INPUT
+	stAmbientState : ST_AmbientState;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//default parameters
+	localDefaultParameters : ST_InnerCapillaryTubeMatsDefaultParameters;	
+	
+	//pumps
+	stPU405DefaultParameters : ST_PumpGrundfosMagna3DefaultParameters;
+	stPU500DefaultParameters : ST_PumpGrundfosMagna3DefaultParameters;
+	
+	PU405 : FB_PumpGrundfosMagna3 := (ST_DefaultParameters := stPU405DefaultParameters);
+	PU500 : FB_PumpGrundfosMagna3 := (ST_DefaultParameters := stPU500DefaultParameters);	
+	
+	//valves
+	stSV401DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 3);
+	stSV402DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 3);
+	stSV403DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 3);
+	stSV404DefaultParameters : ST_DiscreteValveDefaultParameters := (nFeedback := 3);
+	stRV500DefaultParameters : ST_MixingValveDefaultParameters := (bFeedbackSignal := FALSE, tTaskCycleTime := GlobalVariables.tCtrlCycleTime_MAIN, tCtrlCycleTime := GlobalVariables.tCtrlCycleTime_MAIN);	
+	
+	SV401 : FB_DiscreteValve := (ST_DefaultParameters := stSV401DefaultParameters); //cooling network supply
+	SV402 : FB_DiscreteValve := (ST_DefaultParameters := stSV402DefaultParameters); //cooling network return
+	SV403 : FB_DiscreteValve := (ST_DefaultParameters := stSV403DefaultParameters); //heating network supply
+	SV404 : FB_DiscreteValve := (ST_DefaultParameters := stSV404DefaultParameters); //heating entwork return
+	RV500 : FB_MixingValve := (ST_DefaultParameters := stRV500DefaultParameters);
+	
+	//internal variables
+	bSetStatusOn_PU405 	: BOOL;
+	bSetStatusOn_PU500 	: BOOL;
+	bSetStatusOn_SV401 	: BOOL;	
+	bSetStatusOn_SV402 	: BOOL;
+	bSetStatusOn_SV403 	: BOOL;
+	bSetStatusOn_SV404 	: BOOL;
+	bSetStatusOn_RV600 	: BOOL;
+	fSetPoint_RV600 	: BOOL;
+	
+	//clock
+	stDefaultParameters_Clock : ST_ClockDefaultParameters := (tTaskCycleTime := GlobalVariables.tCtrlCycleTime_MAIN, tCtrlCycleTime := T#1M);
+	Clock : FB_Clock := (ST_DefaultParameters := stDefaultParameters_Clock);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="AmbientControl" Id="{a532435f-b78a-43de-9f9b-0a223bf434c5}">
+      <Declaration><![CDATA[METHOD AmbientControl : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//check for heating or cooling mode
+IF Clock.stClockState.sintMonth>4 AND Clock.stClockState.sintMonth<10 THEN
+	//heating mode
+ELSE
+	//cooling mode	
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_InnerCapillaryTubeMats">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_InnerCapillaryTubeMats.AmbientControl">
+      <LineId Id="6" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
