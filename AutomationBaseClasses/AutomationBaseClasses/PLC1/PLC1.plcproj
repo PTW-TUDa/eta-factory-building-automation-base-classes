@@ -102,6 +102,9 @@
     <Compile Include="DUTs\99_BuildingAutomation\03 Systems\LinkageSystems\ST_InnerCapillaryTubeMatsDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\99_BuildingAutomation\03 Systems\LinkageSystems\ST_InnerCapillaryTubeMatsSetParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\99_BuildingAutomation\03 Systems\StorageSystems\BufferStorage\ST_BufferStorageState.TcDUT">
       <SubType>Code</SubType>
     </Compile>

@@ -19,6 +19,7 @@ VAR
 	
 	//ambient state
 	Ambient : FB_Ambient;
+	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[//implement states and linked them to exisiting buffer storage components
