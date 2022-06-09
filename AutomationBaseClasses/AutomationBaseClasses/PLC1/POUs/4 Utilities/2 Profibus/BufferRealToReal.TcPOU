@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="BufferRealToReal" Id="{c8b73249-0fa5-4065-8cbc-01e649bbb727}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION BufferRealToReal : REAL
 VAR_INPUT
@@ -14,7 +14,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[temp := raw_input;
-MEMCPY(ADR(real_output), ADR(temp), SIZEOF(temp));]]></ST>
+MEMCPY(ADR(BufferRealToReal), ADR(temp), SIZEOF(temp));]]></ST>
     </Implementation>
     <LineIds Name="BufferRealToReal">
       <LineId Id="8" Count="0" />
