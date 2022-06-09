@@ -15,8 +15,8 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="SetState_AI" Id="{0a841d63-6fae-4c9e-a077-b7b01fa6149c}">
-      <Declaration><![CDATA[METHOD SetState_AI : BOOL
+    <Method Name="GetState_AI" Id="{0a841d63-6fae-4c9e-a077-b7b01fa6149c}">
+      <Declaration><![CDATA[METHOD GetState_AI : BOOL
 VAR_INPUT
 END_VAR
 VAR
@@ -35,7 +35,7 @@ sensorState.sUnit := 'degreeC';
     <LineIds Name="FB_TemperatureSensor">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_TemperatureSensor.SetState_AI">
+    <LineIds Name="FB_TemperatureSensor.GetState_AI">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="14" Count="0" />

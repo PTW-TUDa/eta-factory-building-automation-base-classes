@@ -8,7 +8,9 @@ TYPE E_GrundfosMagna3ControlMode :
 	constantSpeed := 0,
 	constantTemperature_Heating := 1,
 	constantTemperature_Cooling := 2,
-	temperatureDifference := 3
+	temperatureDifference := 3,
+	pressureDifference := 4,
+	proportionalPressureControl :=5
 );
 END_TYPE
 ]]></Declaration>

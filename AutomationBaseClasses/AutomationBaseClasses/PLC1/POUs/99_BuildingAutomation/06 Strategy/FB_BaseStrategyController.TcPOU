@@ -181,7 +181,6 @@ END_VAR
 cnControl.fTargetTemperature := 15;
 hnltControl.fTargetTemperature := 40;
 
-
 //set target temperatures to linkage structs
 hnltCnLinkageControl.fTargetTemperature_CN := cnControl.fTargetTemperature;
 hnltCnLinkageControl.fTargetTemperature_HNLT := hnltControl.fTargetTemperature;
@@ -245,7 +244,7 @@ hnltCnLinkageControl.fTargetTemperature_ProductionHall := 21;]]></ST>
     <LineIds Name="FB_BaseStrategyController.SetTargetTemperatures">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="1" />
+      <LineId Id="7" Count="0" />
       <LineId Id="13" Count="3" />
       <LineId Id="12" Count="0" />
     </LineIds>

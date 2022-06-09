@@ -93,11 +93,18 @@ CASE nControlMode OF
 	ELSE
 		fAct := localState.fTemperatureInternal;		
 	END_IF
+	
 	3: //temperature difference control
 	fAct := localState.fTemperatureDifference;
 	IF localDefaultParameters.bPumpBeforeApplication AND NOT localDefaultParameters.bExternalTemperatureSensor THEN
 		fAct := fExternalValue;
 	END_IF
+	
+	4: //pressure difference control
+	fAct := localState.fPressureDifference;
+	
+	5: //proportional pressure control
+	fAct := localState.fPressureDifference;
 END_CASE
 
 //switch setpoint and actual value depending on heating or cooling mode
@@ -113,6 +120,15 @@ CASE nControlMode OF
 	3: //temperature difference
 	fSetpointValue := ABS(fAct);
 	fActualValue := ABS(fSetPoint);
+	
+	4: //pressure difference control
+	fSetpointValue := fSetPoint;
+	fActualValue := fAct;
+	
+	5: //proportional pressure control
+	//calculate linear curve depending on fSetPoint
+	fSetpointValue := (fSetPoint-(fSetPoint/2))/((fSetPoint-localDefaultParameters.fMaximumPressureDifference+(localDefaultParameters.fMaximumPressureDifference/(localDefaultParameters.fMaximumVolumeFlowRate-localDefaultParameters.fNominalVolumeFlowRate))*localDefaultParameters.fMaximumVolumeFlowRate)*((localDefaultParameters.fNominalVolumeFlowRate-localDefaultParameters.fMaximumVolumeFlowRate)/localDefaultParameters.fMaximumPressureDifference));
+	fActualValue := fAct;
 END_CASE
 
 PI_Controller (
@@ -146,7 +162,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[statusModule0Bits := ConvertByteToBit(dataByte:=StatusModule_IN[0]);
 
 //control state
-controlState.bStatusOn := controlModule0Bits[1];
+controlState.bStatusOn := statusModule0Bits[1];
 bStatusOn := controlState.bStatusOn;
 
 //setpoint state
@@ -269,9 +285,13 @@ END_VAR
       <LineId Id="227" Count="0" />
       <LineId Id="226" Count="0" />
       <LineId Id="223" Count="0" />
+      <LineId Id="261" Count="0" />
       <LineId Id="234" Count="0" />
       <LineId Id="242" Count="0" />
       <LineId Id="238" Count="1" />
+      <LineId Id="259" Count="1" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="267" Count="2" />
       <LineId Id="222" Count="0" />
       <LineId Id="219" Count="0" />
       <LineId Id="15" Count="1" />
@@ -282,6 +302,10 @@ END_VAR
       <LineId Id="55" Count="0" />
       <LineId Id="192" Count="1" />
       <LineId Id="246" Count="3" />
+      <LineId Id="255" Count="3" />
+      <LineId Id="263" Count="1" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="265" Count="1" />
       <LineId Id="41" Count="0" />
       <LineId Id="72" Count="0" />
       <LineId Id="74" Count="6" />
