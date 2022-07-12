@@ -21,7 +21,7 @@ sensorState.fVolume := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[3].sValue
 sensorState.fFeedTemperature := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[8].sValue);
 sensorState.fReturnTemperature := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[9].sValue);
 sensorState.fVolumeFlowRate := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[6].sValue);
-sensorState.fHeatEnergy := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[2].sValue);
+sensorState.fHeatEnergy := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[2].sValue)/1000000;
 sensorState.fHeatFlowRate := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[4].sValue);
 sensorState.fTemperatureDifference := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[10].sValue);
 
