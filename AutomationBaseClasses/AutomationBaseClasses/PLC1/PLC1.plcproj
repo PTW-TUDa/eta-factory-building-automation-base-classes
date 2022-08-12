@@ -18,8 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>1.4</ProjectVersion>
-    <Description>Export: 12.04.22 21:57</Description>
+    <ProjectVersion>1.8</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -73,6 +72,9 @@
     <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3DefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3Genibus.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\1 Actor Data Structs\Pumps\ST_PumpGrundfosMagna3SetParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -98,6 +100,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\2 Profibus\ConvertByteToBit.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\2 Profibus\FB_Genibus.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
@@ -156,6 +161,7 @@
     <Folder Include="DUTs\2 Sensor Data Structs" />
     <Folder Include="DUTs\3 System Data Structs" />
     <Folder Include="DUTs\4 Utility Data Structs" />
+    <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
     <Folder Include="POUs\4 Utilities\0 Base" />

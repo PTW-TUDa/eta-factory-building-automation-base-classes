@@ -77,6 +77,15 @@ END_VAR]]></Declaration>
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="SetState_Inverted_BO" Id="{f23f4a83-0327-4a91-abab-afc75fe16e7e}">
+      <Declaration><![CDATA[METHOD SetState_Inverted_BO : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bSetStatusOn_OUT := NOT bSetStatusOn;]]></ST>
+      </Implementation>
+    </Method>
     <Property Name="ST_DefaultParameters" Id="{8d33a13c-5650-4ddc-aac7-e5707e8c1b8d}">
       <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_DiscreteValveDefaultParameters]]></Declaration>
       <Set Name="Set" Id="{33d3ed96-b96e-4f0c-89d2-38cef331df44}">
@@ -100,6 +109,9 @@ END_VAR
     <LineIds Name="FB_DiscreteValve.SetState_BO">
       <LineId Id="5" Count="0" />
       <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.SetState_Inverted_BO">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_DiscreteValve.ST_DefaultParameters.Set">
       <LineId Id="2" Count="0" />
