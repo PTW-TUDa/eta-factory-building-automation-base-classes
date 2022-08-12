@@ -93,9 +93,6 @@
     <Compile Include="DUTs\4 Utility Data Structs\ST_ClockState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MAIN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -106,9 +103,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\2 Profibus\FB_Genibus.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TaskMAIN.TcTTO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
