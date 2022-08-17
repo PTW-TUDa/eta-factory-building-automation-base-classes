@@ -16,7 +16,8 @@ VAR
 	localDefaultParameters : ST_MixingValveDefaultParameters;	
 
 	//analog converters for 0 - 10 V i/o signals
-	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
+	//offset for input signal necessary
+	InputConverter : FB_AnalogInput(fLowerLimit := -12.2, fUpperLimit := 100);
 	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
