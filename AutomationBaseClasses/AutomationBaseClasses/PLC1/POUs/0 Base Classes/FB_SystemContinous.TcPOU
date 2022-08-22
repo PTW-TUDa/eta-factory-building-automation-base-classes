@@ -34,7 +34,6 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SUPER^.MAIN();
-SetState();
 SystemFlowControl();]]></ST>
       </Implementation>
     </Method>
@@ -75,17 +74,6 @@ END_VAR
     <Method Name="SetSetPointLimits" Id="{76638cd5-20cb-42ab-afc6-a5afa22b29a7}">
       <Declaration><![CDATA[METHOD PROTECTED ABSTRACT  SetSetPointLimits : BOOL
 VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="SetState" Id="{0631fadf-7cd8-4853-83ce-624761ddf013}">
-      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT SetState : BOOL
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -189,9 +177,7 @@ END_VAR]]></Declaration>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.MAIN">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="1" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.Operational">
       <LineId Id="5" Count="0" />
@@ -203,9 +189,6 @@ END_VAR]]></Declaration>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.SetSetPointLimits">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_SystemContinous.SetState">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_SystemContinous.SystemFlowControl">
