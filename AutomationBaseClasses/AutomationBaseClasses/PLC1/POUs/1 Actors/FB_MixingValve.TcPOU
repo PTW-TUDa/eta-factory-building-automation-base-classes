@@ -17,7 +17,7 @@ VAR
 
 	//analog converters for 0 - 10 V i/o signals
 	//offset for input signal necessary
-	InputConverter : FB_AnalogInput(fLowerLimit := -12.2, fUpperLimit := 100);
+	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
 	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
