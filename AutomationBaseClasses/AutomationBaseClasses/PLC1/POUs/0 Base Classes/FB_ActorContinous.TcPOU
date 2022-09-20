@@ -29,19 +29,18 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[SelectControlMode();
+SelectSetPoint();
 SetSetPointLimits();
 SetPointCheck();]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SelectControlMode" Id="{9487b088-9bc5-4a7e-8bf7-9767eafe3f05}">
-      <Declaration><![CDATA[METHOD PROTECTED SelectControlMode : BOOL
+    <Method Name="SelectSetPoint" Id="{9487b088-9bc5-4a7e-8bf7-9767eafe3f05}">
+      <Declaration><![CDATA[METHOD PROTECTED SelectSetPoint : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[SUPER^.SelectControlMode();
-
-//add changing set point to method
+        <ST><![CDATA[//add changing set point to method
 IF control.bManualModeActivated THEN
 	fsetPoint := setSetPoint.fSetPointManual;
 ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
@@ -74,11 +73,11 @@ END_VAR
       <LineId Id="91" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActorContinous.MAIN">
-      <LineId Id="6" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="1" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_ActorContinous.SelectControlMode">
-      <LineId Id="38" Count="1" />
+    <LineIds Name="FB_ActorContinous.SelectSetPoint">
       <LineId Id="22" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="35" Count="0" />
