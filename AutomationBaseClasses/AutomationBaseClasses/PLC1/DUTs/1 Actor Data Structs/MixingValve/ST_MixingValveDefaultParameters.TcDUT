@@ -7,6 +7,8 @@ STRUCT
 	fDefaultPosition : REAL := 0; //default position when bSetStatusOn = false
 	fControllerAmplification : LREAL := 0.265;
 	tControllerIntegralTime : TIME := T#15S;
+	fOutMaxLimit : LREAL := 100;
+	fOutMinLimit : LREAL := 0;
 	tTaskCycleTime	: TIME;
 	tCtrlCycleTime	: TIME;
 	aSetPointLimitsPosition	: ARRAY[1..2] OF REAL := [0,100]; //setpoint limits for position mode

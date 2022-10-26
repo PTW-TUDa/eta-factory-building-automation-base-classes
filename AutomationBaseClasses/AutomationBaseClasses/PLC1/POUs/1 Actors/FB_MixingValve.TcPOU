@@ -52,8 +52,8 @@ END_VAR
         <ST><![CDATA[//set control parameters
 PI_Controller_Parameters.fKp 				:= localDefaultParameters.fControllerAmplification;
 PI_Controller_Parameters.tTn 				:= localDefaultParameters.tControllerIntegralTime;
-PI_Controller_Parameters.fOutMaxLimit		:= 100.0;
-PI_Controller_Parameters.fOutMinLimit		:= 0.0;
+PI_Controller_Parameters.fOutMaxLimit		:= localDefaultParameters.fOutMaxLimit;
+PI_Controller_Parameters.fOutMinLimit		:= localDefaultParameters.fOutMinLimit;
 PI_Controller_Parameters.tTaskCycleTime		:= localDefaultParameters.tTaskCycleTime;
 PI_Controller_Parameters.tCtrlCycleTime		:= localDefaultParameters.tCtrlCycleTime;
 PI_Controller_Parameters.bARWOnIPartOnly	:= TRUE;
