@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>2.2</ProjectVersion>
+    <ProjectVersion>2.3</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -91,6 +91,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\4 Utility Data Structs\ST_ClockState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_PressureSensor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
