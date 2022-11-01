@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_GasMeter" Id="{b014a8bd-18cc-4742-b2b0-71f117cee5c8}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_GasMeter EXTENDS FB_Sensor
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_GasMeter
 VAR_INPUT
 	aGasmeterTelegramm	: ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
 END_VAR

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_ElectricityMeter" Id="{14f8a120-a526-4f46-883e-e3576a0e0d1b}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectricityMeter EXTENDS FB_Sensor
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectricityMeter
 VAR_INPUT
 	aElectricityMeterTelegramm	: ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
 END_VAR
