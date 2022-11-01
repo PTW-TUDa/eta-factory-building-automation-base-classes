@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>2.5</ProjectVersion>
+    <ProjectVersion>2.6</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -90,6 +90,9 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_GasMeterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_StarkMultical302HeatCounterState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +109,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_PressureSensor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_StarkMultical302HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">

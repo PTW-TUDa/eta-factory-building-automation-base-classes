@@ -8,7 +8,7 @@ END_VAR
 VAR_OUTPUT
 	fFeedTemperature : REAL; //°C
 	fReturnTemperazure : REAL; //°C
-	fVolumeFlowRate : REAL; //m3/s
+	fVolumeFlowRate : REAL; //m3/h
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
