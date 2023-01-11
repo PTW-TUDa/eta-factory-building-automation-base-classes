@@ -9,6 +9,7 @@ VAR_OUTPUT
 	fFeedTemperature : REAL; //°C
 	fReturnTemperazure : REAL; //°C
 	fVolumeFlowRate : REAL; //m3/h
+	fHeatFlowRate : REAL; //kW
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
@@ -31,6 +32,7 @@ sensorState.fHeatFlowRate := sensorState.fVolumeFlowRate/3.6*4.19*sensorState.fT
 fFeedTemperature := sensorState.fFeedTemperature;
 fReturnTemperazure := sensorState.fReturnTemperature;
 fVolumeFlowRate := sensorState.fVolumeFlowRate;
+fHeatFlowRate := sensorState.fHeatFlowRate;
 ]]></ST>
     </Implementation>
     <LineIds Name="FB_MollineC3HeatCounter">
@@ -45,6 +47,7 @@ fVolumeFlowRate := sensorState.fVolumeFlowRate;
       <LineId Id="28" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="72" Count="2" />
+      <LineId Id="105" Count="0" />
       <LineId Id="29" Count="0" />
     </LineIds>
   </POU>

@@ -9,7 +9,10 @@ STRUCT
 	tControllerIntegralTime : TIME := T#15S;
 	tTaskCycleTime	: TIME;
 	tCtrlCycleTime	: TIME;	
-	aSetPointLimits	: ARRAY[1..2] OF REAL := [0,100];
+	aSetPointLimits_constantSpeed : ARRAY[1..2] OF REAL := [0,100]; //degreeC
+	aSetPointLimits_Temperature	: ARRAY[1..2] OF REAL := [0,100]; //degreeC
+	aSetPointLimits_Pressure : ARRAY[1..2] OF REAL := [0,3]; //bar
+	aSetPointLimitsThermalPower : ARRAY[1..2] OF REAL := [-100,100]; //setpoint limits for heating and cooling power in kW
 	fMaximumVolumeFlowRate : REAL := 1.925; //default parameters for Magna3 25-40
 	fNominalVolumeFlowRate : REAL := 0.000635; //default parameters for Magna3 25-40
 	fMaximumPressureDifference : REAL := 40000; //default parameters for Magna3 25-40

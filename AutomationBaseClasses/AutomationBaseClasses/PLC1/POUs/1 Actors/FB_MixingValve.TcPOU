@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
 VAR_INPUT
 	nControlModeAutomatic : E_MixingValveControlMode; //control mode: 0 = position mode, 1 = heating mode, 2 = cooling mode
 	fTemperatureExternal : REAL; //External temperature in °C
+	fThermalPowerExternal : REAL; //external heat power in kW
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -31,6 +32,7 @@ VAR
 	//controllers
 	PI_Controller_Heating		: FB_CTRL_PI; 
 	PI_Controller_Cooling		: FB_CTRL_PI;
+	PI_Controller_ThermalPower		: FB_CTRL_PI;
 	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
 END_VAR]]></Declaration>
     <Implementation>
@@ -84,6 +86,17 @@ IF bSetStatusOn THEN
 			bHold			:= FALSE,
 			stParams		:= PI_Controller_Parameters);
 		fSetPoint_internal := LREAL_TO_REAL(PI_Controller_Cooling.fOut);
+		
+		3: //thermal power
+		PI_Controller_ThermalPower (
+			fSetpointValue	:= ABS(fSetPoint),
+			fActualValue	:= ABS(fThermalPowerExternal),
+			fManSyncValue	:= 0,
+			bSync			:= FALSE,
+			eMode			:= 2, (* mode active *)
+			bHold			:= FALSE,
+			stParams		:= PI_Controller_Parameters);
+		fSetPoint_internal := LREAL_TO_REAL(PI_Controller_ThermalPower.fOut);
 	END_CASE
 ELSE
 	fSetPoint_internal := localDefaultParameters.fDefaultPosition;
@@ -142,6 +155,9 @@ END_VAR
 	
 	2: //cooling mode
 	aSetPointLimits := localDefaultParameters.aSetPointLimitsTemperature;
+	
+	3: //themal power
+	aSetPointLimits := localDefaultParameters.aSetPointLimitsThermalPower;
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -211,6 +227,9 @@ END_VAR
       <LineId Id="84" Count="6" />
       <LineId Id="83" Count="0" />
       <LineId Id="91" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="129" Count="8" />
+      <LineId Id="128" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="112" Count="2" />
       <LineId Id="31" Count="0" />
@@ -236,6 +255,7 @@ END_VAR
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="5" />
+      <LineId Id="18" Count="2" />
       <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="FB_MixingValve.SetState_AO">
