@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActorContinous
 VAR_INPUT
@@ -17,8 +17,7 @@ VAR
 	localDefaultParameters : ST_MixingValveDefaultParameters;	
 
 	//analog converters for 0 - 10 V i/o signals
-	//offset for input signal necessary
-	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
+	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100, fOffset := 7700);
 	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
