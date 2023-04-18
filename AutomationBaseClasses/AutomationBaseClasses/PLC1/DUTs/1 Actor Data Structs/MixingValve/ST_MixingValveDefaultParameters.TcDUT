@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <DUT Name="ST_MixingValveDefaultParameters" Id="{fe25e7db-0691-4761-8b7b-8dd172b389e7}">
     <Declaration><![CDATA[TYPE ST_MixingValveDefaultParameters:
 STRUCT
 	bFeedbackSignal : BOOL := TRUE; //true if valve gets a feedback signal for acual position
 	fDefaultPosition : REAL := 0; //default position when bSetStatusOn = false
+	fOffsetTerminal : REAL := 0; //voltage offset of terminal for input signal
 	fControllerAmplification : LREAL := 0.265;
 	tControllerIntegralTime : TIME := T#15S;
 	fOutMaxLimit : LREAL := 100;

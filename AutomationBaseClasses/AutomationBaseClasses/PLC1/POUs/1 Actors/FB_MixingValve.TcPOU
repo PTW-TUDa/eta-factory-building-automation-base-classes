@@ -17,7 +17,7 @@ VAR
 	localDefaultParameters : ST_MixingValveDefaultParameters;	
 
 	//analog converters for 0 - 10 V i/o signals
-	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100, fOffset := 7700);
+	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
 	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
@@ -38,7 +38,7 @@ END_VAR]]></Declaration>
       <ST><![CDATA[MAIN();
 SelectValveControlMode();
 ControlValve();
-InputConverter(nValue := nOperatingPoint_IN);
+InputConverter(nValue := nOperatingPoint_IN, fOffset := localDefaultParameters.fOffsetTerminal);
 OutputConverter(fValue := fSetPoint_internal);
 ]]></ST>
     </Implementation>
