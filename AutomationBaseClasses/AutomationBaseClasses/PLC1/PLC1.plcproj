@@ -96,6 +96,9 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\4 Utility Data Structs\ST_RangeCheckDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\4 Utility Data Structs\ST_ClockDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -115,6 +118,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_StarkMultical302HeatCounter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\4 Utilities\0 Base\FB_RangeCheck.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
