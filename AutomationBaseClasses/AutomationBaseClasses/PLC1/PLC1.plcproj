@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>2.9</ProjectVersion>
+    <ProjectVersion>3.0</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -135,10 +135,10 @@
     <Compile Include="POUs\4 Utilities\2 Profibus\FB_Genibus.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0 Base Classes\FB_Actor2Point.TcPOU">
+    <Compile Include="POUs\0 Base Classes\FB_Actuator2Point.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\0 Base Classes\FB_ActorContinous.TcPOU">
+    <Compile Include="POUs\0 Base Classes\FB_ActuatorContinous.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Sensor.TcPOU">
