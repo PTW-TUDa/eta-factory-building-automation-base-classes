@@ -120,6 +120,9 @@
     <Compile Include="POUs\2 Sensors\FB_StarkMultical302HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\2 Sensors\FB_TemperatureSensor_KL3214.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_RangeCheck.TcPOU">
       <SubType>Code</SubType>
     </Compile>
