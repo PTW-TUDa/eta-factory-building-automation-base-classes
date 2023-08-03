@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_MollineUltramess403HeatCounter" Id="{f3708acc-6706-4df9-8b03-e5cf7923e46e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MollineUltramess403HeatCounter
+VAR_INPUT
+	aHeatCounterTelegramm : ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
+END_VAR
+VAR_OUTPUT
+	fFeedTemperature : REAL; //°C
+	fReturnTemperature : REAL; //°C
+	fVolumeFlowRate : REAL; //m3/h
+	fHeatFlowRate : REAL; //kW
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_MollineC3HeatCounterState;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//set sensor state
+sensorState.fVolume := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[5].sValue);
+sensorState.fFeedTemperature := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[11].sValue);
+sensorState.fReturnTemperature := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[12].sValue);
+sensorState.fVolumeFlowRate := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[17].sValue);
+sensorState.fHeatEnergy := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[2].sValue)/1000000;
+sensorState.fTemperatureDifference := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[13].sValue);
+
+//calculate fHeatFlowRate because heat meter does not measure negative flows
+sensorState.fHeatFlowRate := sensorState.fVolumeFlowRate/3.6*4.19*sensorState.fTemperatureDifference;
+
+//set outputs
+fFeedTemperature := sensorState.fFeedTemperature;
+fReturnTemperature := sensorState.fReturnTemperature;
+fVolumeFlowRate := sensorState.fVolumeFlowRate;
+fHeatFlowRate := sensorState.fHeatFlowRate;
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_MollineUltramess403HeatCounter">
+      <LineId Id="9" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="29" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

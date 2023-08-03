@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>3.0</ProjectVersion>
+    <ProjectVersion>3.1</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -112,6 +112,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_MollineEHeatCounter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_MollineUltramess403HeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_PressureSensor.TcPOU">
