@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_VirtualHeatCounter" Id="{0372eb64-3056-4c08-b626-8351d2c2d032}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_VirtualHeatCounter
+VAR_INPUT
+	fFeedTemperature : REAL; //°C
+	fReturnTemperature : REAL; //°C
+	fOperatingPoint: REAL; //operating point of valve or pump, used for linear interpolation
+END_VAR
+VAR_OUTPUT
+	fVolumeFlowRate : REAL; //m3/h
+	fHeatFlowRate : REAL; //kW
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_VirtualHeatCounterState;
+	
+	//default parameters
+	localDefaultParameters : ST_VirtualHeatCounterDefaultParameters;
+	
+	//volume flow rate interpolation depending on fOperatingPoint
+	Interpolator 			: FB_CTRL_LIN_INTERPOLATION;
+	Interpolator_Parameters	: ST_CTRL_LIN_INTERPOLATION_PARAMS;
+	
+	//volume flow and heat energy integrator
+	Integrator_HeatEnergy : FB_CTRL_I;	
+	Integrator_VolumeFlow : FB_CTRL_I;
+	Integrator_HeatEnergy_Parameters : ST_CTRL_I_PARAMS;
+	Integrator_VolumeFlow_Parameters : ST_CTRL_I_PARAMS;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[sensorState.fFeedTemperature := fFeedTemperature;
+sensorState.fReturnTemperature := fReturnTemperature;
+sensorState.fTemperatureDifference := fFeedTemperature-fReturnTemperature;
+
+//volume flow rate interpolation
+Interpolator_Parameters.nDataTable_NumberOfRows := 11;
+Interpolator_Parameters.nDataTable_SIZEOF := SIZEOF(localDefaultParameters.aInterpolationData);
+Interpolator_Parameters.pDataTable_ADR := ADR(localDefaultParameters.aInterpolationData);
+Interpolator_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
+Interpolator_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
+Interpolator(
+	fIn	:= fOperatingPoint,
+	fManValue := 0,
+	bExtrapolate := FALSE,
+	eMode := 2,
+	stParams := Interpolator_Parameters);
+fVolumeFlowRate := LREAL_TO_REAL(Interpolator.fOut);
+sensorState.fHeatFlowRate := fVolumeFlowRate/3.6*4.19*sensorState.fTemperatureDifference;
+fHeatFlowRate := sensorState.fHeatFlowRate;
+
+//volume flow integration
+Integrator_VolumeFlow_Parameters.tTi := T#1S;
+Integrator_VolumeFlow_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
+Integrator_VolumeFlow_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
+
+Integrator_VolumeFlow(
+	fIn := fVolumeFlowRate/3600,
+	fManSyncValue := 0,
+	bSync := FALSE,
+	eMode := 2,
+	bHold := FALSE,
+	stParams := Integrator_VolumeFlow_Parameters);
+sensorState.fVolume := LREAL_TO_REAL(Integrator_VolumeFlow.fOut);
+
+//volume flow integration
+Integrator_HeatEnergy_Parameters.tTi := T#1S;
+Integrator_HeatEnergy_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
+Integrator_HeatEnergy_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
+
+Integrator_HeatEnergy(
+	fIn := fHeatFlowRate/(1000*3600),
+	fManSyncValue := 0,
+	bSync := FALSE,
+	eMode := 2,
+	bHold := FALSE,
+	stParams := Integrator_VolumeFlow_Parameters);
+sensorState.fHeatEnergy := LREAL_TO_REAL(Integrator_HeatEnergy.fOut);
+	
+]]></ST>
+    </Implementation>
+    <Property Name="ST_DefaultParameters" Id="{9efa5916-acd9-4137-8182-eaeb0b725643}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_VirtualHeatCounterDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{efc5638b-dd94-41d2-8bc1-0cccbea64084}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_VirtualHeatCounter">
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="74" Count="3" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="55" Count="2" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="83" Count="7" />
+      <LineId Id="96" Count="12" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_VirtualHeatCounter.ST_DefaultParameters.Set">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

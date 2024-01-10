@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>3.1</ProjectVersion>
+    <ProjectVersion>3.2</ProjectVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -84,10 +84,16 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_ElectricityMeterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_GasMeterState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_StarkMultical302HeatCounterState.TcDUT">
@@ -124,6 +130,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_TemperatureSensor_KL3214.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_VirtualHeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\4 Utilities\0 Base\FB_RangeCheck.TcPOU">

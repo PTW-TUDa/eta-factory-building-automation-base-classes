@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_VirtualHeatCounterDefaultParameters" Id="{1d8d0424-1b08-450a-bbc7-3a6981abc718}">
+    <Declaration><![CDATA[TYPE ST_VirtualHeatCounterDefaultParameters:
+STRUCT
+	tTaskCycleTime	: TIME;
+	tCtrlCycleTime	: TIME;
+	aInterpolationData : ARRAY[1..11, 1..2] OF FLOAT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
