@@ -51,7 +51,7 @@ sensorState.fHeatFlowRate := fVolumeFlowRate/3.6*4.19*sensorState.fTemperatureDi
 fHeatFlowRate := sensorState.fHeatFlowRate;
 
 //volume flow integration
-Integrator_VolumeFlow_Parameters.tTi := T#1S;
+Integrator_VolumeFlow_Parameters.tTi := T#5S;
 Integrator_VolumeFlow_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
 Integrator_VolumeFlow_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
 
@@ -65,7 +65,7 @@ Integrator_VolumeFlow(
 sensorState.fVolume := LREAL_TO_REAL(Integrator_VolumeFlow.fOut);
 
 //volume flow integration
-Integrator_HeatEnergy_Parameters.tTi := T#1S;
+Integrator_HeatEnergy_Parameters.tTi := T#5S;
 Integrator_HeatEnergy_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
 Integrator_HeatEnergy_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
 
