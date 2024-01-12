@@ -3,6 +3,7 @@
   <POU Name="FB_VirtualHeatCounter" Id="{0372eb64-3056-4c08-b626-8351d2c2d032}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_VirtualHeatCounter
 VAR_INPUT
+	aInterpolationData : ARRAY[1..11, 1..2] OF FLOAT; //interpolation data for volume flow rate depending on valve position
 	fFeedTemperature : REAL; //°C
 	fReturnTemperature : REAL; //°C
 	fOperatingPoint: REAL; //operating point of valve or pump, used for linear interpolation
@@ -36,8 +37,8 @@ sensorState.fTemperatureDifference := fFeedTemperature-fReturnTemperature;
 
 //volume flow rate interpolation
 Interpolator_Parameters.nDataTable_NumberOfRows := 11;
-Interpolator_Parameters.nDataTable_SIZEOF := SIZEOF(localDefaultParameters.aInterpolationData);
-Interpolator_Parameters.pDataTable_ADR := ADR(localDefaultParameters.aInterpolationData);
+Interpolator_Parameters.nDataTable_SIZEOF := SIZEOF(aInterpolationData);
+Interpolator_Parameters.pDataTable_ADR := ADR(aInterpolationData);
 Interpolator_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
 Interpolator_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
 Interpolator(
