@@ -21,4 +21,7 @@ Citing this project
 Please cite this project using our publication:
 
 .. code-block::
-    Fuhrländer-Völker, Daniel ; Borst, Fabian ; Theisinger, Lukas ; Ranzau, Heiko ; Weigold, Matthias (2022): Modular Data Model for Energy-Flexible Cyber-physical Production Systems. In: Procedia CIRP, Vol: 107, pp. 215-220, Elsevier B.V., DOI: 10.1016/j.procir.2022.04.036
+
+    Fuhrländer-Völker, Daniel ; Borst, Fabian ; Theisinger, Lukas ; Ranzau, Heiko ; Weigold, Matthias (2022): 
+    Modular Data Model for Energy-Flexible Cyber-physical Production Systems. 
+    In: Procedia CIRP, Vol: 107, pp. 215-220, Elsevier B.V., DOI: 10.1016/j.procir.2022.04.036
