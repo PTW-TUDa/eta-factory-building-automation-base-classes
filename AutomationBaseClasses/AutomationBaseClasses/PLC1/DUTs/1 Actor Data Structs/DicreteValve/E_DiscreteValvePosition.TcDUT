@@ -5,10 +5,10 @@
 {attribute 'strict'}
 TYPE E_DiscreteValvePosition :
 (	
-	noValidInformation := 0,
-	moving := 1,
-	closed := 2,
-	open := 3
+	noValidInformation := 0, //no information about position available
+	moving := 1, //valve is moving
+	closed := 2, //valve is closed
+	open := 3 //valve is open
 );
 END_TYPE
 ]]></Declaration>

@@ -3,7 +3,7 @@
   <POU Name="FB_MixingValve" Id="{60dbc338-d028-4fcc-a2a7-9fe749ce4d3c}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_MixingValve EXTENDS FB_ActuatorContinous
 VAR_INPUT
-	nControlModeAutomatic : E_MixingValveControlMode; //control mode: 0 = position mode, 1 = heating mode, 2 = cooling mode
+	nControlModeAutomatic : E_MixingValveControlMode;
 	fTemperatureExternal : REAL; //External temperature in °C
 	fThermalPowerExternal : REAL; //external heat power in kW
 END_VAR
@@ -11,27 +11,27 @@ VAR_OUTPUT
 END_VAR
 VAR	
 	{attribute 'OPC.UA.DA' := '1'}
-	localSetParameters : ST_MixingValveSetParameters;
+	localSetParameters 			: ST_MixingValveSetParameters;
 	
 	//default parameters
-	localDefaultParameters : ST_MixingValveDefaultParameters;	
+	localDefaultParameters 		: ST_MixingValveDefaultParameters;	
 
 	//analog converters for 0 - 10 V i/o signals
-	InputConverter : FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
-	OutputConverter : FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
+	InputConverter 				: FB_AnalogInput(fLowerLimit := 0, fUpperLimit := 100);
+	OutputConverter 			: FB_AnalogOutput(fLowerLimit := 0, fUpperLimit := 100);
 	
 	//I/O Links
 	nSetPoint_OUT		AT %Q* : INT; //Set position linked to terminal
 	nOperatingPoint_IN 	AT %I* : INT; //Actual valve position linked to terminal
 	
 	//internal variables
-	nControlMode			: E_MixingValveControlMode;	
-	fSetPoint_internal 		: REAL; //internal, control mode depending setpoint between 0.0 and 100.0
+	nControlMode				: E_MixingValveControlMode;	
+	fSetPoint_internal 			: REAL; //internal, control mode depending setpoint between 0.0 and 100.0
 	
 	//controllers
 	PI_Controller_Heating		: FB_CTRL_PI; 
 	PI_Controller_Cooling		: FB_CTRL_PI;
-	PI_Controller_ThermalPower		: FB_CTRL_PI;
+	PI_Controller_ThermalPower	: FB_CTRL_PI;
 	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
 END_VAR]]></Declaration>
     <Implementation>

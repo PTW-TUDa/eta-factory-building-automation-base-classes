@@ -3,10 +3,10 @@
   <POU Name="FB_ActuatorContinous" Id="{c8bff7e9-c02c-4471-8259-14c86f2cd564}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_ActuatorContinous EXTENDS FB_Actuator2Point
 VAR_INPUT
-	fSetPointAutomatic	: REAL; //unit depending setpoint
+	fSetPointAutomatic	: REAL; //setpoint in automatic mode
 END_VAR
 VAR_OUTPUT
-	fOperatingPoint : REAL; //unit depending operating point
+	fOperatingPoint : REAL; //operating point
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
@@ -16,7 +16,7 @@ VAR
 	
 	//internal variables
 	fSetPoint	    : REAL; //actual set setpoint
-	aSetPointLimits	: ARRAY[1..2] OF REAL; //control mode and unit depending setpoint limits that are set by abstract method SetSetPointLimits() in a subclass 
+	aSetPointLimits	: ARRAY[1..2] OF REAL; //control mode depending setpoint limits that are set by abstract method SetSetPointLimits() in child class 
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -40,8 +40,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//add changing set point to method
-IF control.bManualModeActivated THEN
+        <ST><![CDATA[IF control.bManualModeActivated THEN
 	fsetPoint := setSetPoint.fSetPointManual;
 ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
 	fsetPoint := setSetPoint.fSetPointAlgorithm;
@@ -78,7 +77,6 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_ActuatorContinous.SelectSetPoint">
-      <LineId Id="22" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="8" Count="0" />

@@ -3,7 +3,7 @@
   <POU Name="FB_PumpGrundfosMagna3" Id="{5ff4732a-f57a-4b28-83eb-fee6b9ba074e}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActuatorContinous
 VAR_INPUT
-	nControlModeAutomatic : E_GrundfosMagna3ControlMode; //Grundfos Magna3 control modes
+	nControlModeAutomatic : E_GrundfosMagna3ControlMode;
 	fExternalValue : REAL; //external value for control, e. g. temperature, temperature difference volume flow rate
 	fThermalPowerExternal : REAL; //external heat power in kW
 END_VAR
@@ -43,16 +43,16 @@ VAR
 	//controllers
 	PI_Controller				: FB_CTRL_PI; 
 	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
-	fSetpointValue : LREAL; //internal setpoint value (is switched depending on heating/cooling application)
-	fActualValue : LREAL; //internal setpoint value (is switched depending on heating/cooling application)
-	fAct : REAL; //actual measured value from internal pump sensor or external sensor
+	fSetpointValue 				: LREAL; //internal setpoint value (is switched depending on heating/cooling application)
+	fActualValue 				: LREAL; //internal setpoint value (is switched depending on heating/cooling application)
+	fAct 						: REAL; //actual measured value from internal pump sensor or external sensor
 		
 	//internal variables:
-	nControlMode : E_GrundfosMagna3ControlMode; //actual pump control mode
-	fSetPoint_controlled : REAL; //controlled setpoint
-	statusModule0Bits : ARRAY[0..7] OF BOOL;
-	tmp : STRING;
-	controlModule0Bits : ARRAY[0..7] OF BOOL;
+	nControlMode 			: E_GrundfosMagna3ControlMode; //actual pump control mode
+	fSetPoint_controlled 	: REAL; //controlled setpoint
+	statusModule0Bits 		: ARRAY[0..7] OF BOOL;
+	tmp 					: STRING;
+	controlModule0Bits 		: ARRAY[0..7] OF BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[MAIN();

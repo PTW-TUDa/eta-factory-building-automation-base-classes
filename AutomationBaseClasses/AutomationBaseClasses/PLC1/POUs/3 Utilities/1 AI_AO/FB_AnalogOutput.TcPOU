@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="FB_AnalogOutput" Id="{e8cc816e-9340-40fa-8115-6e9fa806b2a4}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogOutput
 VAR_INPUT
 END_VAR
 VAR_INPUT
-	fValue				: REAL; //input value	
+	fValue		: REAL; //input value	
 END_VAR
 VAR_OUTPUT
-	nValue 				: INT; //converted value
+	nValue 		: INT; //converted value
 END_VAR
 VAR
 	fUpperLimit : REAL; //upper limit of value range

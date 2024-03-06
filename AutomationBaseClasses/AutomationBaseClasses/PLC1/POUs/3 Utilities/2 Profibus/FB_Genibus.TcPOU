@@ -3,16 +3,15 @@
   <POU Name="FB_Genibus" Id="{0742bb83-2ec0-4ba4-a879-459b57f3ee5f}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_Genibus
 VAR_INPUT
-	Reply						:  POINTER TO ST_PumpGrundfosMagna3Genibus; 	(*This is mapped to PB_DPV0 Module 43 "DirectDataReply"*)
-	Request 					:  POINTER TO ST_PumpGrundfosMagna3Genibus; 	(*This is mapped to PB_DPV0 Module 42 "DirectDataRequest"*)
+	Reply						:  POINTER TO ST_PumpGrundfosMagna3Genibus; 	//This is mapped to PB_DPV0 Module 43 "DirectDataReply"
+	Request 					:  POINTER TO ST_PumpGrundfosMagna3Genibus; 	//This is mapped to PB_DPV0 Module 42 "DirectDataRequest"
 END_VAR
 VAR_OUTPUT
-	preciseInternalTemperature 	:	REAL;	(*Here the resulting precise Value will be stored *)
+	preciseInternalTemperature 	:	REAL; //Here the resulting precise Value will be stored
 END_VAR
 VAR
 	bInitialize					: BOOL := FALSE;
-
-	last_request: TIME;
+	last_request				: TIME;
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -15,7 +15,7 @@ VAR
 	//I/O Links
 	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
 	bStatusOn_IN		AT %I* : BOOL := FALSE; //True if valve is 100 % open
-	bStatusOff_IN		AT %I* : BOOL := FALSE; //True if valve is 0% open (= closed)
+	bStatusOff_IN		AT %I* : BOOL := FALSE; //True if valve is 100 % closed
 	(* NOTE: 
 	If valve provides only one feedback signal, bStatusOn_IN must be linked to the terminal. 
 	If valve provides feedback signals for reaching open/closed position, bStatusOff_IN must be also linked to the terminal.

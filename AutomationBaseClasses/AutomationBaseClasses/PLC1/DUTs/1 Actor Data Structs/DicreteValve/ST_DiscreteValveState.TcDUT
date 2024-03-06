@@ -3,7 +3,7 @@
   <DUT Name="ST_DiscreteValveState" Id="{05129783-53bd-4c22-88f0-65135c0932e7}">
     <Declaration><![CDATA[TYPE ST_DiscreteValveState :
 STRUCT
-	nPosition : E_DiscreteValvePosition;
+	nPosition : E_DiscreteValvePosition; //valve feedback mode as integer
 END_STRUCT
 END_TYPE
 ]]></Declaration>

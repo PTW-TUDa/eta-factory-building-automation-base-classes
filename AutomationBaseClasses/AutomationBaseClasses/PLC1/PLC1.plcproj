@@ -18,7 +18,10 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>3.3</ProjectVersion>
+    <ProjectVersion>1.0</ProjectVersion>
+    <Author>Fabian Borst, Lukas Theisinger, Michael Frank, Tobias Lademann</Author>
+    <Description>
+    </Description>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\0 Base Data Structs\E_SystemControlState.TcDUT">
@@ -105,13 +108,13 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_TemperatureSensorDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\4 Utility Data Structs\ST_RangeCheckDefaultParameters.TcDUT">
+    <Compile Include="DUTs\3 Utility Data Structs\ST_RangeCheckDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\4 Utility Data Structs\ST_ClockDefaultParameters.TcDUT">
+    <Compile Include="DUTs\3 Utility Data Structs\ST_ClockDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\4 Utility Data Structs\ST_ClockState.TcDUT">
+    <Compile Include="DUTs\3 Utility Data Structs\ST_ClockState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_ElectricityMeter.TcPOU">
@@ -138,19 +141,19 @@
     <Compile Include="POUs\2 Sensors\FB_VirtualHeatCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\0 Base\FB_RangeCheck.TcPOU">
+    <Compile Include="POUs\3 Utilities\0 Base\FB_RangeCheck.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\0 Base\FB_Clock.TcPOU">
+    <Compile Include="POUs\3 Utilities\0 Base\FB_Clock.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\2 Profibus\ConvertBitToByte.TcPOU">
+    <Compile Include="POUs\3 Utilities\2 Profibus\ConvertBitToByte.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\2 Profibus\ConvertByteToBit.TcPOU">
+    <Compile Include="POUs\3 Utilities\2 Profibus\ConvertByteToBit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\2 Profibus\FB_Genibus.TcPOU">
+    <Compile Include="POUs\3 Utilities\2 Profibus\FB_Genibus.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\0 Base Classes\FB_Actuator2Point.TcPOU">
@@ -180,22 +183,22 @@
     <Compile Include="POUs\2 Sensors\FB_TemperatureSensor.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\0 Base\Limiter.TcPOU">
+    <Compile Include="POUs\3 Utilities\0 Base\Limiter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\2 Profibus\BufferIntToReal.TcPOU">
+    <Compile Include="POUs\3 Utilities\2 Profibus\BufferIntToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\2 Profibus\BufferRealToReal.TcPOU">
+    <Compile Include="POUs\3 Utilities\2 Profibus\BufferRealToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\2 Profibus\BufferUdintToReal.TcPOU">
+    <Compile Include="POUs\3 Utilities\2 Profibus\BufferUdintToReal.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogInput.TcPOU">
+    <Compile Include="POUs\3 Utilities\1 AI_AO\FB_AnalogInput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\4 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
+    <Compile Include="POUs\3 Utilities\1 AI_AO\FB_AnalogOutput.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -207,17 +210,15 @@
     <Folder Include="DUTs\1 Actor Data Structs\DicreteValve" />
     <Folder Include="DUTs\1 Actor Data Structs\Pumps" />
     <Folder Include="DUTs\2 Sensor Data Structs" />
-    <Folder Include="DUTs\3 System Data Structs" />
-    <Folder Include="DUTs\4 Utility Data Structs" />
+    <Folder Include="DUTs\3 Utility Data Structs" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\0 Base Classes" />
     <Folder Include="POUs\1 Actors" />
-    <Folder Include="POUs\4 Utilities\0 Base" />
+    <Folder Include="POUs\3 Utilities\0 Base" />
     <Folder Include="POUs\2 Sensors" />
-    <Folder Include="POUs\4 Utilities" />
-    <Folder Include="POUs\3 Systems" />
-    <Folder Include="POUs\4 Utilities\2 Profibus" />
-    <Folder Include="POUs\4 Utilities\1 AI_AO" />
+    <Folder Include="POUs\3 Utilities" />
+    <Folder Include="POUs\3 Utilities\2 Profibus" />
+    <Folder Include="POUs\3 Utilities\1 AI_AO" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>

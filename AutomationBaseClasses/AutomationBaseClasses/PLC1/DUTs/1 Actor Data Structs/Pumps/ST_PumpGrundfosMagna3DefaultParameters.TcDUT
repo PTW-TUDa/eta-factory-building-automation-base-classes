@@ -3,8 +3,8 @@
   <DUT Name="ST_PumpGrundfosMagna3DefaultParameters" Id="{c79135d6-6136-4193-87e6-f0a4d4d2cc36}">
     <Declaration><![CDATA[TYPE ST_PumpGrundfosMagna3DefaultParameters :
 STRUCT
-	bExternalTemperatureSensor 	: BOOL := TRUE;
-	bPumpBeforeApplication : BOOL := TRUE;
+	bExternalTemperatureSensor 	: BOOL := TRUE; //pump measures beside the internal temperature als and external temperature
+	bPumpBeforeApplication : BOOL := TRUE; //pump position before application
 	fControllerAmplification : LREAL := 0.265;
 	tControllerIntegralTime : TIME := T#15S;
 	tTaskCycleTime	: TIME;

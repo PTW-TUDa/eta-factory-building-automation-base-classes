@@ -9,15 +9,24 @@ STRUCT
 	bWarning : BOOL; //true if pump shows a warning
 	sErrorMessage : STRING; //error code
 	sWarningMessage : STRING; //warning code
-	fVolumeFlowRate : REAL; //m^3/h volume flow rate from pump or external sensor
-	fTemperatureInternal : REAL; //°C
-	fTemperatureExternal : REAL; //°C
-	fTemperatureDifference : REAL; //°C
-	fPressureDifference : REAL; //pa = 10^-5 bar
-	fPowerElectric : REAL; //W
-	fPowerHydraulic : REAL; //W
-	fPowerThermal : REAL; //W
-	fRotationalSpeed : REAL; //rpm
+	fVolumeFlowRate : REAL;
+	sVolumeFlowRateUnit : STRING := 'm3/h';
+	fTemperatureInternal : REAL; 
+	sTemperatureInternalUnit : STRING := 'degreeC';
+	fTemperatureExternal : REAL;
+	sTemperatureExternalUnit : STRING := 'degreeC';
+	fTemperatureDifference : REAL;
+	sTemperatureDifferenceUnit: STRING := 'K';
+	fPressureDifference : REAL;
+	sPressureDifferenceUnit : STRING := 'Pa';
+	fPowerElectric : REAL;
+	sPowerElectricUnit : STRING := 'W';
+	fPowerHydraulic : REAL;
+	sPowerHydraulicUnit : STRING := 'W';
+	fPowerThermal : REAL;
+	sPowerThermalUnit : STRING := 'W';
+	fRotationalSpeed : REAL;
+	sRotationalSpeedUnit : STRING := 'rpm';
 END_STRUCT
 END_TYPE
 ]]></Declaration>

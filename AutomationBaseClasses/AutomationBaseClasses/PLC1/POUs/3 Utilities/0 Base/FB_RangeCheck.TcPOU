@@ -14,25 +14,24 @@ VAR
 	localDefaultParameters : ST_RangeCheckDefaultParameters;	
 
 	Controller_UpperLimit : FB_CTRL_2POINT;
-	Controller_UpperLimit_Parameters : ST_CTRL_2POINT_PARAMS;	
 	Controller_LowerLimit : FB_CTRL_2POINT;
-	Controller_LowerLimit_Parameters : ST_CTRL_2POINT_PARAMS;	
+	Controller_Parameters : ST_CTRL_2POINT_PARAMS;	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Controller_UpperLimit_Parameters.fHysteresisRange := localDefaultParameters.fRestoreDifference;
-Controller_UpperLimit_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
-Controller_UpperLimit_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
+      <ST><![CDATA[Controller_Parameters.fHysteresisRange := localDefaultParameters.fRestoreDifference;
+Controller_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
+Controller_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
 
 Controller_UpperLimit(fSetpointValue := fUpperLimit - localDefaultParameters.fRestoreDifference/2,
 	fActualValue := fInput,
 	eMode := eCTRL_MODE_ACTIVE,
-	stParams := Controller_UpperLimit_Parameters);
+	stParams := Controller_Parameters);
 	
 Controller_LowerLimit(fSetpointValue := fInput,
 	fActualValue := fLowerLimit + localDefaultParameters.fRestoreDifference/2,
 	eMode := eCTRL_MODE_ACTIVE,
-	stParams := Controller_UpperLimit_Parameters);
+	stParams := Controller_Parameters);
 	
 bPermission := Controller_UpperLimit.bOut AND Controller_LowerLimit.bOut;]]></ST>
     </Implementation>
@@ -54,7 +53,7 @@ END_VAR
       <LineId Id="31" Count="0" />
       <LineId Id="36" Count="2" />
       <LineId Id="35" Count="0" />
-      <LineId Id="32" Count="0" />
+      <LineId Id="56" Count="0" />
       <LineId Id="22" Count="0" />
     </LineIds>
     <LineIds Name="FB_RangeCheck.ST_DefaultParameters.Set">

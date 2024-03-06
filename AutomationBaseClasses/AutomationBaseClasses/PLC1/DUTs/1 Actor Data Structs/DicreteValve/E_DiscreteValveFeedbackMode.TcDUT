@@ -5,10 +5,10 @@
 {attribute 'strict'}
 TYPE E_DiscreteValveFeedbackMode :
 (
-	noFeedback := 0,
-	openedFeedback := 1,
-	closedFeedback := 2,
-	dualFeedback := 3
+	noFeedback := 0, //no feedback signal about valve position available
+	openedFeedback := 1, //feedback signal if valve is open
+	closedFeedback := 2, //feedback signal if valve is closed
+	dualFeedback := 3 //feedback signal if valve is open/closed
 );
 END_TYPE
 ]]></Declaration>

@@ -26,7 +26,6 @@ END_VAR
       <Declaration><![CDATA[METHOD PROTECTED SelectControlMode : BOOL
 VAR_INPUT
 END_VAR
-
 VAR
 END_VAR]]></Declaration>
       <Implementation>

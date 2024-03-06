@@ -4,12 +4,12 @@
     <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
 TYPE ST_GasMeterState :
 STRUCT
-	fVolume						: REAL;
-	sVolumeUnit					: STRING := 'm3';
+	fVolume					: REAL;
+	sVolumeUnit				: STRING := 'm3';
 	fTemperature			: REAL;
 	sTemperatureUnit		: STRING := 'degreeC';
-	fVolumeFlowRate				: REAL;
-	sVolumeFlowRateUnit			: STRING := 'm3/h';
+	fVolumeFlowRate			: REAL;
+	sVolumeFlowRateUnit		: STRING := 'm3/h';
 END_STRUCT
 END_TYPE
 ]]></Declaration>
