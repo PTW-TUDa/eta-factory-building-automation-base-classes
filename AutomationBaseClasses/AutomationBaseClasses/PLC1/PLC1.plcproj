@@ -99,6 +99,9 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterDefaultParameters_Storage.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -139,6 +142,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_VirtualHeatCounter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_VirtualHeatCounter_Storage.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\3 Utilities\0 Base\FB_RangeCheck.TcPOU">

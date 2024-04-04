@@ -48,6 +48,7 @@ Interpolator(
 	eMode := 2,
 	stParams := Interpolator_Parameters);
 fVolumeFlowRate := LREAL_TO_REAL(Interpolator.fOut);
+sensorState.fVolumeFlowRate := fVolumeFlowRate;
 sensorState.fHeatFlowRate := fVolumeFlowRate/3.6*4.19*sensorState.fTemperatureDifference;
 fHeatFlowRate := sensorState.fHeatFlowRate;
 
@@ -71,7 +72,7 @@ Integrator_HeatEnergy_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlC
 Integrator_HeatEnergy_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
 
 Integrator_HeatEnergy(
-	fIn := fHeatFlowRate/(1000*3600),
+	fIn := REAL_TO_LREAL(fHeatFlowRate)/(1000*3600),
 	fManSyncValue := 0,
 	bSync := FALSE,
 	eMode := 2,
@@ -102,6 +103,7 @@ END_VAR
       <LineId Id="35" Count="0" />
       <LineId Id="51" Count="2" />
       <LineId Id="55" Count="2" />
+      <LineId Id="137" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="82" Count="0" />
