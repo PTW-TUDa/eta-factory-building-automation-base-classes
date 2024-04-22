@@ -31,8 +31,8 @@ END_VAR
 sensorState.fReturnTemperature := fReturnTemperature;
 sensorState.fTemperatureDifference := fFeedTemperature-fReturnTemperature;
 
-Differentiator_Parameters.tTv := T#5S;
-Differentiator_Parameters.tTd := T#5S;
+Differentiator_Parameters.tTv := localDefaultParameters.tTv;
+Differentiator_Parameters.tTd := localDefaultParameters.tTd;
 Differentiator_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
 Differentiator_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
 Differentiator(fIn:=fStorageTemperature,

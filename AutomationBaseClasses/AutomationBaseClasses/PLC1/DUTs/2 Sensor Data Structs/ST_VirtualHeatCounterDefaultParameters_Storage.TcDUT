@@ -6,6 +6,8 @@ STRUCT
 	tTaskCycleTime	: TIME;
 	tCtrlCycleTime	: TIME;
 	fHeatCapacity : REAL := 4180; //kJ/K
+	tTv : TIME := T#60S;
+	tTd : TIME := T#120S;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
