@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="FB_GasMeter" Id="{b014a8bd-18cc-4742-b2b0-71f117cee5c8}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_GasMeter
+  <POU Name="FB_GasMeter_Aerius_G4" Id="{b014a8bd-18cc-4742-b2b0-71f117cee5c8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_GasMeter_Aerius_G4
 VAR_INPUT
 	aGasmeterTelegramm	: ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
 END_VAR
@@ -23,7 +23,7 @@ sensorState.fVolume := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[1].sValue);
 fVolumeFlowRate := sensorState.fVolume;
 fTemperature := sensorState.fTemperature;]]></ST>
     </Implementation>
-    <LineIds Name="FB_GasMeter">
+    <LineIds Name="FB_GasMeter_Aerius_G4">
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="1" />
       <LineId Id="19" Count="0" />

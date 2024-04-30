@@ -87,9 +87,6 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_ElectricityMeterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -97,12 +94,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterDefaultParameters.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterDefaultParameters_Storage.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\2 Sensor Data Structs\ST_VirtualHeatCounterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_StarkMultical302HeatCounterState.TcDUT">
@@ -120,10 +111,16 @@
     <Compile Include="DUTs\3 Utility Data Structs\ST_ClockState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\2 Sensors\FB_ElectricityMeter.TcPOU">
+    <Compile Include="POUs\2 Sensors\FB_ElectricityMeter_ABBA44113100.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\2 Sensors\FB_GasMeter.TcPOU">
+    <Compile Include="POUs\2 Sensors\FB_ElectricityMeter_BergDCMI461WP.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_ElectricityMeter_ABBA44213100.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_GasMeter_Aerius_G4.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_MollineEHeatCounter.TcPOU">
@@ -139,12 +136,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_TemperatureSensor_KL3214.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\2 Sensors\FB_VirtualHeatCounter.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\2 Sensors\FB_VirtualHeatCounter_Storage.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\3 Utilities\0 Base\FB_RangeCheck.TcPOU">

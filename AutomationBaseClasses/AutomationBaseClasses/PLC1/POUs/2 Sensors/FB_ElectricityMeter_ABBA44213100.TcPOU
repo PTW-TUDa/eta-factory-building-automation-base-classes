@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <POU Name="FB_ElectricityMeter" Id="{14f8a120-a526-4f46-883e-e3576a0e0d1b}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectricityMeter
+  <POU Name="FB_ElectricityMeter_ABBA44213100" Id="{3bc99379-6ea9-4c9b-ae55-3dca7b5d822b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectricityMeter_ABBA44213100
 VAR_INPUT
 	aElectricityMeterTelegramm	: ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
 END_VAR
@@ -16,14 +16,14 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[sensorState.fWork := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[1].sValue);
-sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[2].sValue);
+sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[2].arrData[2].sValue);
 
 //set outputs
 fWork := sensorState.fWork;
 fPower := sensorState.fPower;
 ]]></ST>
     </Implementation>
-    <LineIds Name="FB_ElectricityMeter">
+    <LineIds Name="FB_ElectricityMeter_ABBA44213100">
       <LineId Id="9" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="25" Count="0" />
