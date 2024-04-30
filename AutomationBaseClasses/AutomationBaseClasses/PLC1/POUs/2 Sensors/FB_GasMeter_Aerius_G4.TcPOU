@@ -18,6 +18,7 @@ END_VAR
       <ST><![CDATA[sensorState.fTemperature := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[3].sValue);
 sensorState.fVolumeFlowRate := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[2].sValue);
 sensorState.fVolume := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[1].sValue);
+sensorState.fPower := sensorState.fVolumeFlowRate*11.2; //11.2 kWh/m3 energy
 
 //set outputs
 fVolumeFlowRate := sensorState.fVolume;
@@ -26,6 +27,7 @@ fTemperature := sensorState.fTemperature;]]></ST>
     <LineIds Name="FB_GasMeter_Aerius_G4">
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="1" />
+      <LineId Id="34" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="20" Count="1" />

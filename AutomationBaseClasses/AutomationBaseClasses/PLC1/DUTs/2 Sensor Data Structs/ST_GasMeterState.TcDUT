@@ -10,6 +10,8 @@ STRUCT
 	sTemperatureUnit		: STRING := 'degreeC';
 	fVolumeFlowRate			: REAL;
 	sVolumeFlowRateUnit		: STRING := 'm3/h';
+	fPower 					: REAL;
+	sPowerUnit				: STRING := 'kW';
 END_STRUCT
 END_TYPE
 ]]></Declaration>

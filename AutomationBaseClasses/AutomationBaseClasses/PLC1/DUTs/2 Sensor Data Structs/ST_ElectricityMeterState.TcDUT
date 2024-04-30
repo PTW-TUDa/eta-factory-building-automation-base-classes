@@ -5,9 +5,9 @@
 TYPE ST_ElectricityMeterState :
 STRUCT
 	fPower			: REAL;
-	sPowerUnit		: STRING := 'W';
+	sPowerUnit		: STRING := 'kW';
 	fWork			: REAL;
-	sWorkUnit		: STRING := 'Wh';
+	sWorkUnit		: STRING := 'kWh';
 END_STRUCT
 END_TYPE
 ]]></Declaration>

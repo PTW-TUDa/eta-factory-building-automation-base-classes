@@ -15,8 +15,8 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[sensorState.fWork := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[1].sValue);
-sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[2].sValue);
+      <ST><![CDATA[sensorState.fWork := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[1].sValue)/1000;
+sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[2].sValue)/1000;
 
 //set outputs
 fWork := sensorState.fWork;
