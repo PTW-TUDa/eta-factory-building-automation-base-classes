@@ -18,7 +18,6 @@ END_VAR
       <ST><![CDATA[sensorState.fWork := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[1].sValue)/1000;
 sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[2].arrData[1].sValue)/1000;
 
-//set outputs
 fWork := sensorState.fWork;
 fPower := sensorState.fPower;
 ]]></ST>
@@ -26,7 +25,6 @@ fPower := sensorState.fPower;
     <LineIds Name="FB_ElectricityMeter_ABBA44113100">
       <LineId Id="9" Count="0" />
       <LineId Id="21" Count="0" />
-      <LineId Id="25" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="24" Count="0" />
