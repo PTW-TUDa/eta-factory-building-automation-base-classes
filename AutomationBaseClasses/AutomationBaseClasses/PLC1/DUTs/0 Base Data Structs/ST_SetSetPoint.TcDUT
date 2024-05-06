@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ST_SetSetPoint" Id="{bc9d9154-e319-49de-a744-1380eb17eb3f}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_SetSetPoint :
+STRUCT
+	fSetPointAlgorithm		 : REAL; //set setpoint in percent 0.0 - 100.0
+	fSetPointManual			 : REAL; //set setpoint in percent 0.0 - 100.0
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

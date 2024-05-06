@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_RangeCheck" Id="{5127d44f-afb9-40d0-9273-2d156d799d4a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RangeCheck
+VAR_INPUT
+	fInput : REAL;
+	fLowerLimit : REAL; //lower limit of permission range
+	fUpperLimit : REAL; //upper limit of permission range
+END_VAR
+VAR_OUTPUT
+	bPermission : BOOL := TRUE;
+END_VAR
+VAR
+	localDefaultParameters : ST_RangeCheckDefaultParameters;	
+
+	Controller_UpperLimit : FB_CTRL_2POINT;
+	Controller_LowerLimit : FB_CTRL_2POINT;
+	Controller_Parameters : ST_CTRL_2POINT_PARAMS;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Controller_Parameters.fHysteresisRange := localDefaultParameters.fRestoreDifference;
+Controller_Parameters.tCtrlCycleTime := localDefaultParameters.tCtrlCycleTime;
+Controller_Parameters.tTaskCycleTime := localDefaultParameters.tTaskCycleTime;
+
+Controller_UpperLimit(fSetpointValue := fUpperLimit - localDefaultParameters.fRestoreDifference/2,
+	fActualValue := fInput,
+	eMode := eCTRL_MODE_ACTIVE,
+	stParams := Controller_Parameters);
+	
+Controller_LowerLimit(fSetpointValue := fInput,
+	fActualValue := fLowerLimit + localDefaultParameters.fRestoreDifference/2,
+	eMode := eCTRL_MODE_ACTIVE,
+	stParams := Controller_Parameters);
+	
+bPermission := Controller_UpperLimit.bOut AND Controller_LowerLimit.bOut;]]></ST>
+    </Implementation>
+    <Property Name="ST_DefaultParameters" Id="{695e30b8-56ba-4995-b79f-93866d291d34}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_RangeCheckDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{04e11d7e-906e-4eac-b62a-a4a5c497dab3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_RangeCheck">
+      <LineId Id="20" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="24" Count="4" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_RangeCheck.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

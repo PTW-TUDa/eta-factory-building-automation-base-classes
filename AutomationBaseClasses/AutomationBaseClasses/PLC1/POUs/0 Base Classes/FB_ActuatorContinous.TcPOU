@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ActuatorContinous" Id="{c8bff7e9-c02c-4471-8259-14c86f2cd564}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_ActuatorContinous EXTENDS FB_Actuator2Point
+VAR_INPUT
+	fSetPointAutomatic	: REAL; //setpoint in automatic mode
+END_VAR
+VAR_OUTPUT
+	fOperatingPoint : REAL; //operating point
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	setSetPoint : ST_SetSetPoint;
+	{attribute 'OPC.UA.DA' := '1'}
+	setPointState : ST_SetPointState;
+	
+	//internal variables
+	fSetPoint	    : REAL; //actual set setpoint
+	aSetPointLimits	: ARRAY[1..2] OF REAL; //control mode depending setpoint limits that are set by abstract method SetSetPointLimits() in child class 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="MAIN" Id="{10fd2c38-d0f2-4506-83f5-f9de93d73f1f}">
+      <Declaration><![CDATA[METHOD MAIN : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SelectControlMode();
+SelectSetPoint();
+SetSetPointLimits();
+SetPointCheck();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SelectSetPoint" Id="{9487b088-9bc5-4a7e-8bf7-9767eafe3f05}">
+      <Declaration><![CDATA[METHOD PROTECTED SelectSetPoint : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF control.bManualModeActivated THEN
+	fsetPoint := setSetPoint.fSetPointManual;
+ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
+	fsetPoint := setSetPoint.fSetPointAlgorithm;
+ELSE
+	fsetPoint := fSetPointAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetPointCheck" Id="{a788f595-bc97-42ed-a5e1-110d1f06de83}">
+      <Declaration><![CDATA[METHOD PRIVATE SetPointCheck : BOOL
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fSetPoint := MAX(fSetPoint, aSetPointLimits[1]);
+fSetPoint := MIN(fSetPoint, aSetPointLimits[2]);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSetPointLimits" Id="{156a380a-be13-4137-b0ba-36981904d328}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT SetSetPointLimits : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//set control mode depending setpoint limits -> aSetPointLimits]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ActuatorContinous">
+      <LineId Id="91" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActuatorContinous.MAIN">
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActuatorContinous.SelectSetPoint">
+      <LineId Id="5" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActuatorContinous.SetPointCheck">
+      <LineId Id="24" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ActuatorContinous.SetSetPointLimits">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

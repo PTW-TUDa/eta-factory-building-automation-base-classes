@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_MollineC3HeatCounter" Id="{68b26994-e772-43d9-bb19-4685b29f39a6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MollineC3HeatCounter
+VAR_INPUT
+	aHeatCounterTelegramm : ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
+END_VAR
+VAR_OUTPUT
+	fFeedTemperature : REAL; //°C
+	fReturnTemperature : REAL; //°C
+	fVolumeFlowRate : REAL; //m3/h
+	fHeatFlowRate : REAL; //kW
+END_VAR
+VAR
+	//default parameters
+	localDefaultParameters : ST_MollineC3HeatCounterDefaultParameters;	
+
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_MollineC3HeatCounterState;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//set sensor state
+sensorState.fVolume := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[3].sValue);
+sensorState.fFeedTemperature := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[8].sValue);
+sensorState.fReturnTemperature := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[9].sValue);
+sensorState.fVolumeFlowRate := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[6].sValue);
+sensorState.fHeatEnergy := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[2].sValue)/1000000;
+sensorState.fTemperatureDifference := STRING_TO_REAL(aHeatCounterTelegramm[1].arrData[10].sValue);
+
+//calculate fHeatFlowRate because heat meter does not measure negative flows
+sensorState.fHeatFlowRate := sensorState.fVolumeFlowRate/3.6*localDefaultParameters.fSpecificHeatCapacity*sensorState.fTemperatureDifference;
+
+//set outputs
+fFeedTemperature := sensorState.fFeedTemperature;
+fReturnTemperature := sensorState.fReturnTemperature;
+fVolumeFlowRate := sensorState.fVolumeFlowRate;
+fHeatFlowRate := sensorState.fHeatFlowRate;
+]]></ST>
+    </Implementation>
+    <Property Name="ST_DefaultParameters" Id="{d8f7825d-bbe1-4dcf-8b9c-8355bd657fe7}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_MollineC3HeatCounterDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{609ae40b-61ad-4e3d-802d-dcfc285d5e4b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_MollineC3HeatCounter">
+      <LineId Id="9" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="88" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="29" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_MollineC3HeatCounter.ST_DefaultParameters.Set">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

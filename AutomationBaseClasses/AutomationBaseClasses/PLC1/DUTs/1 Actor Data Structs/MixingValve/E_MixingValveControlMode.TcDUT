@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="E_MixingValveControlMode" Id="{463072c4-69fe-4cca-86b0-8e2f9e26a76b}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_MixingValveControlMode :
+(
+	position := 0, //control position
+	heating := 1, //control temperature for heating application
+	cooling := 2, //control temperature for cooling application
+	thermalPower := 3 //control thermal power
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

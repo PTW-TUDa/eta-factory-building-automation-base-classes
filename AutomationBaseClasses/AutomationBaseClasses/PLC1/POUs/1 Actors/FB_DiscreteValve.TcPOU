@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_DiscreteValve" Id="{7c2d056e-b7a5-47e0-8780-c9ad927c4f52}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DiscreteValve EXTENDS FB_Actuator2Point
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	{attribute 'OPC.UA.DA' := '1'}
+	localState : ST_DiscreteValveState;
+END_VAR
+VAR
+	//default parameters
+	localDefaultParameters : ST_DiscreteValveDefaultParameters;	
+
+	//I/O Links
+	bSetStatusOn_OUT 	AT %Q* : BOOL := FALSE;
+	bStatusOn_IN		AT %I* : BOOL := FALSE; //True if valve is 100 % open
+	bStatusOff_IN		AT %I* : BOOL := FALSE; //True if valve is 100 % closed
+	(* NOTE: 
+	If valve provides only one feedback signal, bStatusOn_IN must be linked to the terminal. 
+	If valve provides feedback signals for reaching open/closed position, bStatusOff_IN must be also linked to the terminal.
+	If there is no feedback signal, no input signal must be linked.
+	The correct mode must be declared using localDefaultParameters.nFeedback
+	*)
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SelectControlMode();]]></ST>
+    </Implementation>
+    <Method Name="GetState_BI" Id="{bc60f860-fab5-496d-944c-87e5071b9286}">
+      <Declaration><![CDATA[METHOD GetState_BI : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE localDefaultParameters.nFeedback OF
+	1: //feedback - valve opened
+	controlState.bStatusOn := bStatusOn_IN;
+	IF bStatusOn_IN THEN
+		localState.nPosition := 3;
+	ELSE
+		localState.nPosition := 0;
+	END_IF 
+	
+	2: //feedback - valve closed
+	controlState.bStatusOn := NOT bStatusOff_IN;
+	IF bStatusOff_IN THEN
+		localState.nPosition := 2;
+	ELSE
+		localState.nPosition := 0;
+	END_IF 
+
+	3: //feedback - both states
+	controlState.bStatusOn := bStatusOn_IN;
+	IF bStatusOff_IN THEN
+		localState.nPosition := 2;
+	ELSIF bStatusOn_IN THEN
+		localState.nPosition := 3;
+	ELSE
+		localState.nPosition := 1;
+	END_IF
+ELSE
+	localState.nPosition := 0; //no valid information
+	controlState.bStatusOn := 0; //no valid information
+END_CASE
+bStatusOn := controlState.bStatusOn;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState_BO" Id="{0e571675-b07a-4d0e-a5bb-9e330e7c5235}">
+      <Declaration><![CDATA[METHOD SetState_BO : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bSetStatusOn_OUT := bSetStatusOn;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState_Inverted_BO" Id="{f23f4a83-0327-4a91-abab-afc75fe16e7e}">
+      <Declaration><![CDATA[METHOD SetState_Inverted_BO : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bSetStatusOn_OUT := NOT bSetStatusOn;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ST_DefaultParameters" Id="{8d33a13c-5650-4ddc-aac7-e5707e8c1b8d}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_DiscreteValveDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{33d3ed96-b96e-4f0c-89d2-38cef331df44}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_DiscreteValve">
+      <LineId Id="40" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.GetState_BI">
+      <LineId Id="13" Count="27" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="45" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.SetState_BO">
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.SetState_Inverted_BO">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_DiscreteValve.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

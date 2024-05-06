@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="Limiter" Id="{c83406b6-8449-4b56-9fd0-e0580ed56c07}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION Limiter : BOOL
+VAR_INPUT
+	fInput : REAL;
+	fUpperLimit : REAL;
+	fLowerLimit : REAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF fInput <= fUpperLimit AND fInput >= fLowerLimit THEN
+	Limiter := TRUE;
+ELSE
+	Limiter := FALSE;		
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="Limiter">
+      <LineId Id="7" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="31" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

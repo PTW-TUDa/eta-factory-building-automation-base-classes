@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_PumpGrundfosMagna3DefaultParameters" Id="{c79135d6-6136-4193-87e6-f0a4d4d2cc36}">
+    <Declaration><![CDATA[TYPE ST_PumpGrundfosMagna3DefaultParameters :
+STRUCT
+	bExternalTemperatureSensor 	: BOOL := TRUE; //pump measures beside the internal temperature als and external temperature
+	bPumpBeforeApplication : BOOL := TRUE; //pump position before application
+	fControllerAmplification : LREAL := 0.265;
+	tControllerIntegralTime : TIME := T#15S;
+	tTaskCycleTime	: TIME;
+	tCtrlCycleTime	: TIME;	
+	aSetPointLimits_constantSpeed : ARRAY[1..2] OF REAL := [0,100]; //degreeC
+	aSetPointLimits_Temperature	: ARRAY[1..2] OF REAL := [0,100]; //degreeC
+	aSetPointLimits_Pressure : ARRAY[1..2] OF REAL := [0,3]; //bar
+	aSetPointLimitsThermalPower : ARRAY[1..2] OF REAL := [-100,100]; //setpoint limits for heating and cooling power in kW
+	fMaximumVolumeFlowRate : REAL := 1.925; //default parameters for Magna3 25-40
+	fNominalVolumeFlowRate : REAL := 0.000635; //default parameters for Magna3 25-40
+	fMaximumPressureDifference : REAL := 40000; //default parameters for Magna3 25-40
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_Clock" Id="{1d62a444-4039-4e77-9ff5-69450492ca29}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Clock
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	stClockState : ST_ClockState;
+END_VAR
+VAR
+	localDefaultParameters : ST_ClockDefaultParameters;
+
+	Clock				: FB_CTRL_GET_SYSTEM_TIME;
+	Clock_Parameters	: ST_CTRL_GET_SYSTEM_TIME_PARAMS;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Clock_Parameters.tTaskCycleTime	:= localDefaultParameters.tTaskCycleTime;
+Clock_Parameters.tCtrlCycleTime	:= localDefaultParameters.tCtrlCycleTime;
+
+Clock(stParams := Clock_Parameters);
+
+stClockState.sintMonth		:= WORD_TO_SINT(Clock.stSystemTime.wMonth);
+stClockState.sintDay		:= WORD_TO_SINT(Clock.stSystemTime.wDay);
+stClockState.sintWeekday	:= WORD_TO_SINT(Clock.stSystemTime.wDayOfWeek);
+stClockState.fHour			:= WORD_TO_REAL(Clock.stSystemTime.wHour) + WORD_TO_REAL(Clock.stSystemTime.wMinute) / 60;]]></ST>
+    </Implementation>
+    <Property Name="ST_DefaultParameters" Id="{3125722e-d104-4e79-86e3-55616952d129}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_ClockDefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{15f3f6cc-0016-4f73-b31a-81905affc5bf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_Clock">
+      <LineId Id="12" Count="7" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Clock.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

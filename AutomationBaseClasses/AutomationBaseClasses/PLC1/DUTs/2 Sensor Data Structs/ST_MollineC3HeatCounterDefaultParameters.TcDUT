@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_MollineC3HeatCounterDefaultParameters" Id="{96745cf3-6826-444d-9b54-678ec2fd60ae}">
+    <Declaration><![CDATA[TYPE ST_MollineC3HeatCounterDefaultParameters:
+STRUCT
+	fSpecificHeatCapacity : REAL := 4.19;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

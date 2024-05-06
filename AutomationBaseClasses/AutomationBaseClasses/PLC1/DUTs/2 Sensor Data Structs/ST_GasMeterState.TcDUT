@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_GasMeterState" Id="{8f2a4e18-73c7-4d66-a877-3aadfaffa2e2}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_GasMeterState :
+STRUCT
+	fVolume					: REAL;
+	sVolumeUnit				: STRING := 'm3';
+	fTemperature			: REAL;
+	sTemperatureUnit		: STRING := 'degreeC';
+	fVolumeFlowRate			: REAL;
+	sVolumeFlowRateUnit		: STRING := 'm3/h';
+	fPower 					: REAL;
+	sPowerUnit				: STRING := 'kW';
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

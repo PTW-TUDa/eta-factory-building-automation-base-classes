@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_PumpGrundfosMagna3" Id="{5ff4732a-f57a-4b28-83eb-fee6b9ba074e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PumpGrundfosMagna3 EXTENDS FB_ActuatorContinous
+VAR_INPUT
+	nControlModeAutomatic : E_GrundfosMagna3ControlMode;
+	fExternalValue : REAL; //external value for control, e. g. temperature, temperature difference volume flow rate
+	fThermalPowerExternal : REAL; //external heat power in kW
+END_VAR
+VAR_OUTPUT
+	bError : BOOL; //true if pump is in error
+	fTemperatureInternal : REAL; //internal temperature (e.g. for temperature controlling valves)
+	fTemperatureExternal : REAL; //external temperature (e.g. for temperature controlling valves)
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	localSetParameters : ST_PumpGrundfosMagna3SetParameters;
+	{attribute 'OPC.UA.DA' := '1'}
+	localState : ST_PumpGrundfosMagna3State;
+	
+	//default parameters
+	localDefaultParameters : ST_PumpGrundfosMagna3DefaultParameters;
+	
+	//I/O links
+	StatusModule_IN						AT %I* : ARRAY [0..5] OF BYTE;
+	nAlarmCode_IN						AT %I* : USINT;
+	nWarningCode_IN						AT %I* : USINT;
+	fVolumeFlowRate_IN 					AT %I* : UDINT; //m^3/h volume flow rate from pump
+	fPressureDifference_IN	 			AT %I* : UDINT; //pa = 10^-5 bar
+	fPowerElectric_IN					AT %I* : UDINT; //W
+	fActualSetpoint_IN					AT %I* : UDINT; //%
+	fRotationalSpeed_IN	 				AT %I* : UDINT; //rpm
+	fTemperatureExternal_IN 			AT %I* : UDINT; //°C external temperature from sensor connected to pump
+	fTemperatureDifference_IN			AT %I* : UDINT; //°C
+	fPowerThermal_IN	 				AT %I* : UDINT; //W
+	ControlModule_OUT 					AT %Q* : ARRAY [0..4] OF BYTE;
+	
+	//Genibus
+	Genibus : FB_Genibus;
+	stTemperatureInternal_Genibus_Reply 	AT %I* : ST_PumpGrundfosMagna3Genibus;
+	stTemperatureInternal_Genibus_Request	AT %Q* : ST_PumpGrundfosMagna3Genibus;
+	
+	//controllers
+	PI_Controller				: FB_CTRL_PI; 
+	PI_Controller_Parameters 	: ST_CTRL_PI_PARAMS;
+	fSetpointValue 				: LREAL; //internal setpoint value (is switched depending on heating/cooling application)
+	fActualValue 				: LREAL; //internal setpoint value (is switched depending on heating/cooling application)
+	fAct 						: REAL; //actual measured value from internal pump sensor or external sensor
+		
+	//internal variables:
+	nControlMode 			: E_GrundfosMagna3ControlMode; //actual pump control mode
+	fSetPoint_controlled 	: REAL; //controlled setpoint
+	statusModule0Bits 		: ARRAY[0..7] OF BOOL;
+	tmp 					: STRING;
+	controlModule0Bits 		: ARRAY[0..7] OF BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MAIN();
+SelectLocalControlMode();
+CalculateHydraulicPower();
+LocalControl();
+Genibus(Reply := ADR(stTemperatureInternal_Genibus_Reply), Request := ADR(stTemperatureInternal_Genibus_Request));]]></ST>
+    </Implementation>
+    <Method Name="CalculateHydraulicPower" Id="{5ee59af5-7c08-4f03-8cfe-829337b66dfd}">
+      <Declaration><![CDATA[METHOD PRIVATE CalculateHydraulicPower : REAL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[localState.fPowerHydraulic := localState.fPressureDifference*localState.fVolumeFlowRate;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetState_Profibus" Id="{14b06936-b53d-4b61-8427-f5bf98ac63d6}">
+      <Declaration><![CDATA[METHOD GetState_Profibus : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[statusModule0Bits := ConvertByteToBit(dataByte:=StatusModule_IN[0]);
+
+//control state
+controlState.bStatusOn := statusModule0Bits[1];
+bStatusOn := controlState.bStatusOn;
+
+//setpoint state
+setPointState.fOperatingPoint := BufferUdintToReal(raw_input := fActualSetpoint_IN);
+fOperatingPoint := setPointState.fOperatingPoint;
+setPointState.sOperatingPointUnit := 'percent';
+
+//local state
+localState.bError := statusModule0Bits[2];
+localState.bWarning := statusModule0Bits[3];
+bError := localState.bError;
+localState.sErrorMessage := CONCAT('Alarm code: ',INT_TO_STRING(nAlarmCode_IN));
+localState.sWarningMessage := CONCAT('Warning code: ',INT_TO_STRING(nWarningCode_IN));
+localState.bRemoteControlOn := statusModule0Bits[0];
+localState.fVolumeFlowRate := BufferUdintToReal(raw_input := fVolumeFlowRate_IN);
+localState.fTemperatureInternal := BufferRealToReal(raw_input := Genibus.preciseInternalTemperature);
+fTemperatureInternal := localState.fTemperatureInternal;
+IF localDefaultParameters.bExternalTemperatureSensor THEN //Set external temperature and temperature difference if temperature sensor is connected
+	localState.fTemperatureExternal := BufferUdintToReal(raw_input := fTemperatureExternal_IN);
+	fTemperatureExternal := localState.fTemperatureExternal;
+	localState.fTemperatureDifference := localState.fTemperatureInternal-localState.fTemperatureExternal;
+END_IF;
+localState.fPressureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
+localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN);
+localState.fPowerThermal := BufferUdintToReal(raw_input := fPowerThermal_IN);
+localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_IN);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="LocalControl" Id="{812b0398-87f0-4a15-8dd7-9c34771d439d}">
+      <Declaration><![CDATA[METHOD PRIVATE LocalControl : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//set control parameters
+PI_Controller_Parameters.fKp 				:= localDefaultParameters.fControllerAmplification;
+PI_Controller_Parameters.tTn 				:= localDefaultParameters.tControllerIntegralTime;
+PI_Controller_Parameters.fOutMaxLimit		:= 100.0;
+PI_Controller_Parameters.fOutMinLimit		:= 0.0;
+PI_Controller_Parameters.tTaskCycleTime		:= localDefaultParameters.tTaskCycleTime;
+PI_Controller_Parameters.tCtrlCycleTime		:= localDefaultParameters.tCtrlCycleTime;
+PI_Controller_Parameters.bARWOnIPartOnly	:= TRUE;
+
+//check which actual value should be used depending on control mode, external temperature sensor and pump place
+CASE nControlMode OF
+	1,2: //constant temperature control
+	IF localDefaultParameters.bPumpBeforeApplication THEN
+		IF localDefaultParameters.bExternalTemperatureSensor THEN
+			fAct := localState.fTemperatureExternal;
+		ELSE
+			fAct := fExternalValue;
+		END_IF
+	ELSE
+		fAct := localState.fTemperatureInternal;		
+	END_IF
+	
+	3: //temperature difference control
+	fAct := localState.fTemperatureDifference;
+	IF localDefaultParameters.bPumpBeforeApplication AND NOT localDefaultParameters.bExternalTemperatureSensor THEN
+		fAct := fExternalValue;
+	END_IF
+	
+	4: //pressure difference control
+	fAct := localState.fPressureDifference;
+	
+	5: //proportional pressure control
+	fAct := localState.fPressureDifference;
+	
+	6: //thermal power
+	fAct := fThermalPowerExternal;
+END_CASE
+
+//switch setpoint and actual value depending on heating or cooling mode
+CASE nControlMode OF
+	1: //flow is heated
+	fSetpointValue := fAct;
+	fActualValue := fSetPoint;	
+
+	2: //flow is cooled
+	fSetpointValue := fSetPoint;	
+	fActualValue := fAct;
+	
+	3: //temperature difference
+	fSetpointValue := ABS(fAct);
+	fActualValue := ABS(fSetPoint);
+	
+	4: //pressure difference control
+	fSetpointValue := fSetPoint;
+	fActualValue := fAct;
+	
+	5: //proportional pressure control
+	//calculate linear curve depending on fSetPoint
+	fSetpointValue := (fSetPoint-(fSetPoint/2))/((fSetPoint-localDefaultParameters.fMaximumPressureDifference+(localDefaultParameters.fMaximumPressureDifference/(localDefaultParameters.fMaximumVolumeFlowRate-localDefaultParameters.fNominalVolumeFlowRate))*localDefaultParameters.fMaximumVolumeFlowRate)*((localDefaultParameters.fNominalVolumeFlowRate-localDefaultParameters.fMaximumVolumeFlowRate)/localDefaultParameters.fMaximumPressureDifference));
+	fActualValue := fAct;
+	
+	6: //thermal power
+	fSetpointValue := ABS(fSetPoint);
+	fActualValue := ABS(fAct);
+END_CASE
+
+PI_Controller (
+		fSetpointValue	:= fSetpointValue,
+		fActualValue	:= fActualValue,
+		fManSyncValue	:= 0,
+		bSync			:= FALSE,
+		eMode			:= 2, (* mode active *)
+		bHold			:= FALSE,
+		stParams		:= PI_Controller_Parameters);
+
+//output of PI controller is not used in frequency control mode
+CASE nControlMode OF
+	0:
+	fSetPoint_controlled := fSetPoint;
+ELSE	
+	fSetPoint_controlled := LREAL_TO_REAL(PI_Controller.fOut);
+END_CASE
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SelectLocalControlMode" Id="{9f36f1dc-61c9-4f36-814e-95f20eaaf659}">
+      <Declaration><![CDATA[METHOD PRIVATE SelectLocalControlMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF control.bManualModeActivated THEN
+	nControlMode := localSetParameters.nControlModeManual;
+ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
+	nControlMode := localSetParameters.nControlModeAlgorithm;
+ELSE
+	nControlMode := nControlModeAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSetPointLimits" Id="{98846448-9692-42fd-b02a-6804c1f2306d}">
+      <Declaration><![CDATA[METHOD PROTECTED  SetSetPointLimits : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE nControlMode OF
+	0: //constant speed
+	aSetPointLimits := localDefaultParameters.aSetPointLimits_constantSpeed;
+
+	1,2,3: //temperature mode
+	aSetPointLimits := localDefaultParameters.aSetPointLimits_Temperature;
+	
+	4,5: //pressure
+	aSetPointLimits := localDefaultParameters.aSetPointLimits_Pressure;
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState_Profibus" Id="{26cf015c-036e-449a-a37e-24bce7fc2f85}">
+      <Declaration><![CDATA[METHOD SetState_Profibus : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//setpoint state
+setPointState.fSetPoint := fSetPoint;
+setPointState.aSetPointLimits := aSetPointLimits;
+CASE nControlMode OF
+	0: //position mode
+	setPointState.sSetPointUnit := 'percent';
+	
+	1,2: //constant temperature
+	setPointState.sSetPointUnit := 'degreeC';
+	
+	3: //temperature difference
+	setPointState.sSetPointUnit := 'K';
+END_CASE
+
+//output
+controlModule0Bits[0] := TRUE; //Remote control
+controlModule0Bits[1] := bSetStatusOn;//bit for switching on pump
+controlModule0Bits[2] := localSetParameters.bReset; //bit to reset errors and warnings
+
+ControlModule_OUT[0] := ConvertBitToByte(dataBit:=controlModule0Bits);
+ControlModule_OUT[1] := 1;
+ControlModule_OUT[2] := 0;
+tmp := DWORD_TO_HEXSTR(DINT_TO_DWORD(TRUNC(fSetPoint_controlled*100)),4,TRUE);
+ControlModule_OUT[3] := HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,1))*16 + HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,2));
+ControlModule_OUT[4] := HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,3))*16 + HEXCHRNIBBLE_TO_BYTE(MID(tmp,1,4));]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ST_DefaultParameters" Id="{37c47602-10af-4f25-93f4-2c0dd2131db3}">
+      <Declaration><![CDATA[PROPERTY ST_DefaultParameters : REFERENCE TO ST_PumpGrundfosMagna3DefaultParameters]]></Declaration>
+      <Set Name="Set" Id="{69ad99eb-9ef1-4940-bed0-9eace3e8cb70}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[localDefaultParameters := ST_DefaultParameters;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_PumpGrundfosMagna3">
+      <LineId Id="554" Count="3" />
+      <LineId Id="497" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.CalculateHydraulicPower">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.GetState_Profibus">
+      <LineId Id="46" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="39" Count="2" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="16" Count="4" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.LocalControl">
+      <LineId Id="6" Count="7" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="224" Count="1" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="231" Count="1" />
+      <LineId Id="230" Count="0" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="238" Count="1" />
+      <LineId Id="259" Count="1" />
+      <LineId Id="262" Count="0" />
+      <LineId Id="267" Count="2" />
+      <LineId Id="276" Count="2" />
+      <LineId Id="222" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="192" Count="1" />
+      <LineId Id="246" Count="3" />
+      <LineId Id="255" Count="3" />
+      <LineId Id="263" Count="1" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="265" Count="1" />
+      <LineId Id="279" Count="3" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="74" Count="6" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.SelectLocalControlMode">
+      <LineId Id="6" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.SetSetPointLimits">
+      <LineId Id="33" Count="8" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.SetState_Profibus">
+      <LineId Id="6" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="76" Count="4" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="90" Count="2" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="109" Count="1" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="36" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PumpGrundfosMagna3.ST_DefaultParameters.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ElectricityMeter_BergDCMI461WP" Id="{14f8a120-a526-4f46-883e-e3576a0e0d1b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectricityMeter_BergDCMI461WP
+VAR_INPUT
+	aElectricityMeterTelegramm	: ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
+END_VAR
+VAR_OUTPUT
+	fWork : REAL; //Wh
+	fPower : REAL; //W
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_ElectricityMeterState;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[sensorState.fWork := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[1].sValue)/1000;
+sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[2].sValue)/1000;
+
+//set outputs
+fWork := sensorState.fWork;
+fPower := sensorState.fPower;
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ElectricityMeter_BergDCMI461WP">
+      <LineId Id="9" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

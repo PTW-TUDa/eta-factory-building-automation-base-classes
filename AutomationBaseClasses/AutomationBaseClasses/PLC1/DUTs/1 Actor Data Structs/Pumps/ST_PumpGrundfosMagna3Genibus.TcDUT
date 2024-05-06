@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_PumpGrundfosMagna3Genibus" Id="{1f3c29ea-2fc1-470b-b3f4-7192576211eb}">
+    <Declaration><![CDATA[TYPE ST_PumpGrundfosMagna3Genibus :
+STRUCT
+	SequenceNumber 	: BYTE;			(*SequenceNumber: Is the trigger, every time the value changes a new reply will be generated. *)
+									(*For return telegram: values valid if Number matches request SquenceNumber*)
+	DestAddress		: BYTE;			(*Address of GeniPro Slave, Broadcast = 16#FF*)
+	Class			: BYTE;			(* no further Info provided*)
+	OpLength		: BYTE; 		(* Operation and Length / for Reply Acknowledge and Length*)
+	Data1			: BYTE;
+	Data2			: BYTE;
+	Data3			: BYTE;
+	Data4			: BYTE;
+	Data5			: BYTE;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

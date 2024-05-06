@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_MollineC3HeatCounterState" Id="{c8d4f2b1-a854-46ef-bf16-f3901cc94b32}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_MollineC3HeatCounterState :
+STRUCT
+	fVolume						: REAL;
+	sVolumeUnit					: STRING := 'm3';
+	fFeedTemperature			: REAL;
+	sFeedTemperatureUnit		: STRING := 'degreeC';
+	fReturnTemperature			: REAL;
+	sReturnTemperatureUnit		: STRING := 'degreeC';
+	fVolumeFlowRate				: REAL;
+	sVolumeFlowRateUnit			: STRING := 'm3/h';
+	fHeatEnergy					: REAL;
+	sHeatEnergyUnit				: STRING := 'MWh';
+	fHeatFlowRate				: REAL;
+	sHeatFlowRateUnit			: STRING := 'kW';
+	fTemperatureDifference		: REAL;
+	sTemperatureDifferenceUnit 	: STRING := 'K';
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

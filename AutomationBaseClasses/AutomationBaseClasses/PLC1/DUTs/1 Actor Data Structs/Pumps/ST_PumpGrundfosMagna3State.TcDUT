@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_PumpGrundfosMagna3State" Id="{2e0e0d05-2e8a-40b3-8fdf-0cb5e297c45b}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_PumpGrundfosMagna3State :
+STRUCT
+	bRemoteControlOn : BOOL; //0 = control by pump, 1 = control by bus 	
+	bError : BOOL; //true if pump shows an error
+	bWarning : BOOL; //true if pump shows a warning
+	sErrorMessage : STRING; //error code
+	sWarningMessage : STRING; //warning code
+	fVolumeFlowRate : REAL;
+	sVolumeFlowRateUnit : STRING := 'm3/h';
+	fTemperatureInternal : REAL; 
+	sTemperatureInternalUnit : STRING := 'degreeC';
+	fTemperatureExternal : REAL;
+	sTemperatureExternalUnit : STRING := 'degreeC';
+	fTemperatureDifference : REAL;
+	sTemperatureDifferenceUnit: STRING := 'K';
+	fPressureDifference : REAL;
+	sPressureDifferenceUnit : STRING := 'Pa';
+	fPowerElectric : REAL;
+	sPowerElectricUnit : STRING := 'W';
+	fPowerHydraulic : REAL;
+	sPowerHydraulicUnit : STRING := 'W';
+	fPowerThermal : REAL;
+	sPowerThermalUnit : STRING := 'W';
+	fRotationalSpeed : REAL;
+	sRotationalSpeedUnit : STRING := 'rpm';
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

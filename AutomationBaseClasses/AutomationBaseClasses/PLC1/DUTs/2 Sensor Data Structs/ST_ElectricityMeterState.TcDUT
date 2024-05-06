@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_ElectricityMeterState" Id="{7d5a1323-3437-4d6e-9dc0-e12e1105ec4e}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_ElectricityMeterState :
+STRUCT
+	fPower			: REAL;
+	sPowerUnit		: STRING := 'kW';
+	fWork			: REAL;
+	sWorkUnit		: STRING := 'kWh';
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

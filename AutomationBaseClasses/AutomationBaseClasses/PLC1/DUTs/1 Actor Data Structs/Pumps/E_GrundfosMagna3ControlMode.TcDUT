@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="E_GrundfosMagna3ControlMode" Id="{0ebc95ca-56b0-475f-9f3e-553d6515e4b2}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_GrundfosMagna3ControlMode :
+(
+	constantSpeed := 0, //constant speed control - 0.0 - 100.0 %
+	constantTemperature_Heating := 1, //temperature control if flow is heated
+	constantTemperature_Cooling := 2, //temperature control if flow is cooled
+	temperatureDifference := 3, //temperature difference control
+	pressureDifference := 4, //pressure difference control
+	proportionalPressureControl := 5, //proportional pressure control
+	thermalPower := 6 //thermal power control
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

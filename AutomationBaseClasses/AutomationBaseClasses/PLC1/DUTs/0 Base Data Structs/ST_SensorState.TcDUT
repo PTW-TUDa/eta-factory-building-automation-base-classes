@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_SensorState" Id="{2975f68f-a189-46c5-b8f3-10203fb5a404}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_SensorState :
+STRUCT
+	fValue 		: REAL; //current value
+	sUnit		: STRING; //current unit of sensor value
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_AnalogOutput" Id="{e8cc816e-9340-40fa-8115-6e9fa806b2a4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_AnalogOutput
+VAR_INPUT
+END_VAR
+VAR_INPUT
+	fValue		: REAL; //input value	
+END_VAR
+VAR_OUTPUT
+	nValue 		: INT; //converted value
+END_VAR
+VAR
+	fUpperLimit : REAL; //upper limit of value range
+	fLowerLimit : REAL; //lower limit of value range
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// conversion from Bit value to actual value
+nValue := REAL_TO_INT((fValue-fLowerLimit)/(fUpperLimit-fLowerLimit)*32767);]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{a1fc4530-5ecd-48d2-b2ae-0a43985b9150}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	fUpperLimit : REAL; //upper limit of value range
+	fLowerLimit : REAL; //lower limit of value range
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//copy input values to internal variables
+THIS^.fUpperLimit := fUpperLimit;
+THIS^.fLowerLimit := fLowerLimit;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_AnalogOutput">
+      <LineId Id="27" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_AnalogOutput.FB_init">
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

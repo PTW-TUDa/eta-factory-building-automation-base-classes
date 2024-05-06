@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_Actuator2Point" Id="{779c39b8-c120-47da-8edf-760811555f3b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Actuator2Point
+VAR_INPUT
+	bSetStatusOnAutomatic : BOOL; //turn actor on
+	bAlgorithmPermission : BOOL; //is true if control by algorithm is allowed
+END_VAR
+VAR_OUTPUT
+	bStatusOn : BOOL; //true if actor is on
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	control : ST_Control;
+	{attribute 'OPC.UA.DA' := '1'}
+	controlState : ST_ControlState;
+
+	//internal variables
+	bSetStatusOn : BOOL; //actual internal value to switch on 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="SelectControlMode" Id="{3e578076-f21b-4cb6-b8d9-37cde3c10288}">
+      <Declaration><![CDATA[METHOD PROTECTED SelectControlMode : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//change access mode
+IF control.bManualModeActivated THEN
+	controlState.nAccessmode := E_SystemControlState.manual;
+	controlState.sAccessMode := 'manual';
+	bSetStatusOn := control.bSetStatusOnManual;
+ELSIF control.bAlgorithmModeActivated AND bAlgorithmPermission THEN
+	controlState.nAccessmode := E_SystemControlState.algorithm;
+	controlState.sAccessMode := 'algorithm';
+	bSetStatusOn := control.bSetStatusOnAlgorithm;
+ELSE
+	controlState.nAccessmode := E_SystemControlState.automatic;
+	controlState.sAccessMode := 'automatic';
+	bSetStatusOn := bSetStatusOnAutomatic;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Actuator2Point">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Actuator2Point.SelectControlMode">
+      <LineId Id="22" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

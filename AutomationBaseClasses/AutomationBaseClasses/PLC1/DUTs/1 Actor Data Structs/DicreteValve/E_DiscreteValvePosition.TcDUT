@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="E_DiscreteValvePosition" Id="{dde8a09a-e579-47ab-809c-5f9f7f9873ea}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_DiscreteValvePosition :
+(	
+	noValidInformation := 0, //no information about position available
+	moving := 1, //valve is moving
+	closed := 2, //valve is closed
+	open := 3 //valve is open
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

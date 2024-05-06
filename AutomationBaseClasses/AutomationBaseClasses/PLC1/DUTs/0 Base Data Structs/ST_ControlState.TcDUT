@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="ST_ControlState" Id="{65125475-c668-47ed-8c3b-4d8abf97b67a}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_ControlState :
+STRUCT
+	bStatusOn 		: BOOL; //status on / off
+	sAccessMode		: STRING; //current access mode as string
+	nAccessmode		: E_SystemControlState; //current access mode (1 = automatic, 2 = algorihm, 3 = manual)
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <DUT Name="E_SystemOperatingState" Id="{3ae62665-110e-4839-b666-82d251e02aac}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_SystemOperatingState :
+(
+	standby 	:= 0,
+	rampUp		:= 1,
+	rampDown	:= 2,
+	operational	:= 3,
+	working		:= 4
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

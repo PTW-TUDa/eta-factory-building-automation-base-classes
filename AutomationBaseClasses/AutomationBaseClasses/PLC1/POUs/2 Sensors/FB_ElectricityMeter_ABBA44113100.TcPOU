@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_ElectricityMeter_ABBA44113100" Id="{a91df6ca-9751-4819-9508-b0844ede8476}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElectricityMeter_ABBA44113100
+VAR_INPUT
+	aElectricityMeterTelegramm	: ARRAY[1..cMBUS_MaxTelegrams] OF ST_MBus_Data2;
+END_VAR
+VAR_OUTPUT
+	fWork : REAL; //Wh
+	fPower : REAL; //W
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_ElectricityMeterState;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[sensorState.fWork := STRING_TO_REAL(aElectricityMeterTelegramm[1].arrData[1].sValue)/1000;
+sensorState.fPower := STRING_TO_REAL(aElectricityMeterTelegramm[2].arrData[1].sValue)/1000;
+
+fWork := sensorState.fWork;
+fPower := sensorState.fPower;
+]]></ST>
+    </Implementation>
+    <LineIds Name="FB_ElectricityMeter_ABBA44113100">
+      <LineId Id="9" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="20" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_PressureSensor" Id="{7044f823-1ed9-4edf-a9f3-50efcf49ac23}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_PressureSensor EXTENDS FB_Sensor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	fPressure : REAL; //measured pressure in bar
+END_VAR
+VAR	
+	//I/O-Links
+	nPressure_IN AT %I* : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="GetState_AI" Id="{2f26965c-ca17-4f24-ac3f-b491df8f99e3}">
+      <Declaration><![CDATA[METHOD GetState_AI : BOOL
+VAR_INPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// scaling to [0,6000]
+fPressure := (INT_TO_REAL(nPressure_IN))*0.1831/1000 ;
+
+//sensor state
+sensorState.fValue := fPressure;
+sensorState.sUnit := 'bar';
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_PressureSensor">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_PressureSensor.GetState_AI">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

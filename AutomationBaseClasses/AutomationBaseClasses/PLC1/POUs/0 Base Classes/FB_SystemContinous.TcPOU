@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_SystemContinous" Id="{96d5c5c8-8c8e-4fc0-9cb9-dd455bc0dccf}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_SystemContinous EXTENDS FB_ActuatorContinous
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	systemState : ST_SystemState;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+]]></ST>
+    </Implementation>
+    <Method Name="CheckError" Id="{ad935b5d-159a-45d8-a497-f9d6421f009b}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT CheckError : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bError : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="MAIN" Id="{0f6296ee-45f5-4e45-b70e-a6b0f33b8461}">
+      <Declaration><![CDATA[METHOD MAIN : BOOL // Method that calls all needed function block methods
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.MAIN();
+SetState();
+SystemFlowControl();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operational" Id="{2598fbd1-9bc6-46f7-b45a-1192dd4e31bf}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT Operational : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bSwitchToWorking : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RampDown" Id="{c456b4e1-b9b4-4165-a480-69fcb8d85911}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT RampDown : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bRampDownFinished : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RampUp" Id="{90e484f3-4a54-4088-a19e-e3315ad62ded}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT RampUp : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bRampUpFinished : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetSetPointLimits" Id="{76638cd5-20cb-42ab-afc6-a5afa22b29a7}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT  SetSetPointLimits : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetState" Id="{0631fadf-7cd8-4853-83ce-624761ddf013}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT SetState : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SystemFlowControl" Id="{6217cbf4-0afa-43b2-8f55-e14926bb4551}">
+      <Declaration><![CDATA[METHOD SystemFlowControl : INT
+VAR_INPUT
+END_VAR
+VAR_INST
+	nState : E_SystemOperatingState := E_SystemOperatingState.standby; //actual state number
+	bSwitchState : BOOL := FALSE;
+	bSystemError : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CheckError(bError => bSystemError);
+systemState.bError := bSystemError;
+
+IF NOT bSystemError THEN
+	CASE nState OF
+		E_SystemOperatingState.standby:
+			systemState.sOperatingState := 'standby';
+			bSwitchState := FALSE;
+			//if turned on switch to ramp-up
+			IF(bSetStatusOn) THEN
+				nState := E_SystemOperatingState.rampUp;
+			END_IF
+		E_SystemOperatingState.rampUp:
+			systemState.sOperatingState := 'ramp-up';
+			RampUp(bRampUpFinished => bSwitchState);
+			//if turned off switch to ramp-down
+			IF(NOT bSetStatusOn) THEN
+				nState := E_SystemOperatingState.rampDown;
+			//if ramp-up finished switch to operational
+			ELSIF(bSwitchState) THEN
+				nState := E_SystemOperatingState.operational;
+			END_IF
+		E_SystemOperatingState.operational:
+			systemState.sOperatingState := 'operational';
+			Operational(bSwitchToWorking => bSwitchState);
+			//if turned off switch to ramp-down
+			IF(NOT bSetStatusOn) THEN
+				nState := E_SystemOperatingState.rampDown;
+			//switch to working if desired
+			ELSIF(bSwitchState) THEN
+				nState := E_SystemOperatingState.working;
+			END_IF
+		E_SystemOperatingState.working:
+			systemState.sOperatingState := 'working';
+			Working(bSwitchToOperational => bSwitchState);
+			//if turned off switch to ramp-down
+			IF(NOT bSetStatusOn) THEN
+				nState := E_SystemOperatingState.rampDown;
+			//switch to operational if desired
+			ELSIF(bSwitchState) THEN
+				nState := E_SystemOperatingState.operational;
+			END_IF
+		E_SystemOperatingState.rampDown:
+			systemState.sOperatingState := 'ramp-down';
+			RampDown(bRampDownFinished => bSwitchState);
+			//if turned on switch to ramp-up
+			IF(bSetStatusOn) THEN
+				nState := E_SystemOperatingState.rampUp;
+			//if ramp-down finished switch to standby
+			ELSIF(bSwitchState) THEN
+				nState := E_SystemOperatingState.standby;
+			END_IF
+	END_CASE
+ELSE
+	RampDown(bRampDownFinished => bSwitchState);
+	IF bSwitchState THEN
+		systemState.sOperatingState := 'standby';
+		nState := E_SystemOperatingState.standby;
+	ELSE
+		systemState.sOperatingState := 'ramp-down';	
+		nState := E_SystemOperatingState.rampDown;		
+	END_IF
+	
+END_IF
+systemState.nOperatingState := nState;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Working" Id="{16283899-5654-440c-b82d-86196b3a2bb6}">
+      <Declaration><![CDATA[METHOD PROTECTED ABSTRACT Working : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bSwitchToOperational : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SystemContinous">
+      <LineId Id="9" Count="0" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.CheckError">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.MAIN">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.Operational">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.RampDown">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.RampUp">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.SetSetPointLimits">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.SetState">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.SystemFlowControl">
+      <LineId Id="162" Count="0" />
+      <LineId Id="165" Count="1" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="82" Count="2" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="85" Count="9" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="95" Count="4" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="100" Count="2" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="103" Count="2" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="149" Count="5" />
+      <LineId Id="108" Count="6" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="115" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="167" Count="1" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="175" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="174" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="141" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SystemContinous.Working">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

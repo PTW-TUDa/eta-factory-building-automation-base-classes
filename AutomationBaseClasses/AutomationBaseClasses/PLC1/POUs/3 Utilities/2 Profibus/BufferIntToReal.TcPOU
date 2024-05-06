@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="BufferIntToReal" Id="{5ba4695c-2ebb-4c7e-85fa-5e012c521cf2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION BufferIntToReal : Real
+VAR_INPUT
+	raw_input :INT;
+END_VAR
+VAR
+	temp : DWORD;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[temp := INT_TO_DWORD(raw_input);
+BufferIntToReal := DWORD_TO_REAL(temp);
+temp := BE32_TO_HOST(temp);
+MEMCPY(ADR(BufferUdintToReal), ADR(temp), SIZEOF(temp));
+]]></ST>
+    </Implementation>
+    <LineIds Name="BufferIntToReal">
+      <LineId Id="8" Count="2" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
