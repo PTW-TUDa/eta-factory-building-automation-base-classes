@@ -1,9 +1,7 @@
 ETA Factory Building Automation Base Classes
 ============================================
 
-The *ETA Factory Building Automation Base Classes (ETA BABC)*, developed by the team of the `ETA-Fabrik <https://www.ptw.tu-darmstadt.de>`_ at Technical University of Darmstadt, is a novel Twincat 3 library, which aims at standardized implementation of the industrial energy supply system. Based on a generic data model this libary provides beside the data model implementation specific components like Grundfos Magna3 pumps, several energy counters and valves. 
-
-You can find the `source code on github <Github link>`_. If you would like to contribute, please check our `working repository <Gitlab link>`_.
+The *ETA Factory Building Automation Base Classes (ETA BABC)*, developed by the team of the `ETA-Fabrik <https://www.ptw.tu-darmstadt.de>`_ at Technical University of Darmstadt, is a novel Twincat 3 library, which aims at standardized implementation of the industrial energy supply system. Based on a generic data model this libary provides beside the data model implementation specific components like Grundfos Magna3 pumps, several energy counters and valves.
 
 Library structure
 -----------------
