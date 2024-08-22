@@ -11,6 +11,7 @@ VAR_OUTPUT
 	bError : BOOL; //true if pump is in error
 	fTemperatureInternal : REAL; //internal temperature (e.g. for temperature controlling valves)
 	fTemperatureExternal : REAL; //external temperature (e.g. for temperature controlling valves)
+	fVolumeFlowRate : REAL;
 END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
@@ -106,7 +107,8 @@ END_IF;
 localState.fPressureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
 localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN);
 localState.fPowerThermal := BufferUdintToReal(raw_input := fPowerThermal_IN);
-localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_IN);]]></ST>
+localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_IN);
+fVolumeFlowRate := localState.fVolumeFlowRate;]]></ST>
       </Implementation>
     </Method>
     <Method Name="LocalControl" Id="{812b0398-87f0-4a15-8dd7-9c34771d439d}">
@@ -311,6 +313,7 @@ END_VAR
       <LineId Id="59" Count="0" />
       <LineId Id="16" Count="4" />
       <LineId Id="5" Count="0" />
+      <LineId Id="69" Count="0" />
     </LineIds>
     <LineIds Name="FB_PumpGrundfosMagna3.LocalControl">
       <LineId Id="6" Count="7" />
