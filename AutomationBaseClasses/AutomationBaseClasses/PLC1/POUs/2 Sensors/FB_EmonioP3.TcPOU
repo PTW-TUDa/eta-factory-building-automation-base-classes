@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_EmonioP3" Id="{c4a1a050-55fe-4479-b0af-783598946749}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EmonioP3
+VAR_INPUT
+	sIPAddr : STRING(15);
+END_VAR
+VAR_OUTPUT
+	fPower : REAL; 			//kW
+	fVoltage : REAL; 		//V
+	fCurrent : REAL; 		//A
+	fEnergy : REAL; 		//kWh
+	fTemperature : REAL; 	//°C
+	
+	bError: BOOL;
+    nErrId: UDINT;
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_EmonioP3State;
+	
+	fbEmonio : FB_MBReadRegs;
+	
+	//timer to execute modbus fb
+	Timer : TON;	
+	bStartTimer : BOOL;
+	bReadModbus : BOOL;
+	
+	arrInputRegs: ARRAY[0..502] OF WORD;			  // buffer for modbus fb
+	
+	//define arrays to convert from 16-bit word to real values
+	PowerArray: ARRAY [0..1] OF WORD;
+	VoltageArray: ARRAY [0..1] OF WORD;
+	CurrentArray: ARRAY [0..1] OF WORD;
+	EnergyArray: ARRAY [0..1] OF WORD;
+	TemperatureArray: ARRAY [0..1] OF WORD;
+	
+	PowerInWatt : REAL; //helper variable to convert from W to kW
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Start and check timer for 2s interval
+bStartTimer := TRUE;
+Timer(IN := bStartTimer,
+	PT := T#2S);
+IF Timer.Q THEN
+	bReadModbus := TRUE;
+	bStartTimer := FALSE;	
+END_IF
+
+// Read Emonio via Modbus
+fbEmonio(    
+	sIPAddr := sIPAddr,   			//IP adress of the device
+	nTCPPort := 502,				//Port number of the target device
+	nUnitID := 255,					//Identification number of a serial sub-network device
+	nQuantity  := 502,				//Number of input registers (data words) to be read
+	nMBAddr := 0,					// Start address of the output registers to be read (word offset)
+	cbLength := SIZEOF(arrInputRegs),
+	pDestAddr := ADR(arrInputRegs),
+	bExecute := bReadModbus,         // trigger
+	tTimeout  := T#20S,
+	bError => bError,				// Error handling
+	nErrId => nErrId				// Error handling 
+);
+
+bReadModbus := FALSE;
+
+//create arrays with word outputs
+PowerArray[0] := arrInputRegs[4];
+PowerArray[1] := arrInputRegs[5];
+VoltageArray[0] := arrInputRegs[0];
+VoltageArray[1] := arrInputRegs[1];
+CurrentArray[0] := arrInputRegs[2];
+CurrentArray[1] := arrInputRegs[3];
+EnergyArray[0] := arrInputRegs[12];
+EnergyArray[1] := arrInputRegs[13];
+TemperatureArray[0] := arrInputRegs[500];
+TemperatureArray[1] := arrInputRegs[501];
+
+//convert word to real values
+MEMCPY(ADR(PowerInWatt), ADR(PowerArray), 4);
+sensorState.fPower := PowerInWatt/1000;
+MEMCPY(ADR(sensorState.fVoltage), ADR(VoltageArray), 4);
+MEMCPY(ADR(sensorState.fCurrent), ADR(CurrentArray), 4);
+MEMCPY(ADR(sensorState.fEnergy), ADR(EnergyArray), 4);
+MEMCPY(ADR(sensorState.fTemperature), ADR(TemperatureArray), 4);
+
+//define output variables
+fPower := sensorState.fPower;
+fVoltage := sensorState.fVoltage;
+fCurrent := sensorState.fCurrent;
+fEnergy := sensorState.fEnergy;
+fTemperature := sensorState.fTemperature;]]></ST>
+    </Implementation>
+    <LineIds Name="FB_EmonioP3">
+      <LineId Id="102" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="19" Count="3" />
+      <LineId Id="24" Count="6" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="37" Count="3" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="3" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

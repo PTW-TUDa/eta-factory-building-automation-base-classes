@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_EmonioP3State" Id="{ad6f0ce4-c78f-4c77-a65f-2dc9abdeb6e2}">
+    <Declaration><![CDATA[{attribute 'OPC.UA.DA.StructuredType' := '1'}
+TYPE ST_EmonioP3State :
+STRUCT
+	fPower 					: REAL;
+	sPowerUnit				: STRING := 'kW';
+	fVoltage 				: REAL;
+	sVoltageUnit			: STRING := 'V';
+	fCurrent				: REAL;
+	sCurrentUnit			: STRING := 'A';
+	fEnergy					: REAL;
+	sEnergyUnit				: STRING := 'kWh';
+	fTemperature			: REAL;
+	sTemperatureUnit		: STRING := 'degreeC';
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
