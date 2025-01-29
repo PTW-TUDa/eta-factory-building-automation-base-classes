@@ -28,7 +28,7 @@ VAR
 	nWarningCode_IN						AT %I* : USINT;
 	fVolumeFlowRate_IN 					AT %I* : UDINT; //m^3/h volume flow rate from pump
 	fPressureDifference_IN	 			AT %I* : UDINT; //pa = 10^-5 bar
-	fPowerElectric_IN					AT %I* : UDINT; //W
+	fPowerElectric_IN					AT %I* : UDINT; //kW
 	fActualSetpoint_IN					AT %I* : UDINT; //%
 	fRotationalSpeed_IN	 				AT %I* : UDINT; //rpm
 	fTemperatureExternal_IN 			AT %I* : UDINT; //°C external temperature from sensor connected to pump
@@ -105,7 +105,7 @@ IF localDefaultParameters.bExternalTemperatureSensor THEN //Set external tempera
 	localState.fTemperatureDifference := localState.fTemperatureInternal-localState.fTemperatureExternal;
 END_IF;
 localState.fPressureDifference := BufferUdintToReal(raw_input := fPressureDifference_IN);
-localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN);
+localState.fPowerElectric := BufferUdintToReal(raw_input := fPowerElectric_IN)/1000; //W->kW
 localState.fPowerThermal := BufferUdintToReal(raw_input := fPowerThermal_IN);
 localState.fRotationalSpeed := BufferUdintToReal(raw_input := fRotationalSpeed_IN);
 fVolumeFlowRate := localState.fVolumeFlowRate;]]></ST>

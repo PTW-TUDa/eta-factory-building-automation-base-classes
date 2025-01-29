@@ -14,6 +14,8 @@ STRUCT
 	sEnergyUnit				: STRING := 'kWh';
 	fTemperature			: REAL;
 	sTemperatureUnit		: STRING := 'degreeC';
+	fPulse					: REAL;
+	sPulse					: STRING := 'm^3';
 END_STRUCT
 END_TYPE
 ]]></Declaration>
