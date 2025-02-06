@@ -16,6 +16,8 @@ STRUCT
 	sTemperatureUnit		: STRING := 'degreeC';
 	fPulse					: REAL;
 	sPulse					: STRING := 'm^3';
+	fPulseGasPower			: REAL;
+	sPulseGasPower			: STRING := 'kW';
 END_STRUCT
 END_TYPE
 ]]></Declaration>

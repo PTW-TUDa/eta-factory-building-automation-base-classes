@@ -12,6 +12,7 @@ VAR_OUTPUT
 	fEnergy : REAL; 		//kWh
 	fTemperature : REAL; 	//°C
 	fPulse : REAL; 			//m^3
+	fPulseGasPower : REAL;	//kW
 	
 	bErrorEM: BOOL;
 	bErrorTemp: BOOL;
@@ -47,6 +48,11 @@ VAR
 	PulseArray: ARRAY [0..1] OF WORD;
 	
 	PowerInWatt : REAL; //helper variable to convert from W to kW
+	
+	//timer to execute modbus fb
+	TimerGas : TON;	
+	bStartTimerGas : BOOL;
+	fPulseLastValue : REAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -127,13 +133,24 @@ MEMCPY(ADR(sensorState.fEnergy), ADR(EnergyArray), 4);
 MEMCPY(ADR(sensorState.fTemperature), ADR(TemperatureArray), 4);
 MEMCPY(ADR(sensorState.fPulse), ADR(PulseArray), 4);
 
+TimerGas(IN := bStartTimerGas,
+	PT := T#120S);
+bStartTimerGas := TRUE;
+IF TimerGas.Q THEN
+	fPulseLastValue := fPulse;
+	bStartTimerGas := FALSE;	
+END_IF
+sensorState.fPulseGasPower := (fPulse-fPulseLastValue)*30*11.2; //Gas power in kW
+
+
 //define output variables
 fPower := sensorState.fPower;
 fVoltage := sensorState.fVoltage;
 fCurrent := sensorState.fCurrent;
 fEnergy := sensorState.fEnergy;
 fTemperature := sensorState.fTemperature;
-fPulse := sensorState.fPulse;]]></ST>
+fPulse := sensorState.fPulse;
+fPulseGasPower := sensorState.fPulseGasPower;]]></ST>
     </Implementation>
     <LineIds Name="FB_EmonioP3">
       <LineId Id="102" Count="0" />
@@ -170,11 +187,19 @@ fPulse := sensorState.fPulse;]]></ST>
       <LineId Id="79" Count="0" />
       <LineId Id="37" Count="3" />
       <LineId Id="183" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="240" Count="3" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="239" Count="0" />
       <LineId Id="105" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="41" Count="0" />
       <LineId Id="43" Count="3" />
       <LineId Id="184" Count="0" />
+      <LineId Id="249" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
