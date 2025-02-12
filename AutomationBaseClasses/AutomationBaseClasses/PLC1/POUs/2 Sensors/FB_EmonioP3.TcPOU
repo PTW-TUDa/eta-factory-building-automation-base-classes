@@ -134,14 +134,18 @@ MEMCPY(ADR(sensorState.fTemperature), ADR(TemperatureArray), 4);
 MEMCPY(ADR(sensorState.fPulse), ADR(PulseArray), 4);
 
 TimerGas(IN := bStartTimerGas,
-	PT := T#120S);
+	PT := T#30S);
 bStartTimerGas := TRUE;
+
+//overwrite last value durint init as long as last value remains zero
+IF fPulseLastValue = 0 THEN
+	fPulseLastValue := fPulse;
+END_IF
 IF TimerGas.Q THEN
+	sensorState.fPulseGasPower := (fPulse-fPulseLastValue)*120*11.2; //Gas power in kW
 	fPulseLastValue := fPulse;
 	bStartTimerGas := FALSE;	
 END_IF
-sensorState.fPulseGasPower := (fPulse-fPulseLastValue)*30*11.2; //Gas power in kW
-
 
 //define output variables
 fPower := sensorState.fPower;
@@ -188,12 +192,15 @@ fPulseGasPower := sensorState.fPulseGasPower;]]></ST>
       <LineId Id="37" Count="3" />
       <LineId Id="183" Count="0" />
       <LineId Id="237" Count="0" />
-      <LineId Id="240" Count="3" />
+      <LineId Id="240" Count="2" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="305" Count="2" />
+      <LineId Id="243" Count="0" />
       <LineId Id="245" Count="0" />
+      <LineId Id="303" Count="0" />
       <LineId Id="247" Count="0" />
       <LineId Id="238" Count="0" />
-      <LineId Id="248" Count="0" />
-      <LineId Id="239" Count="0" />
       <LineId Id="105" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="41" Count="0" />
