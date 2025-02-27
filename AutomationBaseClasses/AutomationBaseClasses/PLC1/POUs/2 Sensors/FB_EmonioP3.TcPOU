@@ -71,7 +71,7 @@ fbEmonioElectricity(
 	nTCPPort := 502,				//Port number of the target device
 	nUnitID := 255,					//Identification number of a serial sub-network device
 	nQuantity  := 13,				//Number of input registers (data words) to be read
-	nMBAddr := 0,					// Start address of the output registers to be read (word offset)
+	nMBAddr := 300,					// Start address of the output registers to be read (word offset)
 	cbLength := SIZEOF(arrInputRegsElectricity),
 	pDestAddr := ADR(arrInputRegsElectricity),
 	bExecute := bReadModbus,         // trigger
