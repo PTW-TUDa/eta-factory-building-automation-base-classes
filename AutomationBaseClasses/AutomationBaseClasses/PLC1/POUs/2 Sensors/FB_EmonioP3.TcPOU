@@ -22,6 +22,8 @@ VAR
 	{attribute 'OPC.UA.DA' := '1'}
 	sensorState : ST_EmonioP3State;
 	
+	localDefaultParameters : ST_EmonioP3DefaultParameters;
+	
 	fbEmonioElectricity : FB_MBReadRegs;
 	fbEmonioTemperature : FB_MBReadRegs;
 	fbEmonioPulse : FB_MBReadRegs;
@@ -142,7 +144,7 @@ IF fPulseLastValue = 0 THEN
 	fPulseLastValue := fPulse;
 END_IF
 IF TimerGas.Q THEN
-	sensorState.fPulseGasPower := (fPulse-fPulseLastValue)*120*11.2; //Gas power in kW
+	sensorState.fPulseGasPower := (fPulse-fPulseLastValue)*120*localDefaultParameters.fCalorificValue; //Gas power in kW
 	fPulseLastValue := fPulse;
 	bStartTimerGas := FALSE;	
 END_IF

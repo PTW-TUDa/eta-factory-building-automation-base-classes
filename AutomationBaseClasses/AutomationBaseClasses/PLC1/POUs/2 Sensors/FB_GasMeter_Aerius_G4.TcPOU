@@ -12,13 +12,15 @@ END_VAR
 VAR
 	{attribute 'OPC.UA.DA' := '1'}
 	sensorState : ST_GasMeterState;
+	
+	localDefaultParameters : ST_GasMeterDefaultParameters;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[sensorState.fTemperature := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[3].sValue);
 sensorState.fVolumeFlowRate := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[2].sValue);
 sensorState.fVolume := STRING_TO_REAL(aGasmeterTelegramm[1].arrData[1].sValue);
-sensorState.fPower := sensorState.fVolumeFlowRate*11.2; //11.2 kWh/m3 energy
+sensorState.fPower := sensorState.fVolumeFlowRate*localDefaultParameters.fCalorificValue; //calculate Power in kW
 
 //set outputs
 fVolumeFlowRate := sensorState.fVolume;

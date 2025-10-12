@@ -87,7 +87,13 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_ElectricityMeterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_EmonioP3DefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_EmonioP3State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_GasMeterDefaultParameters.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterState.TcDUT">
