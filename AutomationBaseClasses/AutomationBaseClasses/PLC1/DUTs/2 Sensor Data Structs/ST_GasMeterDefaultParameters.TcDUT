@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <DUT Name="ST_GasMeterDefaultParameters" Id="{e90a33e3-8d5d-4aee-95d6-7c1ca893efdf}">
+    <Declaration><![CDATA[TYPE ST_GasMeterDefaultParameters :
+STRUCT
+	fCalorificValue : REAL := 11.49;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

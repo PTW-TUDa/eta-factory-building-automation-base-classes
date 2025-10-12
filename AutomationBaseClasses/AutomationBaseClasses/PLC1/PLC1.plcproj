@@ -18,7 +18,7 @@
     <Company>PTW TU Darmstadt</Company>
     <Released>false</Released>
     <Title>AutomationBaseClasses</Title>
-    <ProjectVersion>1.0</ProjectVersion>
+    <ProjectVersion>1.1</ProjectVersion>
     <Author>Fabian Borst, Lukas Theisinger, Michael Frank, Tobias Lademann</Author>
     <Description>
     </Description>
@@ -87,6 +87,15 @@
     <Compile Include="DUTs\2 Sensor Data Structs\ST_ElectricityMeterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_EmonioP3DefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_EmonioP3State.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\2 Sensor Data Structs\ST_GasMeterDefaultParameters.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\2 Sensor Data Structs\ST_MollineC3HeatCounterState.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -118,6 +127,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_ElectricityMeter_ABBA44213100.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\2 Sensors\FB_EmonioP3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\2 Sensors\FB_GasMeter_Aerius_G4.TcPOU">
@@ -227,6 +239,10 @@
     <PlaceholderReference Include="Tc2_MBus">
       <DefaultResolution>Tc2_MBus, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_MBus</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_ModbusSrv">
+      <DefaultResolution>Tc2_ModbusSrv, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_ModbusSrv</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>

@@ -10,6 +10,7 @@ STRUCT
 	tControllerIntegralTime : TIME := T#15S;
 	fOutMaxLimit : LREAL := 100; //maximum output of controller
 	fOutMinLimit : LREAL := 0; //minimum output of controller
+	bARWOnIPartOnly : BOOL := TRUE; //if true, integration of I component stops, when integrator output reaches limit
 	tTaskCycleTime	: TIME;
 	tCtrlCycleTime	: TIME;
 	aSetPointLimitsPosition	: ARRAY[1..2] OF REAL := [0,100]; //setpoint limits for position mode

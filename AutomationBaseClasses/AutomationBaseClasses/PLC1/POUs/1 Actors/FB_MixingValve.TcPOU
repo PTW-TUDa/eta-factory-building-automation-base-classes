@@ -77,7 +77,7 @@ PI_Controller_Parameters.fOutMaxLimit		:= localDefaultParameters.fOutMaxLimit;
 PI_Controller_Parameters.fOutMinLimit		:= localDefaultParameters.fOutMinLimit;
 PI_Controller_Parameters.tTaskCycleTime		:= localDefaultParameters.tTaskCycleTime;
 PI_Controller_Parameters.tCtrlCycleTime		:= localDefaultParameters.tCtrlCycleTime;
-PI_Controller_Parameters.bARWOnIPartOnly	:= TRUE;
+PI_Controller_Parameters.bARWOnIPartOnly	:= localDefaultParameters.bARWOnIPartOnly;
 
 IF bSetStatusOn THEN
 	CASE nControlMode OF

@@ -20,7 +20,7 @@ STRUCT
 	fPressureDifference : REAL;
 	sPressureDifferenceUnit : STRING := 'Pa';
 	fPowerElectric : REAL;
-	sPowerElectricUnit : STRING := 'W';
+	sPowerElectricUnit : STRING := 'kW';
 	fPowerHydraulic : REAL;
 	sPowerHydraulicUnit : STRING := 'W';
 	fPowerThermal : REAL;
