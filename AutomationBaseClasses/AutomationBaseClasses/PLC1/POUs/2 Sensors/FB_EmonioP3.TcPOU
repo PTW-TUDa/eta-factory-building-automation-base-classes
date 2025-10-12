@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="FB_EmonioP3" Id="{c4a1a050-55fe-4479-b0af-783598946749}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EmonioP3
+VAR_INPUT
+	sIPAddr : STRING(15);
+END_VAR
+VAR_OUTPUT
+	fPower : REAL; 			//kW
+	fVoltage : REAL; 		//V
+	fCurrent : REAL; 		//A
+	fEnergy : REAL; 		//kWh
+	fTemperature : REAL; 	//°C
+	fPulse : REAL; 			//m^3
+	fPulseGasPower : REAL;	//kW
+	
+	bErrorEM: BOOL;
+	bErrorTemp: BOOL;
+	bErrorPulse : BOOL;
+END_VAR
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	sensorState : ST_EmonioP3State;
+	
+	localDefaultParameters : ST_EmonioP3DefaultParameters;
+	
+	fbEmonioElectricity : FB_MBReadRegs;
+	fbEmonioTemperature : FB_MBReadRegs;
+	fbEmonioPulse : FB_MBReadRegs;
+	
+	//timer to execute modbus fb
+	Timer : TON;	
+	bStartTimer : BOOL;
+	bReadModbus : BOOL;
+	
+	arrInputRegsElectricity: ARRAY[0..13] OF WORD;			  // buffer for modbus fb electricity values
+	arrInputRegsTemperature: ARRAY[0..1] OF WORD;			  // buffer for modbus fb temperature value
+	arrInputRegsPulse: ARRAY[0..1] OF WORD;			  // buffer for modbus fb pulse value
+	
+    nErrIdEM: UDINT;
+    nErrIdTemp: UDINT;
+	nErrIdPulse: UDINT;
+	
+	//define arrays to convert from 16-bit word to real values
+	PowerArray: ARRAY [0..1] OF WORD;
+	VoltageArray: ARRAY [0..1] OF WORD;
+	CurrentArray: ARRAY [0..1] OF WORD;
+	EnergyArray: ARRAY [0..1] OF WORD;
+	TemperatureArray: ARRAY [0..1] OF WORD;
+	PulseArray: ARRAY [0..1] OF WORD;
+	
+	PowerInWatt : REAL; //helper variable to convert from W to kW
+	
+	//timer to execute modbus fb
+	TimerGas : TON;	
+	bStartTimerGas : BOOL;
+	fPulseLastValue : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Start and check timer for 2s interval
+Timer(IN := bStartTimer,
+	PT := T#2S);
+bStartTimer := TRUE;
+IF Timer.Q THEN
+	bReadModbus := TRUE;
+	bStartTimer := FALSE;	
+END_IF
+
+// Read Emonio via Modbus
+fbEmonioElectricity(    
+	sIPAddr := sIPAddr,   			//IP adress of the device
+	nTCPPort := 502,				//Port number of the target device
+	nUnitID := 255,					//Identification number of a serial sub-network device
+	nQuantity  := 13,				//Number of input registers (data words) to be read
+	nMBAddr := 300,					// Start address of the output registers to be read (word offset)
+	cbLength := SIZEOF(arrInputRegsElectricity),
+	pDestAddr := ADR(arrInputRegsElectricity),
+	bExecute := bReadModbus,         // trigger
+	tTimeout  := T#20S,
+	bError => bErrorEM,				// Error handling
+	nErrId => nErrIdEM				// Error handling 
+);
+
+fbEmonioTemperature(    
+	sIPAddr := sIPAddr,   			//IP adress of the device
+	nTCPPort := 502,				//Port number of the target device
+	nUnitID := 255,					//Identification number of a serial sub-network device
+	nQuantity  := 2,				//Number of input registers (data words) to be read
+	nMBAddr := 500,					// Start address of the output registers to be read (word offset)
+	cbLength := SIZEOF(arrInputRegsTemperature),
+	pDestAddr := ADR(arrInputRegsTemperature),
+	bExecute := bReadModbus,         // trigger
+	tTimeout  := T#20S,
+	bError => bErrorTemp,				// Error handling
+	nErrId => nErrIdTemp				// Error handling 
+);
+
+fbEmonioPulse(    
+	sIPAddr := sIPAddr,   			//IP adress of the device
+	nTCPPort := 502,				//Port number of the target device
+	nUnitID := 255,					//Identification number of a serial sub-network device
+	nQuantity  := 2,				//Number of input registers (data words) to be read
+	nMBAddr := 800,					// Start address of the output registers to be read (word offset)
+	cbLength := SIZEOF(arrInputRegsPulse),
+	pDestAddr := ADR(arrInputRegsPulse),
+	bExecute := bReadModbus,         // trigger
+	tTimeout  := T#20S,
+	bError => bErrorPulse,				// Error handling
+	nErrId => nErrIdPulse				// Error handling 
+);
+
+bReadModbus := FALSE;
+
+//create arrays with word outputs
+PowerArray[0] := arrInputRegsElectricity[4];
+PowerArray[1] := arrInputRegsElectricity[5];
+VoltageArray[0] := arrInputRegsElectricity[0];
+VoltageArray[1] := arrInputRegsElectricity[1];
+CurrentArray[0] := arrInputRegsElectricity[2];
+CurrentArray[1] := arrInputRegsElectricity[3];
+EnergyArray[0] := arrInputRegsElectricity[12];
+EnergyArray[1] := arrInputRegsElectricity[13];
+TemperatureArray[0] := arrInputRegsTemperature[0];
+TemperatureArray[1] := arrInputRegsTemperature[1];
+PulseArray[0] := arrInputRegsPulse[0];
+PulseArray[1] := arrInputRegsPulse[1];
+
+//convert word to real values
+MEMCPY(ADR(PowerInWatt), ADR(PowerArray), 4);
+sensorState.fPower := PowerInWatt/1000;
+MEMCPY(ADR(sensorState.fVoltage), ADR(VoltageArray), 4);
+MEMCPY(ADR(sensorState.fCurrent), ADR(CurrentArray), 4);
+MEMCPY(ADR(sensorState.fEnergy), ADR(EnergyArray), 4);
+MEMCPY(ADR(sensorState.fTemperature), ADR(TemperatureArray), 4);
+MEMCPY(ADR(sensorState.fPulse), ADR(PulseArray), 4);
+
+TimerGas(IN := bStartTimerGas,
+	PT := T#30S);
+bStartTimerGas := TRUE;
+
+//overwrite last value durint init as long as last value remains zero
+IF fPulseLastValue = 0 THEN
+	fPulseLastValue := fPulse;
+END_IF
+IF TimerGas.Q THEN
+	sensorState.fPulseGasPower := (fPulse-fPulseLastValue)*120*localDefaultParameters.fCalorificValue; //Gas power in kW
+	fPulseLastValue := fPulse;
+	bStartTimerGas := FALSE;	
+END_IF
+
+//define output variables
+fPower := sensorState.fPower;
+fVoltage := sensorState.fVoltage;
+fCurrent := sensorState.fCurrent;
+fEnergy := sensorState.fEnergy;
+fTemperature := sensorState.fTemperature;
+fPulse := sensorState.fPulse;
+fPulseGasPower := sensorState.fPulseGasPower;]]></ST>
+    </Implementation>
+    <LineIds Name="FB_EmonioP3">
+      <LineId Id="102" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="99" Count="0" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="19" Count="3" />
+      <LineId Id="24" Count="6" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="110" Count="12" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="168" Count="12" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="53" Count="2" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="181" Count="1" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="37" Count="3" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="240" Count="2" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="305" Count="2" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="3" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="249" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
