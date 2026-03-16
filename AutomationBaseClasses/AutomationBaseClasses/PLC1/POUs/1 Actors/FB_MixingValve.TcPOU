@@ -176,6 +176,10 @@ CASE nControlMode OF
 	
 	2: //cooling mode
 	setPointState.sSetPointUnit := 'degreeC';
+	
+	3: //thermal power mode
+	setPointState.sSetPointUnit := 'kW';
+
 END_CASE
 
 nSetPoint_OUT := OutputConverter.nValue;  //converts real setpoint for terminal
@@ -257,6 +261,7 @@ END_VAR
       <LineId Id="108" Count="0" />
       <LineId Id="118" Count="0" />
       <LineId Id="109" Count="8" />
+      <LineId Id="121" Count="3" />
       <LineId Id="106" Count="1" />
       <LineId Id="69" Count="0" />
       <LineId Id="66" Count="0" />
