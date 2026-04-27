@@ -1,0 +1,61 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: ETA Factory Building Automation Base Classes
+message: >-
+  If you use this software, please cite both the article  
+  from preferred-citation and the software itself.
+type: software
+authors:
+  - given-names: Daniel
+    family-names: Fuhrländer-Völker
+    affiliation: Technical University of Darmstadt
+    orcid: 'https://orcid.org/0000-0002-9986-6191'
+  - given-names: Fabian
+    family-names: Borst
+    orcid: 'https://orcid.org/0000-0002-0202-2858'
+  - given-names: Lukas
+    family-names: Theisinger
+    orcid: 'https://orcid.org/0000-0001-8270-1350'
+  - given-names: Tobias
+    family-names: Lademann
+    affiliation: Technical University of Darmstadt
+    orcid: 'https://orcid.org/0009-0001-9430-3912'
+  - given-names: Matthias
+    family-names: Weigold
+    name-suffix: 'https://orcid.org/0000-0002-7820-8544'
+repository-code: >-
+  https://github.com/PTW-TUDa/eta-factory-building-automation-base-classes
+abstract: >-
+  The ETA Factory Building Automation Base Classes (ETA
+  BABC), developed by the team of the ETA-Fabrik at
+  Technical University of Darmstadt, is a novel Twincat 3
+  library, which aims at standardized implementation of the
+  industrial energy supply system. Based on a generic data
+  model this libary provides beside the data model
+  implementation specific components like Grundfos Magna3
+  pumps, several energy counters and valves.
+keywords:
+  - automation
+  - simulation
+  - communication
+  - industry 4.0
+license: BSD-2-Clause
+version: v1.1.1
+preferred-citation:
+  type: conference-paper
+  title: "Modular data model for energy-flexible cyber-physical production systems"
+  doi: 10.1016/j.procir.2022.04.036 
+  year: 2022
+  authors:
+    - given-names: Daniel
+      family-names: Fuhrländer-Völker
+    - given-names: Fabian
+      family-names: Borst
+    - given-names: Lukas
+      family-names: Theisinger
+    - given-names: Heiko
+      family-names: Ranzau
+    - given-names: Matthias
+      family-names: Weigold
